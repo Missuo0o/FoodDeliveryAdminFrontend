@@ -18,7 +18,7 @@
         @click="checkOption(it, ind)"
         >{{ it.name }}</span
       >
-      <span v-if="dishFlavorsData == []" class="none">无数据</span>
+      <span v-if="dishFlavorsData == []" class="none">No Data</span>
     </div>
   </div>
 </template>

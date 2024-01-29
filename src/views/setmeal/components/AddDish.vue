@@ -27,7 +27,7 @@
                   <span style="flex: 3; text-align: left">{{
                     item.dishName
                   }}</span>
-                  <span>{{ item.status == 0 ? '停售' : '在售' }}</span>
+                  <span>{{ item.status == 0 ? 'Disabled' : 'Enabled' }}</span>
                   <span>{{ (Number(item.price) ).toFixed(2)*100/100 }}</span>
                 </div>
               </el-checkbox>
@@ -38,7 +38,7 @@
     </div>
     <div class="ritCont">
       <div class="tit">
-        已选菜品({{ checkedListAll.length }})
+        Selected dishes({{ checkedListAll.length }})
       </div>
       <div class="items">
         <div v-for="(item, ind) in checkedListAll"

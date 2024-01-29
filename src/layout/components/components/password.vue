@@ -7,21 +7,21 @@
     @close="handlePwdClose()"
   >
     <el-form :model="form" label-width="85px" :rules="rules" ref="form">
-      <el-form-item label="Original：" prop="oldPassword">
+      <el-form-item label="Original:" prop="oldPassword">
         <el-input
           v-model="form.oldPassword"
           type="password"
           placeholder="Please enter"
         ></el-input>
       </el-form-item>
-      <el-form-item label="New：" prop="newPassword">
+      <el-form-item label="New:" prop="newPassword">
         <el-input
           v-model="form.newPassword"
           type="password"
           placeholder="6 - 20 digit password, numeric or alphabetic, case sensitive"
         ></el-input>
       </el-form-item>
-      <el-form-item label="Confirm：" prop="affirmPassword">
+      <el-form-item label="Confirm:" prop="affirmPassword">
         <el-input
           v-model="form.affirmPassword"
           type="password"

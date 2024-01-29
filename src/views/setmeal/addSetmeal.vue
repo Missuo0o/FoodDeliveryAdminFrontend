@@ -8,16 +8,16 @@
                label-width="180px"
                class="demo-ruleForm">
         <div>
-          <el-form-item label="套餐名称:"
+          <el-form-item label="Name:"
                         prop="name">
             <el-input v-model="ruleForm.name"
-                      placeholder="请填写套餐名称"
-                      maxlength="14" />
+                      placeholder="Please enter the name"
+                      maxlength="20" />
           </el-form-item>
-          <el-form-item label="套餐分类:"
+          <el-form-item label="Category:"
                         prop="idType">
             <el-select v-model="ruleForm.idType"
-                       placeholder="请选择套餐分类"
+                       placeholder="Please select the category"
                        @change="$forceUpdate()">
               <el-option v-for="(item, index) in setMealList"
                          :key="index"
@@ -27,37 +27,38 @@
           </el-form-item>
         </div>
         <div>
-          <el-form-item label="套餐价格:"
+          <el-form-item label="Price:"
                         prop="price">
             <el-input v-model="ruleForm.price"
-                      placeholder="请设置套餐价格" />
+                      placeholder="Please set the price"
+                      maxlength="5"/>
           </el-form-item>
         </div>
         <div>
-          <el-form-item label="套餐菜品:"
+          <el-form-item label="Dish:"
                         required>
             <el-form-item>
               <div class="addDish">
                 <span v-if="dishTable.length == 0"
                       class="addBut"
                       @click="openAddDish('new')">
-                  + 添加菜品</span>
+                  + Add Dish</span>
                 <div v-if="dishTable.length != 0"
                      class="content">
                   <div class="addBut"
                        style="margin-bottom: 20px"
                        @click="openAddDish('change')">
-                    + 添加菜品
+                    + Add Dish
                   </div>
                   <div class="table">
                     <el-table :data="dishTable"
                               style="width: 100%">
                       <el-table-column prop="name"
-                                       label="名称"
+                                       label="Name"
                                        width="180"
                                        align="center" />
                       <el-table-column prop="price"
-                                       label="原价"
+                                       label="Price"
                                        width="180"
                                        align="center">
                         <template slot-scope="scope">
@@ -65,18 +66,18 @@
                         </template>
                       </el-table-column>
                       <el-table-column prop="address"
-                                       label="份数"
+                                       label="Number"
                                        align="center">
                         <template slot-scope="scope">
                           <el-input-number v-model="scope.row.copies"
                                            size="small"
                                            :min="1"
                                            :max="99"
-                                           label="描述文字" />
+                                           label="Description" />
                         </template>
                       </el-table-column>
                       <el-table-column prop="address"
-                                       label="操作"
+                                       label="Operate"
                                        width="180px;"
                                        align="center">
                         <template slot-scope="scope">
@@ -84,7 +85,7 @@
                                      size="small"
                                      class="delBut non"
                                      @click="delDishHandle(scope.$index)">
-                            删除
+                            Delete
                           </el-button>
                         </template>
                       </el-table-column>
@@ -96,12 +97,12 @@
           </el-form-item>
         </div>
         <div>
-          <el-form-item label="套餐图片:"
+          <el-form-item label="Image:"
                         required
                         prop="image">
             <image-upload :prop-image-url="imageUrl"
                           @imageChange="imageChange">
-              图片大小不超过2M<br>仅能上传 PNG JPEG JPG类型图片<br>建议上传200*200或300*300尺寸的图片
+              Image size not more than 2M<br>Only PNG JPEG JPG type images can be uploaded<br>It is recommended to upload a 200*200 or 300*300 size image
             </image-upload>
           </el-form-item>
         </div>
@@ -115,42 +116,42 @@
           />
         </el-form-item> -->
         <div class="address">
-          <el-form-item label="套餐描述:">
+          <el-form-item label="Description:">
             <el-input v-model="ruleForm.description"
                       type="textarea"
                       :rows="3"
                       maxlength="200"
-                      placeholder="套餐描述，最长200字" />
+                      placeholder="Package description, maximum 200 words" />
           </el-form-item>
         </div>
         <div class="subBox address">
           <el-form-item>
             <el-button @click="() => $router.back()">
-              取消
+              Cancel
             </el-button>
             <el-button type="primary"
                        :class="{ continue: actionType === 'add' }"
                        @click="submitForm('ruleForm', false)">
-              保存
+              Submit
             </el-button>
             <el-button v-if="actionType == 'add'"
                        type="primary"
                        @click="submitForm('ruleForm', true)">
-              保存并继续添加
+              Submit and continue adding
             </el-button>
           </el-form-item>
         </div>
       </el-form>
     </div>
     <el-dialog v-if="dialogVisible"
-               title="添加菜品"
+               title="Add Dish"
                class="addDishList"
                :visible.sync="dialogVisible"
                width="60%"
                :before-close="handleClose">
       <el-input v-model="value"
                 class="seachDish"
-                placeholder="请输入菜品名称进行搜索"
+                placeholder="Please enter the name of the dish"
                 style="width: 293px; height: 40px"
                 size="small"
                 clearable>
@@ -167,9 +168,9 @@
                @checkList="getCheckList" />
       <span slot="footer"
             class="dialog-footer">
-        <el-button @click="handleClose">取 消</el-button>
+        <el-button @click="handleClose">Cancel</el-button>
         <el-button type="primary"
-                   @click="addTableList">添 加</el-button>
+                   @click="addTableList">Submit</el-button>
       </span>
     </el-dialog>
   </div>
@@ -220,11 +221,11 @@ export default class extends Vue {
         required: true,
         validator: (rule: any, value: string, callback: Function) => {
           if (!value) {
-            callback(new Error('请输入套餐名称'))
+            callback(new Error('Please enter the name'))
           } else {
             const reg = /^([A-Za-z0-9\u4e00-\u9fa5]){2,20}$/
             if (!reg.test(value)) {
-              callback(new Error('套餐名称输入不符，请输入2-20个字符'))
+              callback(new Error('The input of the dish name does not match, please enter 2-20 characters'))
             } else {
               callback()
             }
@@ -234,12 +235,12 @@ export default class extends Vue {
       },
       idType: {
         required: true,
-        message: '请选择套餐分类',
+        message: 'Please select a category',
         trigger: 'change'
       },
       image: {
         required: true,
-        message: '菜品图片不能为空'
+        message: 'Image cannot be empty'
       },
       price: {
         required: true,
@@ -249,7 +250,7 @@ export default class extends Vue {
           if (!reg.test(value) || Number(value) <= 0) {
             callback(
               new Error(
-                '套餐价格格式有误，请输入大于零且最多保留两位小数的金额'
+                'Greater than zero and with up to two decimal places'
               )
             )
           } else {
@@ -258,7 +259,7 @@ export default class extends Vue {
         },
         trigger: 'blur'
       },
-      code: { required: true, message: '请输入商品码', trigger: 'blur' }
+      code: { required: true, message: 'Please fill in the product code', trigger: 'blur' }
     }
   }
 
@@ -353,9 +354,9 @@ export default class extends Vue {
     ;(this.$refs[formName] as any).validate((valid: any) => {
       if (valid) {
         if (this.dishTable.length === 0) {
-          return this.$message.error('套餐下菜品不能为空')
+          return this.$message.error('Dish cannot be empty')
         }
-        if (!this.ruleForm.image) return this.$message.error('套餐图片不能为空')
+        if (!this.ruleForm.image) return this.$message.error('Image cannot be empty')
         let prams = { ...this.ruleForm } as any
         prams.setmealDishes = this.dishTable.map((obj: any) => ({
           copies: obj.copies,
@@ -372,7 +373,7 @@ export default class extends Vue {
           addSetmeal(prams)
             .then(res => {
               if (res && res.data && res.data.code === 200) {
-                this.$message.success('套餐添加成功！')
+                this.$message.success('Success!')
                 if (!st) {
                   this.$router.push({ path: '/setmeal' })
                 } else {
@@ -398,21 +399,21 @@ export default class extends Vue {
               }
             })
             .catch(err => {
-              this.$message.error('请求出错了：' + err.message)
+              this.$message.error('error:' + err.message)
             })
         } else {
           delete prams.updateTime
           editSetmeal(prams)
             .then(res => {
               if (res.data.code === 200) {
-                this.$message.success('套餐修改成功！')
+                this.$message.success('Success!')
                 this.$router.push({ path: '/setmeal' })
               } else {
                 // this.$message.error(res.data.desc || res.data.message)
               }
             })
             .catch(err => {
-              this.$message.error('请求出错了：' + err.message)
+              this.$message.error('error：' + err.message)
             })
         }
       } else {

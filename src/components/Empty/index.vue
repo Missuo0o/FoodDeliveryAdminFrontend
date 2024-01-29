@@ -7,7 +7,7 @@
            alt="">
       <img v-else
            src="../../assets/search_table_empty.png">
-      <p>{{ !isSearch ? 'This place is empty' : 'Nothing here' }}</p>
+      <p>{{ !isSearch ? 'No data' : 'No data' }}</p>
     </div>
   </div>
 </template>

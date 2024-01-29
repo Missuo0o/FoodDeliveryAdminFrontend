@@ -2,10 +2,9 @@
   <div class="dashboard-container">
     <div class="container">
       <div class="tableBar">
-        <label style="margin-right: 5px">Name：</label>
+        <label style="margin-right: 5px">Name:</label>
         <el-input
           v-model="input"
-          placeholder="Please enter the name"
           style="width: 15%"
           clearable
           @clear="init"
@@ -37,7 +36,7 @@
               class="tableColumn-status"
               :class="{ 'stop-use': String(scope.row.status) === '0' }"
             >
-              {{ String(scope.row.status) === '0' ? 'Disable' : 'Enable' }}
+              {{ String(scope.row.status) === '0' ? 'Disabled' : 'Enabled' }}
             </div>
           </template>
         </el-table-column>
@@ -147,7 +146,7 @@ export default class extends Vue {
         // }
       })
       .catch((err) => {
-        this.$message.error('Error：' + err.message)
+        this.$message.error('Error:' + err.message)
       })
   }
 
@@ -183,7 +182,7 @@ export default class extends Vue {
           }
         })
         .catch((err) => {
-          this.$message.error('Error：' + err.message)
+          this.$message.error('Error:' + err.message)
         })
     })
   }

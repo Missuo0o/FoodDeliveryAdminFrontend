@@ -113,13 +113,13 @@
                class="demo-form-inline"
                :rules="rules"
                label-width="100px">
-        <el-form-item label="Name："
+        <el-form-item label="Name:"
                       prop="name">
           <el-input v-model="classData.name"
                     placeholder="Please enter the name"
                     maxlength="20" />
         </el-form-item>
-        <el-form-item label="Sort："
+        <el-form-item label="Sort:"
                       prop="sort">
           <el-input v-model="classData.sort"
                     placeholder="Please enter the sort" />
@@ -262,7 +262,7 @@ export default class extends Vue {
       })
       .catch(err => {
         console.log(err, 'err')
-        this.$message.error('error：' + err.message)
+        this.$message.error('error:' + err.message)
       })
   }
 
@@ -305,7 +305,7 @@ export default class extends Vue {
   private statusHandle(row: any) {
     this.id = row.id
     this.status = row.status
-    this.$confirm('Confirm ?', 'Comfirm', {
+    this.$confirm('Confirm?', 'Comfirm', {
       confirmButtonText: 'Yes',
       cancelButtonText: 'No',
       type: 'warning',
@@ -319,14 +319,14 @@ export default class extends Vue {
           }
         })
         .catch(err => {
-          this.$message.error('error：' + err.message)
+          this.$message.error('error:' + err.message)
         })
     })
   }
 
   //删除
   private deleteHandle(id: any) {
-    this.$confirm('Confirm ?', 'Comfirm', {
+    this.$confirm('Confirm?', 'Comfirm', {
       confirmButtonText: 'Yes',
       cancelButtonText: 'No',
       type: 'warning'
@@ -341,7 +341,7 @@ export default class extends Vue {
           }
         })
         .catch(err => {
-          this.$message.error('error：' + err.message)
+          this.$message.error('error:' + err.message)
         })
     })
   }
@@ -373,7 +373,7 @@ export default class extends Vue {
               }
             })
             .catch(err => {
-              this.$message.error('error：' + err.message)
+              this.$message.error('error:' + err.message)
             })
         }
       })
@@ -396,7 +396,7 @@ export default class extends Vue {
               }
             })
             .catch(err => {
-              this.$message.error('error：' + err.message)
+              this.$message.error('error:' + err.message)
             })
         }
       })

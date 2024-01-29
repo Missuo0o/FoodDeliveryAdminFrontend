@@ -389,7 +389,7 @@ export default class extends Vue {
               }
             })
             .catch(err => {
-              this.$message.error('error：' + err.message)
+              this.$message.error('error:' + err.message)
             })
         } else {
           delete params.createTime
@@ -410,7 +410,7 @@ export default class extends Vue {
               // }
             })
             .catch(err => {
-              this.$message.error('error：' + err.message)
+              this.$message.error('error:' + err.message)
             })
         }
       } else {
