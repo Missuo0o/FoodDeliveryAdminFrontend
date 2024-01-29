@@ -104,7 +104,7 @@ import { queryEmployeeById, addEmployee, editEmployee } from '@/api/employee'
   }
 })
 export default class extends Vue {
-  private title = '添加员工'
+  private title = 'Add Employee'
   private actionType = ''
   private ruleForm = {
     name: '',
@@ -126,37 +126,41 @@ export default class extends Vue {
   //   }
   // }
 
-  // private isCellPhone(val: any) {
-  //   if (!/^1(3|4|5|6|7|8)\d{9}$/.test(val)) {
-  //     return false
-  //   } else {
-  //     return true
-  //   }
-  // }
+  private isCellPhone(val: any) {
+    if (!/^(?:\(\d{3}\)\s?|\d{3}-)?\d{3}-\d{4}$/.test(val)) {
+      return false
+    } else {
+      return true
+    }
+  }
 
-  // private checkphone(rule: any, value: any, callback: any) {
-  //   // let phoneReg = /(^1[3|4|5|6|7|8|9]\d{9}$)|(^09\d{8}$)/;
-  //   if (value == '') {
-  //     callback(new Error('请输入手机号'))
-  //   } else if (!this.isCellPhone(value)) {
-  //     //引入methods中封装的检查手机格式的方法
-  //     callback(new Error('请输入正确的手机号!'))
-  //   } else {
-  //     callback()
-  //   }
-  // }
+  private checkphone(rule: any, value: any, callback: any) {
+    // let phoneReg = /(^1[3|4|5|6|7|8|9]\d{9}$)|(^09\d{8}$)/;
+    if (value == '') {
+      callback(new Error('Please enter the phone number'))
+    }
+    else if (!this.isCellPhone(value)) {
+      //引入methods中封装的检查手机格式的方法
+      callback(new Error('Please enter the correct number!'))
+    }
+    else {
+      callback()
+    }
+  }
 
-  // private validID(rule: any, value: any, callback: any) {
-  //   // 身份证号码为15位或者18位，15位时全为数字，18位前17位为数字，最后一位是校验位，可能为数字或字符X
-  //   let reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/
-  //   if (value == '') {
-  //     callback(new Error('请输入身份证号码'))
-  //   } else if (reg.test(value)) {
-  //     callback()
-  //   } else {
-  //     callback(new Error('身份证号码不正确'))
-  //   }
-  // }
+  private validID(rule: any, value: any, callback: any) {
+    // 身份证号码为15位或者18位，15位时全为数字，18位前17位为数字，最后一位是校验位，可能为数字或字符X
+    // let reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/
+    if (value == '') {
+      callback(new Error('Please enter the idNumber'))
+    }
+    // else if (reg.test(value)) {
+    //   callback()
+    // }
+    else {
+      callback()
+    }
+  }
 
   get rules() {
     return {
@@ -168,12 +172,12 @@ export default class extends Vue {
             if (!value) {
               callback(new Error('Please enter the name'))
             } else {
-              // const reg = /^[\u4e00-\u9fa5_a-zA-Z]{1,12}$/
-              // if (!reg.test(value)) {
-              //   callback(new Error('姓名输入不符，请输入1-12个字符'))
-              // } else {
-              //   callback()
-              // }
+              const reg = /^[\u4e00-\u9fa5_a-zA-Z]{1,12}$/
+              if (!reg.test(value)) {
+                callback(new Error('The name input does not match, please enter 1-12 characters'))
+              } else {
+                callback()
+              }
               callback()
             }
           },
@@ -199,8 +203,8 @@ export default class extends Vue {
           trigger: 'blur'
         }
       ],
-  //     phone: [{ required: true, validator: this.checkphone, trigger: 'blur' }],
-  //     idNumber: [{ required: true, validator: this.validID, trigger: 'blur' }]
+      phone: [{ required: true, validator: this.checkphone, trigger: 'blur' }],
+      idNumber: [{ required: true, validator: this.validID, trigger: 'blur' }]
     }
   }
 
@@ -254,7 +258,7 @@ export default class extends Vue {
                     name: '',
                     phone: '',
                     // 'password': '',
-                    // 'rePassword': '',/
+                    // npm'rePassword': '',/
                     sex: 'Male',
                     idNumber: ''
                   }
@@ -264,7 +268,7 @@ export default class extends Vue {
               }
             })
             .catch(() => {
-              // this.$message.error('请求出错了：' + err.message)
+              // this.$message.error(res.data.msg)
             })
         } else {
           const params = {

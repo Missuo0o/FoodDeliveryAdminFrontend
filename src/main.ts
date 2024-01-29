@@ -11,7 +11,6 @@ import '@/styles/home.scss'
 import 'vue-area-linkage/dist/index.css'
 
 import * as echarts from 'echarts'
-// 瑞吉外卖样式表
 import '@/styles/newRJWMsystem.scss'
 import '@/styles/icon/iconfont.css'
 import App from '@/App.vue'

@@ -2,10 +2,10 @@
   <div class="dashboard-container">
     <div class="container">
       <div class="tableBar">
-        <label style="margin-right: 5px">Employee Name：</label>
+        <label style="margin-right: 5px">Name：</label>
         <el-input
           v-model="input"
-          placeholder="Please enter name"
+          placeholder="Please enter the name"
           style="width: 15%"
           clearable
           @clear="init"
@@ -28,7 +28,7 @@
         v-if="tableData.length"
         class="tableBox"
       >
-        <el-table-column prop="name" label="Employee Name" />
+        <el-table-column prop="name" label="Name" />
         <el-table-column prop="username" label="Username" />
         <el-table-column prop="phone" label="Phone" />
         <el-table-column label="Status">

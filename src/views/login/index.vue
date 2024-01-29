@@ -106,7 +106,7 @@ export default class extends Vue {
             }
           })
           .catch(() => {
-            // this.$message.error('用户名或密码错误！')
+            // this.$message.error('Incorrect user name or password!')
             this.loading = false
           })
       } else {
