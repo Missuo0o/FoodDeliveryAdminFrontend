@@ -28,10 +28,11 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import * as echarts from 'echarts'
+
 @Component({
-  name: 'OrderStatistics',
+  name: 'OrderStatistics'
 })
 export default class extends Vue {
   @Prop() private orderdata!: any
@@ -43,6 +44,7 @@ export default class extends Vue {
       this.initChart()
     })
   }
+
   initChart() {
     type EChartsOption = echarts.EChartsOption
     const chartDom = document.getElementById('ordermain') as any
@@ -78,15 +80,15 @@ export default class extends Vue {
         textStyle: {
           color: '#333', //字体颜色
           fontSize: 12, //字体大小
-          fontWeight: 300,
-        },
+          fontWeight: 300
+        }
       },
       grid: {
         top: '5%',
         left: '20',
         right: '50',
         bottom: '12%',
-        containLabel: true,
+        containLabel: true
       },
       xAxis: {
         type: 'category',
@@ -95,17 +97,17 @@ export default class extends Vue {
           //X轴字体颜色
           textStyle: {
             color: '#666',
-            fontSize: '12px',
-          },
+            fontSize: '12px'
+          }
         },
         axisLine: {
           //X轴线颜色
           lineStyle: {
             color: '#E5E4E4',
-            width: 1, //x轴线的宽度
-          },
+            width: 1 //x轴线的宽度
+          }
         },
-        data: this.orderdata.data.dateList, //后端传来的动态数据
+        data: this.orderdata.data.dateList //后端传来的动态数据
       },
       yAxis: [
         {
@@ -116,11 +118,11 @@ export default class extends Vue {
           axisLabel: {
             textStyle: {
               color: '#666',
-              fontSize: '12px',
-            },
+              fontSize: '12px'
+            }
             // formatter: "{value} ml",//单位
-          },
-        }, //左侧值
+          }
+        } //左侧值
       ],
       series: [
         {
@@ -135,17 +137,17 @@ export default class extends Vue {
             normal: {
               color: '#FFD000',
               lineStyle: {
-                color: '#FFD000',
-              },
+                color: '#FFD000'
+              }
             },
             emphasis: {
               color: '#fff',
               borderWidth: 5,
-              borderColor: '#FFC100',
-            },
+              borderColor: '#FFC100'
+            }
           },
 
-          data: this.orderdata.data.orderCountList,
+          data: this.orderdata.data.orderCountList
         },
         {
           name: '有效订单',
@@ -159,20 +161,20 @@ export default class extends Vue {
             normal: {
               color: '#FD7F7F',
               lineStyle: {
-                color: '#FD7F7F',
-              },
+                color: '#FD7F7F'
+              }
             },
             emphasis: {
               // 圆点颜色
               color: '#fff',
               borderWidth: 5,
-              borderColor: '#FD7F7F',
-            },
+              borderColor: '#FD7F7F'
+            }
           },
 
-          data: this.orderdata.data.validOrderCountList,
+          data: this.orderdata.data.validOrderCountList
         }
-      ],
+      ]
     }
     option && myChart.setOption(option)
   }

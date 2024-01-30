@@ -28,8 +28,8 @@
         <div :class="shopShow?'userInfo':''"
              @mouseenter="toggleShow"
              @mouseleave="mouseLeaves">
-          <el-button type="primary"
-                     :class="shopShow?'active':''">
+          <el-button :class="shopShow?'active':''"
+                     type="primary">
             {{ name }}<i class="el-icon-arrow-down" />
           </el-button>
           <div v-if="shopShow"
@@ -47,10 +47,10 @@
       </div>
     </div>
     <!-- 营业状态弹层 -->
-    <el-dialog title="Business Status Setting"
+    <el-dialog :show-close="false"
                :visible.sync="dialogVisible"
-               width="25%"
-               :show-close="false">
+               title="Business Status Setting"
+               width="25%">
       <el-radio-group v-model="setStatus">
         <el-radio :label="1">
           In Business
@@ -77,15 +77,13 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator'
+import { Component, Vue } from 'vue-property-decorator'
 import { AppModule } from '@/store/modules/app'
 import { UserModule } from '@/store/modules/user'
 import Breadcrumb from '@/components/Breadcrumb/index.vue'
 import Hamburger from '@/components/Hamburger/index.vue'
 import { getStatus, setStatus } from '@/api/users'
 import Cookies from 'js-cookie'
-import { debounce, throttle } from '@/utils/common'
-import { setNewData, getNewData } from '@/utils/cookies'
 
 // 接口
 import { getCountUnread } from '@/api/inform'
@@ -97,8 +95,8 @@ import Password from '../components/password.vue'
   components: {
     Breadcrumb,
     Hamburger,
-    Password,
-  },
+    Password
+  }
 })
 export default class extends Vue {
   private storeId = this.getStoreId
@@ -127,10 +125,6 @@ export default class extends Vue {
     return AppModule.device.toString()
   }
 
-  getuserInfo() {
-    return UserModule.userInfo
-  }
-
   get name() {
     return (UserModule.userInfo as any).name
       ? (UserModule.userInfo as any).name
@@ -146,6 +140,11 @@ export default class extends Vue {
     }
     return storeId
   }
+
+  getuserInfo() {
+    return UserModule.userInfo
+  }
+
   mounted() {
     document.addEventListener('click', this.handleClose)
     //console.log(this.$store.state.app.statusNumber)
@@ -158,11 +157,14 @@ export default class extends Vue {
     // }
     this.getStatus()
   }
+
   created() {
     this.webSocket()
   }
+
   onload() {
   }
+
   destroyed() {
     this.websocket.close() //离开路由之后断开websocket连接
   }
@@ -178,16 +180,16 @@ export default class extends Vue {
         title: 'Notice',
         message: 'Please use Google Chrome！',
         type: 'warning',
-        duration: 0,
+        duration: 0
       })
     } else {
       this.websocket = new WebSocket(socketUrl)
       // 监听socket打开
-      this.websocket.onopen = function () {
+      this.websocket.onopen = function() {
         console.log('Browser WebSocket is open')
       }
       // 监听socket消息接收
-      this.websocket.onmessage = function (msg) {
+      this.websocket.onmessage = function(msg) {
         // 转换为json对象
         that.$refs.audioVo.currentTime = 0
         that.$refs.audioVo2.currentTime = 0
@@ -219,36 +221,25 @@ export default class extends Vue {
             jsonMsg.type === 1
               ? `<span>You have 1<span style=color:#419EFF>order pending</span>,${jsonMsg.content}</span>`
               : `${jsonMsg.content}<span style='color:#419EFF;cursor: pointer'>To deal with</span>`
-          }`,
+          }`
         })
       }
       // 监听socket错误
-      this.websocket.onerror = function () {
+      this.websocket.onerror = function() {
         that.$notify({
           title: 'Error',
           message: 'Server error',
           type: 'error',
-          duration: 0,
+          duration: 0
         })
       }
       // 监听socket关闭
-      this.websocket.onclose = function () {
+      this.websocket.onclose = function() {
         console.log('WebSocket is closed')
       }
     }
   }
 
-  private toggleSideBar() {
-    AppModule.ToggleSideBar(false)
-  }
-  // 退出
-  private async logout() {
-    this.$store.dispatch('LogOut').then(() => {
-      // location.href = '/'
-      this.$router.replace({ path: '/login' })
-    })
-    // this.$router.push(`/login?redirect=${this.$route.fullPath}`)
-  }
   // 获取未读消息
   async getCountUnread() {
     const { data } = await getCountUnread()
@@ -261,29 +252,35 @@ export default class extends Vue {
       this.$message.error(data.msg)
     }
   }
+
   // 营业状态
   async getStatus() {
     const { data } = await getStatus()
     this.status = data.data
     this.setStatus = this.status
   }
+
   // 下拉菜单显示
   toggleShow() {
     this.shopShow = true
   }
+
   // 下拉菜单隐藏
   mouseLeaves() {
     this.shopShow = false
   }
+
   // 触发空白处下来菜单关闭
   handleClose() {
     // clearTimeout(this.leave)
     // this.shopShow = false
   }
+
   // 设置营业状态
   handleStatus() {
     this.dialogVisible = true
   }
+
   // 营业状态设置
   async handleSave() {
     const { data } = await setStatus(this.setStatus)
@@ -292,13 +289,28 @@ export default class extends Vue {
       this.getStatus()
     }
   }
+
   // 修改密码
   handlePwd() {
     this.dialogFormVisible = true
   }
+
   // 关闭密码编辑弹层
   handlePwdClose() {
     this.dialogFormVisible = false
+  }
+
+  private toggleSideBar() {
+    AppModule.ToggleSideBar(false)
+  }
+
+  // 退出
+  private async logout() {
+    this.$store.dispatch('LogOut').then(() => {
+      // location.href = '/'
+      this.$router.replace({ path: '/login' })
+    })
+    // this.$router.push(`/login?redirect=${this.$route.fullPath}`)
   }
 }
 </script>
@@ -317,6 +329,7 @@ export default class extends Vue {
     align-items: center;
     display: flex;
   }
+
   .hamburger-container {
     // line-height: 54px;
 
@@ -333,6 +346,7 @@ export default class extends Vue {
   .breadcrumb-container {
     float: left;
   }
+
   .right-menu {
     float: right;
 
@@ -346,10 +360,12 @@ export default class extends Vue {
       width: 130px;
       display: inline-block;
       cursor: pointer;
+
       &:hover {
         background: rgba(255, 255, 255, 0.52);
       }
     }
+
     .amendPwdIcon {
       i {
         width: 18px;
@@ -359,16 +375,17 @@ export default class extends Vue {
         margin-top: 8px;
       }
     }
+
     .outLogin {
       i {
         width: 18px;
         height: 18px;
-        background: url(./../../../assets/icons/btn_close@2x.png) no-repeat 100%
-          100%;
+        background: url(./../../../assets/icons/btn_close@2x.png) no-repeat 100% 100%;
         background-size: contain;
         margin-top: 8px;
       }
     }
+
     .outLogin {
       cursor: pointer;
     }
@@ -400,6 +417,7 @@ export default class extends Vue {
 
     // }
   }
+
   .rightStatus {
     height: 100%;
     line-height: 60px;
@@ -407,6 +425,7 @@ export default class extends Vue {
     align-items: center;
     float: left;
   }
+
   .avatar-wrapper {
     margin-top: 14px;
     margin-left: 18px;
@@ -415,6 +434,7 @@ export default class extends Vue {
     float: right;
     width: 120px;
     text-align: left;
+
     .user-avatar {
       cursor: pointer;
       width: 40px;
@@ -445,15 +465,18 @@ export default class extends Vue {
       border: 0 none;
       height: 32px;
       line-height: 32px;
+
       &.active {
         background: rgba(250, 250, 250, 0);
         border: 0 none;
+
         .el-icon-arrow-down {
           transform: rotate(-180deg);
         }
       }
     }
   }
+
   .businessBtn {
     height: 22px;
     line-height: 20px;
@@ -464,9 +487,11 @@ export default class extends Vue {
     padding: 0 6px;
     color: #fff;
   }
+
   .closing {
     background: #6a6a6a;
   }
+
   .navicon {
     i {
       display: inline-block;
@@ -476,18 +501,21 @@ export default class extends Vue {
       margin: 0 4px 0 0;
     }
   }
+
   .operatingState {
     i {
       background: url('./../../../assets/icons/time.png') no-repeat;
       background-size: contain;
     }
   }
+
   .mesCenter {
     i {
       background: url('./../../../assets/icons/msg.png') no-repeat;
       background-size: contain;
     }
   }
+
   // .el-badge__content.is-fixed {
   //   top: 20px;
   //   right: 6px;
@@ -498,18 +526,22 @@ export default class extends Vue {
 .el-notification {
   // background: rgba(255, 255, 255, 0.71);
   width: 419px !important;
+
   .el-notification__title {
     margin-bottom: 14px;
     color: #333;
+
     .el-notification__content {
       color: #333;
     }
   }
 }
+
 .navbar {
   .el-dialog {
     min-width: auto !important;
   }
+
   .el-dialog__header {
     height: 61px;
     line-height: 60px;
@@ -519,16 +551,20 @@ export default class extends Vue {
     color: #333;
     border: 0 none;
   }
+
   .el-dialog__body {
     padding: 10px 30px 30px;
+
     .el-radio,
     .el-radio__input {
       white-space: normal;
     }
+
     .el-radio__label {
       padding-left: 5px;
       color: #333;
       font-weight: 700;
+
       span {
         display: block;
         line-height: 20px;
@@ -537,16 +573,19 @@ export default class extends Vue {
         font-weight: normal;
       }
     }
+
     .el-radio__input.is-checked .el-radio__inner {
       &::after {
         background: #333;
       }
     }
+
     .el-radio-group {
       & > .is-checked {
         border: 1px solid #ffc200;
       }
     }
+
     .el-radio {
       width: 100%;
       background: #fbfbfa;
@@ -555,11 +594,13 @@ export default class extends Vue {
       padding: 14px 22px;
       margin-top: 20px;
     }
+
     .el-radio__input.is-checked + .el-radio__label {
       span {
       }
     }
   }
+
   .el-badge__content.is-fixed {
     top: 24px;
     right: 2px;
@@ -571,6 +612,7 @@ export default class extends Vue {
     border-radius: 50%;
     padding: 0;
   }
+
   .badgeW {
     .el-badge__content.is-fixed {
       width: 30px;
@@ -578,6 +620,7 @@ export default class extends Vue {
     }
   }
 }
+
 .el-icon-arrow-down {
   background: url('./../../../assets/icons/up.png') no-repeat 50% 50%;
   background-size: contain;
@@ -588,6 +631,7 @@ export default class extends Vue {
   position: absolute;
   right: 16px;
   top: 12px;
+
   &:before {
     content: '';
   }
@@ -616,11 +660,13 @@ export default class extends Vue {
     // top: 35px;
     padding-left: 5px;
   }
+
   p {
     cursor: pointer;
     height: 32px;
     line-height: 32px;
     padding: 0 5px 0 7px;
+
     i {
       margin-left: 10px;
 
@@ -628,15 +674,18 @@ export default class extends Vue {
       margin-top: 4px;
       float: right;
     }
+
     &:hover {
       background: #f6f1e1;
     }
   }
 }
+
 .msgTip {
   color: #419eff;
   padding: 0 5px;
 }
+
 // .el-dropdown{
 //   .el-button--primary{
 //     height: 32px;

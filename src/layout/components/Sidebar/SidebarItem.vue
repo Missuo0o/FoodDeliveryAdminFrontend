@@ -14,19 +14,19 @@
           :to="resolvePath(theOnlyOneChild.path)"
         >
           <el-menu-item
-            :index="resolvePath(theOnlyOneChild.path)"
             :class="{ 'submenu-title-noDropdown': isFirstLevel }"
+            :index="resolvePath(theOnlyOneChild.path)"
           >
             <!-- <i v-if="theOnlyOneChild.meta.title==='工作台'" class="iconfont icon img-icon-sel" /> -->
             <!-- <svg-icon v-if="theOnlyOneChild.meta.title==='工作台'" name="dashboard" width="20" height="20"></svg-icon> -->
             <i
               v-if="theOnlyOneChild.meta.icon"
-              class="iconfont"
               :class="theOnlyOneChild.meta.icon"
+              class="iconfont"
             />
             <span v-if="theOnlyOneChild.meta.title" slot="title">{{
-              theOnlyOneChild.meta.title
-            }}</span>
+                theOnlyOneChild.meta.title
+              }}</span>
           </el-menu-item>
         </sidebar-item-link>
       </template>
@@ -34,21 +34,21 @@
         <template slot="title">
           <i
             v-if="item.meta && item.meta.icon"
-            class="iconfont"
             :class="item.meta.icon"
+            class="iconfont"
           />
           <span v-if="item.meta && item.meta.title" slot="title">{{
-            item.meta.title
-          }}</span>
+              item.meta.title
+            }}</span>
         </template>
         <template v-if="item.children">
           <sidebar-item
             v-for="child in item.children"
             :key="child.path"
-            :item="child"
+            :base-path="resolvePath(child.path)"
             :is-collapse="isCollapse"
             :is-first-level="false"
-            :base-path="resolvePath(child.path)"
+            :item="child"
             class="nest-menu"
           />
         </template>
@@ -61,15 +61,15 @@
 import path from 'path'
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import { UserModule } from '@/store/modules/user'
-import { Route, RouteConfig } from 'vue-router'
+import { RouteConfig } from 'vue-router'
 import { isExternal } from '@/utils/validate'
 import SidebarItemLink from './SidebarItemLink.vue'
 
 @Component({
   name: 'SidebarItem',
   components: {
-    SidebarItemLink,
-  },
+    SidebarItemLink
+  }
 })
 export default class extends Vue {
   @Prop({ required: true }) private item!: RouteConfig

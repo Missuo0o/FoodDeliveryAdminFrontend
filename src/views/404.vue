@@ -3,24 +3,24 @@
     <div class="wscn-http404">
       <div class="pic-404">
         <img
+          alt="404"
           class="pic-404__parent"
           src="@/assets/404-images/404.png"
-          alt="404"
         >
         <img
+          alt="404"
           class="pic-404__child left"
           src="@/assets/404-images/404-cloud.png"
-          alt="404"
         >
         <img
+          alt="404"
           class="pic-404__child mid"
           src="@/assets/404-images/404-cloud.png"
-          alt="404"
         >
         <img
+          alt="404"
           class="pic-404__child right"
           src="@/assets/404-images/404-cloud.png"
-          alt="404"
         >
       </div>
       <div class="text-404">
@@ -30,8 +30,8 @@
         <div class="text-404__info">
           All rights reserved
           <a
-            style="color:#20a0ff"
             href="https://wallstreetcn.com"
+            style="color:#20a0ff"
             target="_blank"
           >wallstreetcn</a>
         </div>
@@ -42,8 +42,8 @@
           Please check that the URL you entered is correct, or click the button below to return to the homepage.
         </div>
         <a
-          href=""
           class="text-404__return-home"
+          href=""
         >Back to home</a>
       </div>
     </div>
@@ -51,10 +51,10 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-property-decorator'
 
 @Component({
-    'name': 'Page404'
+  'name': 'Page404'
 })
 export default class extends Vue {
   private message = '404 Page Not Found'
@@ -63,7 +63,7 @@ export default class extends Vue {
 
 <style lang="scss" scoped>
 .wscn-http404-container {
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
   position: absolute;
   top: 40%;
   left: 50%;

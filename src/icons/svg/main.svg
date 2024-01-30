@@ -1,7 +1,9 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="128px" height="128px" viewBox="0 0 128 128" enable-background="new 0 0 128 128" xml:space="preserve">  <image id="image0" width="128" height="128" x="0" y="0"
-    href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAD4AAAA+CAMAAABEH1h2AAAABGdBTUEAALGPC/xhBQAAACBjSFJN
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0px"
+     y="0px" width="128px" height="128px" viewBox="0 0 128 128" enable-background="new 0 0 128 128"
+     xml:space="preserve">  <image id="image0" width="128" height="128" x="0" y="0"
+                                   href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAD4AAAA+CAMAAABEH1h2AAAABGdBTUEAALGPC/xhBQAAACBjSFJN
 AAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAABI1BMVEX/////////////////
 ////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -17,5 +19,5 @@ iHxbXxQgxsfjO7usRLLBJf3v+Xiq9lf6H3g8k2Xt7VN4x9ENCD84PGId5yg8bzzcCYVnDH5KuvvZ
 OevC03+TF7y/+OVVASiW2tOA659V5ze3d5b6/gHd0xRL/sjBi0+Wxz+XK9WXV1Nv7x/sQ/2sfH1L
 IpGIWh3fwLcChnMOBwAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAxOS0xMi0xMlQxMDoyMDoyMSswODow
 MCFCsgkAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMTktMTItMTJUMTA6MjA6MjErMDg6MDBQHwq1AAAA
-AElFTkSuQmCC" />
+AElFTkSuQmCC"/>
 </svg>

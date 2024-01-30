@@ -1,8 +1,8 @@
 @font-face {
   font-family: 'iconfont';  /* Project id 3388893 */
   src: url('//at.alicdn.com/t/font_3388893_e5ffotpqbv7.woff2?t=1654065128569') format('woff2'),
-       url('//at.alicdn.com/t/font_3388893_e5ffotpqbv7.woff?t=1654065128569') format('woff'),
-       url('//at.alicdn.com/t/font_3388893_e5ffotpqbv7.ttf?t=1654065128569') format('truetype');
+  url('//at.alicdn.com/t/font_3388893_e5ffotpqbv7.woff?t=1654065128569') format('woff'),
+  url('//at.alicdn.com/t/font_3388893_e5ffotpqbv7.ttf?t=1654065128569') format('truetype');
 }
 
 .iconfont {
@@ -12,9 +12,11 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
 .dashboard:before {
   content: "\e605";
 }
+
 .icon-category:before {
   content: "\e60c";
 }
@@ -42,24 +44,31 @@
 .icon-dish:before {
   content: "\e60a";
 }
+
 .icon-inform:before {
   content: "\e60d";
 }
+
 .icon-statistics:before {
   content: "\e608";
 }
+
 .icon-clear:before {
   content: "\e611";
 }
+
 .icon-download:before {
   content: "\e613";
 }
+
 .icon-open:before {
   content: "\e614";
 }
+
 .icon-stop:before {
   content: "\e615";
 }
+
 .icon-waiting:before {
   content: "\e61a";
 }

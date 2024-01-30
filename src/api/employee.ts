@@ -1,4 +1,5 @@
 import request from '@/utils/request'
+
 /**
  *
  * 员工管理
@@ -11,13 +12,13 @@ export const login = (data: any) =>
     'method': 'post',
     data
   })
-  // 退出
- export const userLogout = (params: any) =>
- request({
-   'url': `/employee/logout`, // 授课老师接口
-   'method': 'post',
-   params
- })
+// 退出
+export const userLogout = (params: any) =>
+  request({
+    'url': `/employee/logout`, // 授课老师接口
+    'method': 'post',
+    params
+  })
 
 export const getEmployeeList = (params: any) => {
   return request({
@@ -32,7 +33,7 @@ export const enableOrDisableEmployee = (params: any) => {
   return request({
     url: `/employee/status/${params.status}`,
     method: 'post',
-    params: { id:params.id }
+    params: { id: params.id }
   })
 }
 

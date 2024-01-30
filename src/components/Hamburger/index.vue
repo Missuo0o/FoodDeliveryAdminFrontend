@@ -1,6 +1,6 @@
 <template>
   <div :class="[{'is-active': isActive}]" @click="toggleClick">
-    <svg-icon name="hamburger" width="20" height="20" />
+    <svg-icon height="20" name="hamburger" width="20" />
   </div>
 </template>
 
@@ -15,7 +15,7 @@ export default class extends Vue {
   @Prop({ 'default': false }) private isActive!: boolean
 
   private toggleClick() {
-    this.$emit('toggleClick');
+    this.$emit('toggleClick')
   }
 }
 </script>

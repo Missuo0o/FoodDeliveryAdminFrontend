@@ -19,9 +19,9 @@ import router from '@/router'
 import '@/icons/components'
 import '@/permission'
 import { checkProcessEnv } from '@/utils/common'
-import locale from 'element-ui/lib/locale/lang/en';
+import locale from 'element-ui/lib/locale/lang/en'
 
-Vue.use(ElementUI, { locale });
+Vue.use(ElementUI, { locale })
 Vue.use(VueAreaLinkage)
 Vue.use(SvgIcon, {
   'tagName': 'svg-icon',
@@ -34,7 +34,7 @@ Vue.prototype.moment = moment
 Vue.prototype.$checkProcessEnv = checkProcessEnv
 const routerPush = Router.prototype.push
 Router.prototype.push = function push(location) {
- return routerPush.call(this, location).catch(error=> error)
+  return routerPush.call(this, location).catch(error => error)
 }
 Vue.prototype.$echarts = echarts
 new Vue({

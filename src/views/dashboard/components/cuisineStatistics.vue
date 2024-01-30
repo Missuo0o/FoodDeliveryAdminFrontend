@@ -25,11 +25,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { Component, Prop, Vue } from 'vue-property-decorator'
 import orderList from './orderList.vue'
+
 @Component({
   components: { orderList },
-  name: 'cuisineview',
+  name: 'cuisineview'
 })
 export default class extends Vue {
   @Prop() private dishesData!: any

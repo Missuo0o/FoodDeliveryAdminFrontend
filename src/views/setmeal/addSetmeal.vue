@@ -2,17 +2,17 @@
   <div class="addBrand-container">
     <div class="container">
       <el-form ref="ruleForm"
+               :inline="true"
                :model="ruleForm"
                :rules="rules"
-               :inline="true"
-               label-width="180px"
-               class="demo-ruleForm">
+               class="demo-ruleForm"
+               label-width="180px">
         <div>
           <el-form-item label="Name:"
                         prop="name">
             <el-input v-model="ruleForm.name"
-                      placeholder="Please enter the name"
-                      maxlength="20" />
+                      maxlength="20"
+                      placeholder="Please enter the name" />
           </el-form-item>
           <el-form-item label="Category:"
                         prop="idType">
@@ -30,8 +30,8 @@
           <el-form-item label="Price:"
                         prop="price">
             <el-input v-model="ruleForm.price"
-                      placeholder="Please set the price"
-                      maxlength="5"/>
+                      maxlength="5"
+                      placeholder="Please set the price" />
           </el-form-item>
         </div>
         <div>
@@ -53,37 +53,37 @@
                   <div class="table">
                     <el-table :data="dishTable"
                               style="width: 100%">
-                      <el-table-column prop="name"
+                      <el-table-column align="center"
                                        label="Name"
-                                       width="180"
-                                       align="center" />
-                      <el-table-column prop="price"
+                                       prop="name"
+                                       width="180" />
+                      <el-table-column align="center"
                                        label="Price"
-                                       width="180"
-                                       align="center">
+                                       prop="price"
+                                       width="180">
                         <template slot-scope="scope">
                           {{ (Number(scope.row.price).toFixed(2) * 100) / 100 }}
                         </template>
                       </el-table-column>
-                      <el-table-column prop="address"
+                      <el-table-column align="center"
                                        label="Number"
-                                       align="center">
+                                       prop="address">
                         <template slot-scope="scope">
                           <el-input-number v-model="scope.row.copies"
-                                           size="small"
-                                           :min="1"
                                            :max="99"
-                                           label="Description" />
+                                           :min="1"
+                                           label="Description"
+                                           size="small" />
                         </template>
                       </el-table-column>
-                      <el-table-column prop="address"
+                      <el-table-column align="center"
                                        label="Operate"
-                                       width="180px;"
-                                       align="center">
+                                       prop="address"
+                                       width="180px;">
                         <template slot-scope="scope">
-                          <el-button type="text"
+                          <el-button class="delBut non"
                                      size="small"
-                                     class="delBut non"
+                                     type="text"
                                      @click="delDishHandle(scope.$index)">
                             Delete
                           </el-button>
@@ -98,11 +98,12 @@
         </div>
         <div>
           <el-form-item label="Image:"
-                        required
-                        prop="image">
+                        prop="image"
+                        required>
             <image-upload :prop-image-url="imageUrl"
                           @imageChange="imageChange">
-              Image size not more than 2M<br>Only PNG JPEG JPG type images can be uploaded<br>It is recommended to upload a 200*200 or 300*300 size image
+              Image size not more than 2M<br>Only PNG JPEG JPG type images can be uploaded<br>It is recommended to
+              upload a 200*200 or 300*300 size image
             </image-upload>
           </el-form-item>
         </div>
@@ -118,10 +119,10 @@
         <div class="address">
           <el-form-item label="Description:">
             <el-input v-model="ruleForm.description"
-                      type="textarea"
                       :rows="3"
                       maxlength="200"
-                      placeholder="Package description, maximum 200 words" />
+                      placeholder="Package description, maximum 200 words"
+                      type="textarea" />
           </el-form-item>
         </div>
         <div class="subBox address">
@@ -129,8 +130,8 @@
             <el-button @click="() => $router.back()">
               Cancel
             </el-button>
-            <el-button type="primary"
-                       :class="{ continue: actionType === 'add' }"
+            <el-button :class="{ continue: actionType === 'add' }"
+                       type="primary"
                        @click="submitForm('ruleForm', false)">
               Submit
             </el-button>
@@ -144,17 +145,17 @@
       </el-form>
     </div>
     <el-dialog v-if="dialogVisible"
-               title="Add Dish"
-               class="addDishList"
+               :before-close="handleClose"
                :visible.sync="dialogVisible"
-               width="60%"
-               :before-close="handleClose">
+               class="addDishList"
+               title="Add Dish"
+               width="60%">
       <el-input v-model="value"
                 class="seachDish"
+                clearable
                 placeholder="Please enter the name of the dish"
-                style="width: 293px; height: 40px"
                 size="small"
-                clearable>
+                style="width: 293px; height: 40px">
         <i slot="prefix"
            class="el-input__icon el-icon-search"
            style="cursor: pointer"
@@ -163,8 +164,8 @@
       <AddDish v-if="dialogVisible"
                ref="adddish"
                :check-list="checkList"
-               :seach-key="seachKey"
                :dish-list="dishList"
+               :seach-key="seachKey"
                @checkList="getCheckList" />
       <span slot="footer"
             class="dialog-footer">
@@ -181,9 +182,8 @@ import { Component, Vue } from 'vue-property-decorator'
 import HeadLable from '@/components/HeadLable/index.vue'
 import ImageUpload from '@/components/ImgUpload/index.vue'
 import AddDish from './components/AddDish.vue'
-import { querySetmealById, addSetmeal, editSetmeal } from '@/api/setMeal'
+import { addSetmeal, editSetmeal, querySetmealById } from '@/api/setMeal'
 import { getCategoryList } from '@/api/dish'
-import { baseUrl } from '@/config.json'
 
 @Component({
   name: 'addShop',
@@ -271,37 +271,25 @@ export default class extends Vue {
     }
   }
 
-  private async init() {
-    querySetmealById(this.$route.query.id).then(res => {
-      if (res && res.data && res.data.code === 200) {
-        this.ruleForm = res.data.data
-        this.ruleForm.status = res.data.data.status == '1'
-        ;(this.ruleForm as any).price = res.data.data.price
-        // this.imageUrl = `http://172.17.2.120:8080/common/download?name=${res.data.data.image}`
-        this.imageUrl = res.data.data.image
-        this.checkList = res.data.data.setmealDishes
-        this.dishTable = res.data.data.setmealDishes.reverse()
-        this.ruleForm.idType = res.data.data.categoryId
-      } else {
-        this.$message.error(res.data.msg)
-      }
-    })
+  // 删除套餐菜品
+  delDishHandle(index: any) {
+    this.dishTable.splice(index, 1)
+    this.checkList = this.dishTable
+    // this.checkList.splice(index, 1)
   }
-  private seachHandle() {
-    this.seachKey = this.value
+
+  // 添加菜品
+  openAddDish(st: string) {
+    this.seachKey = ''
+    this.dialogVisible = true
   }
-  // 获取套餐分类
-  private getDishTypeList() {
-    getCategoryList({ type: 2, page: 1, pageSize: 1000 }).then(res => {
-      if (res && res.data && res.data.code === 200) {
-        this.setMealList = res.data.data.map((obj: any) => ({
-          ...obj,
-          idType: obj.id
-        }))
-      } else {
-        this.$message.error(res.data.msg)
-      }
-    })
+
+  // 取消添加菜品
+  handleClose(done: any) {
+    // this.$refs.adddish.close()
+    this.dialogVisible = false
+    this.checkList = JSON.parse(JSON.stringify(this.dishTable))
+    // this.dialogVisible = false
   }
 
   // 通过套餐ID获取菜品列表分类
@@ -315,31 +303,6 @@ export default class extends Vue {
   //     }
   //   })
   // }
-
-  // 删除套餐菜品
-  delDishHandle(index: any) {
-    this.dishTable.splice(index, 1)
-    this.checkList = this.dishTable
-    // this.checkList.splice(index, 1)
-  }
-
-  // 获取添加菜品数据 - 确定加菜倒序展示
-  private getCheckList(value: any) {
-    this.checkList = [...value].reverse()
-  }
-
-  // 添加菜品
-  openAddDish(st: string) {
-    this.seachKey = ''
-    this.dialogVisible = true
-  }
-  // 取消添加菜品
-  handleClose(done: any) {
-    // this.$refs.adddish.close()
-    this.dialogVisible = false
-    this.checkList = JSON.parse(JSON.stringify(this.dishTable))
-    // this.dialogVisible = false
-  }
 
   // 保存添加菜品列表
   public addTableList() {
@@ -426,6 +389,46 @@ export default class extends Vue {
   imageChange(value: any) {
     this.ruleForm.image = value
   }
+
+  private async init() {
+    querySetmealById(this.$route.query.id).then(res => {
+      if (res && res.data && res.data.code === 200) {
+        this.ruleForm = res.data.data
+        this.ruleForm.status = res.data.data.status == '1'
+        ;(this.ruleForm as any).price = res.data.data.price
+        // this.imageUrl = `http://172.17.2.120:8080/common/download?name=${res.data.data.image}`
+        this.imageUrl = res.data.data.image
+        this.checkList = res.data.data.setmealDishes
+        this.dishTable = res.data.data.setmealDishes.reverse()
+        this.ruleForm.idType = res.data.data.categoryId
+      } else {
+        this.$message.error(res.data.msg)
+      }
+    })
+  }
+
+  private seachHandle() {
+    this.seachKey = this.value
+  }
+
+  // 获取套餐分类
+  private getDishTypeList() {
+    getCategoryList({ type: 2, page: 1, pageSize: 1000 }).then(res => {
+      if (res && res.data && res.data.code === 200) {
+        this.setMealList = res.data.data.map((obj: any) => ({
+          ...obj,
+          idType: obj.id
+        }))
+      } else {
+        this.$message.error(res.data.msg)
+      }
+    })
+  }
+
+  // 获取添加菜品数据 - 确定加菜倒序展示
+  private getCheckList(value: any) {
+    this.checkList = [...value].reverse()
+  }
 }
 </script>
 <style>
@@ -437,8 +440,7 @@ export default class extends Vue {
   top: calc(50% - 40px);
   width: 40px;
   height: 40px;
-  background: url('./../../assets/icons/icon_upload@2x.png') center center
-    no-repeat;
+  background: url('./../../assets/icons/icon_upload@2x.png') center center no-repeat;
   background-size: 20px;
 }
 </style>
@@ -487,6 +489,7 @@ export default class extends Vue {
       width: 777px !important;
     }
   }
+
   .el-input__prefix {
     top: 2px;
   }
@@ -539,6 +542,7 @@ export default class extends Vue {
       padding: 0;
       border-bottom: solid 1px #efefef;
     }
+
     .seachDish {
       .el-input__inner {
         height: 40px;
@@ -566,9 +570,11 @@ export default class extends Vue {
         text-align: center;
         border-top: solid 1px $gray-5;
       }
+
       .el-input {
         width: 350px;
       }
+
       .addDish {
         width: 777px;
 

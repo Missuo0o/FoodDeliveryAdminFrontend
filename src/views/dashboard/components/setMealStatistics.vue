@@ -25,9 +25,10 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { Component, Prop, Vue } from 'vue-property-decorator'
+
 @Component({
-  name: 'SetMeal',
+  name: 'SetMeal'
 })
 export default class extends Vue {
   @Prop() private setMealData!: any

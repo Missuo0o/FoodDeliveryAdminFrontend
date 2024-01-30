@@ -3,13 +3,13 @@
   <div class="tab-change">
     <div v-for="item in changedOrderList"
          :key="item.value"
-         class="tab-item"
          :class="{ active: item.value === activeIndex }"
+         class="tab-item"
          @click="tabChange(item.value)">
       <el-badge :class="{'special-item':item.num<10}"
-                class="item"
+                :hidden="!([2, 3, 4].includes(item.value) && item.num)"
                 :value="item.num > 99 ? '99+' : item.num"
-                :hidden="!([2, 3, 4].includes(item.value) && item.num)">
+                class="item">
         {{ item.label }}
       </el-badge>
     </div>
@@ -17,8 +17,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
-import { getOrderDetailPage } from '@/api/order'
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 
 @Component({
   name: 'TabChange'
@@ -27,11 +26,6 @@ export default class extends Vue {
   @Prop({ default: '' }) orderStatics: any
   @Prop({ default: '' }) defaultActivity: any
   private activeIndex: number = this.defaultActivity || 0
-
-  @Watch('defaultActivity')
-  private onChange(val) {
-    this.activeIndex = Number(val)
-  }
 
   get changedOrderList() {
     return [
@@ -65,6 +59,11 @@ export default class extends Vue {
     ]
   }
 
+  @Watch('defaultActivity')
+  private onChange(val) {
+    this.activeIndex = Number(val)
+  }
+
   private tabChange(activeIndex) {
     this.activeIndex = activeIndex
     this.$emit('tabChange', activeIndex)
@@ -87,12 +86,14 @@ export default class extends Vue {
     background-color: white;
     border-left: none;
     cursor: pointer;
+
     .special-item {
       .el-badge__content {
         width: 20px;
         padding: 0 5px;
       }
     }
+
     .item {
       .el-badge__content {
         background-color: #fd3333 !important;
@@ -102,16 +103,19 @@ export default class extends Vue {
         min-height: 18px;
         // border-radius: 50%;
       }
+
       .el-badge__content.is-fixed {
         top: 14px;
         right: 2px;
       }
     }
   }
+
   .active {
     background-color: #ffc200;
     font-weight: bold;
   }
+
   .tab-item:first-child {
     border-left: 1px solid #e5e4e4;
   }

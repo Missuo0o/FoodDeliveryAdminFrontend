@@ -3,15 +3,15 @@
   <div class="upload-item">
     <el-upload ref="uploadfiles"
                :accept="type"
-               :class="{ borderNone: imageUrl }"
-               class="avatar-uploader"
-               action="/api/common/upload"
-               :show-file-list="false"
-               :on-success="handleAvatarSuccess"
-               :on-remove="handleRemove"
-               :on-error="handleError"
                :before-upload="beforeAvatarUpload"
-               :headers="headers">
+               :class="{ borderNone: imageUrl }"
+               :headers="headers"
+               :on-error="handleError"
+               :on-remove="handleRemove"
+               :on-success="handleAvatarSuccess"
+               :show-file-list="false"
+               action="/api/common/upload"
+               class="avatar-uploader">
       <img v-if="imageUrl"
            :src="imageUrl"
            class="avatar">
@@ -34,9 +34,9 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
-import { baseUrl } from '@/config.json'
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import { getToken } from '@/utils/cookies'
+
 @Component({
   name: 'UploadImage'
 })
@@ -49,11 +49,8 @@ export default class extends Vue {
     token: getToken()
   }
   private imageUrl = ''
-  handleRemove() {}
 
-  @Watch('propImageUrl')
-  private onChange(val) {
-    this.imageUrl = val
+  handleRemove() {
   }
 
   handleError(err, file, fileList) {
@@ -77,6 +74,7 @@ export default class extends Vue {
     this.imageUrl = ''
     this.$emit('imageChange', this.imageUrl)
   }
+
   beforeAvatarUpload(file) {
     const isLt2M = file.size / 1024 / 1024 < this.size
     if (!isLt2M) {
@@ -87,6 +85,11 @@ export default class extends Vue {
       return false
     }
   }
+
+  @Watch('propImageUrl')
+  private onChange(val) {
+    this.imageUrl = val
+  }
 }
 </script>
 <style lang='scss'>
@@ -96,7 +99,7 @@ export default class extends Vue {
   }
 }
 </style>
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .avatar-uploader .el-icon-plus:after {
   position: absolute;
   display: inline-block;
@@ -105,30 +108,35 @@ export default class extends Vue {
   top: calc(50% - 40px);
   width: 40px;
   height: 40px;
-  background: url('./../../assets/icons/icon_upload@2x.png') center center
-    no-repeat;
+  background: url('./../../assets/icons/icon_upload@2x.png') center center no-repeat;
   background-size: 20px;
 }
 
 .el-upload-list__item-actions:hover .upload-icon {
   display: inline-block;
 }
+
 .el-icon-zoom-in:before {
   content: '\E626';
 }
+
 .el-icon-delete:before {
   content: '\E612';
 }
+
 .el-upload-list__item-actions:hover {
   opacity: 1;
 }
+
 .upload-item {
   display: flex;
   align-items: center;
+
   .el-form-item__content {
     width: 500px !important;
   }
 }
+
 .upload-tips {
   font-size: 12px;
   color: #666666;
@@ -136,6 +144,7 @@ export default class extends Vue {
   line-height: 17px;
   margin-left: 36px;
 }
+
 .el-upload-list__item-actions {
   position: absolute;
   width: 100%;
@@ -154,6 +163,7 @@ export default class extends Vue {
   align-items: center;
   flex-direction: column;
 }
+
 .avatar-uploader .el-upload {
   border: 1px dashed #d9d9d9;
   border-radius: 6px;
@@ -161,6 +171,7 @@ export default class extends Vue {
   position: relative;
   overflow: hidden;
 }
+
 .avatar-uploader {
   display: inline-block;
 }
@@ -168,6 +179,7 @@ export default class extends Vue {
 .avatar-uploader .el-upload:hover {
   border-color: #ffc200;
 }
+
 .el-upload-span {
   width: 100px;
   height: 30px;

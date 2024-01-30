@@ -14,29 +14,29 @@ import request from '@/utils/request'
 //     'method': 'get'
 //   })
 // 订单管理
-  export const getOrderData = () =>
+export const getOrderData = () =>
   request({
     'url': `/workspace/overviewOrders`,
     'method': 'get'
   })
 // 菜品总览
 export const getOverviewDishes = () =>
-request({
-  'url': `/workspace/overviewDishes`,
-  'method': 'get'
-})
+  request({
+    'url': `/workspace/overviewDishes`,
+    'method': 'get'
+  })
 // 套餐总览
 export const getSetMealStatistics = () =>
-request({
-  'url': `/workspace/overviewSetmeals`,
-  'method': 'get'
-})
+  request({
+    'url': `/workspace/overviewSetmeals`,
+    'method': 'get'
+  })
 // 营业数据
-export const getBusinessData= () =>
-request({
-  'url': `/workspace/businessData`,
-  'method': 'get'
-})
+export const getBusinessData = () =>
+  request({
+    'url': `/workspace/businessData`,
+    'method': 'get'
+  })
 /**
  *
  * 报表数据
@@ -52,7 +52,7 @@ request({
 
 
 // 营业额统计
-export const getTurnoverStatistics= (params: any) =>
+export const getTurnoverStatistics = (params: any) =>
   request({
     'url': `/report/turnoverStatistics`,
     'method': 'get',
@@ -60,38 +60,39 @@ export const getTurnoverStatistics= (params: any) =>
   })
 
 // 用户统计
-export const getUserStatistics= (params: any) =>
+export const getUserStatistics = (params: any) =>
   request({
     'url': `/report/userStatistics`,
     'method': 'get',
     params
   })
-  // 订单统计
-export const getOrderStatistics= (params: any) =>
-request({
-  'url': `/report/ordersStatistics`,
-  'method': 'get',
-  params
-})
-  // 销量排名TOP10
-  export const getTop= (params: any) =>
+// 订单统计
+export const getOrderStatistics = (params: any) =>
+  request({
+    'url': `/report/ordersStatistics`,
+    'method': 'get',
+    params
+  })
+// 销量排名TOP10
+export const getTop = (params: any) =>
   request({
     'url': `/report/top10`,
     'method': 'get',
     params
   })
-  // 数据概览
-  export const getDataOverView= (params: any) =>
+// 数据概览
+export const getDataOverView = (params: any) =>
   request({
     'url': `/report/dataOverView`,
     'method': 'get',
     params
   })
-  // 导出
-  export function exportInfor() {
-    return request({
-      url: '/report/export',
-      method: 'get',
-      responseType: "blob"
-    })
-  }
+
+// 导出
+export function exportInfor() {
+  return request({
+    url: '/report/export',
+    method: 'get',
+    responseType: 'blob'
+  })
+}

@@ -177,16 +177,19 @@ li {
     .tip {
       color: #666;
 
-      &>span{
+      & > span {
         padding-left: 5px;
-        span{
+
+        span {
           font-weight: 600;
         }
       }
-      .red{
+
+      .red {
         color: #fd3333;
       }
-      .green{
+
+      .green {
         color: #00B36A;
       }
     }
@@ -209,7 +212,8 @@ li {
         height: 16px;
       }
 
-      ::after {}
+      ::after {
+      }
     }
   }
 }
@@ -222,13 +226,15 @@ li {
   // line-height: 16px;
   padding: 5px 0 0;
   margin-bottom: 18px;
-  i{
+
+  i {
     font-size: 14px;
     color: #666666;
     padding-left: 10px;
     font-style: normal;
-    font-weight:normal
+    font-weight: normal
   }
+
   span {
     float: right;
     color: #666;
@@ -244,20 +250,23 @@ li {
 .home {
   .container {
     padding: 20px;
-    .homeTitleBtn{
+
+    .homeTitleBtn {
       line-height: 36px;
     }
   }
 }
-.dashboard-container.home{
+
+.dashboard-container.home {
   .homeMain {
-    &.homecon{
+    &.homecon {
       .container {
         margin-bottom: 0;
       }
     }
   }
 }
+
 .homeMain {
   display: flex;
 
@@ -277,7 +286,7 @@ li {
   vertical-align: middle;
   font-size: 12px;
 
-  &>div {
+  & > div {
     display: inline-block;
 
     p {
@@ -332,10 +341,11 @@ li {
       background: #fffbf0;
       border-radius: 4px;
       margin-left: 20px;
-      padding:20px;
+      padding: 20px;
       font-size: 14px;
       line-height: 36px;
       color: #333;
+
       &.add {
         width: 100px;
         flex: none;
@@ -364,6 +374,7 @@ li {
     .status {
       vertical-align: middle;
       line-height: 36px;
+
       i {
         display: inline-block;
         // width: 24px;
@@ -396,10 +407,12 @@ li {
           background: url(./../../src/assets/icons/gzt_quanbu.png) no-repeat;
           background-size: contain;
         }
+
         &.openIcon {
           background: url(./../../src/assets/icons/gzt_yiqishou@2x.png) no-repeat;
           background-size: contain;
         }
+
         &.stopIcon {
           background: url(./../../src/assets/icons/gzt_yitingshou@2x.png) no-repeat;
           background-size: contain;
@@ -418,17 +431,20 @@ li {
       color: #fd3333;
     }
   }
-  .iconfont{
+
+  .iconfont {
     font-size: 28px;
   }
 }
-.homeTitle{
+
+.homeTitle {
   .conTab {
     .el-badge__content.is-fixed {
       top: 12px;
     }
   }
 }
+
 .conTab {
   float: right;
   font-weight: 400;
@@ -464,8 +480,9 @@ li {
     padding: 0;
 
   }
-  .badgeW{
-    .el-badge__content.is-fixed{
+
+  .badgeW {
+    .el-badge__content.is-fixed {
       width: 30px;
       border-radius: 20px;
     }
@@ -476,12 +493,14 @@ li {
 .informBox {
   text-align: right;
   padding: 0 0 20px;
+
   .conTab {
     float: left;
     height: 40px;
     line-height: 40px;
   }
-  .right-el-button{
+
+  .right-el-button {
     float: none;
   }
 
@@ -500,25 +519,30 @@ li {
   padding-bottom: 0;
   border: 1px solid #E5E4E4;
   float: right;
-  &:focus{
+
+  &:focus {
     background: #fff;
     border: 1px solid #E5E4E4;
   }
-  &.onbutton{
+
+  &.onbutton {
     border: 1px solid #E5E4E4;
-    color:#E5E4E4;
+    color: #E5E4E4;
 
   }
-  &:hover{
-    background:#fff;
+
+  &:hover {
+    background: #fff;
   }
-  &.is-disabled{
-    &:hover{
+
+  &.is-disabled {
+    &:hover {
       border: 1px solid #E5E4E4;
-    color:#E5E4E4;
+      color: #E5E4E4;
     }
   }
 }
+
 .el-badge__content {
   background: #fd3333;
   line-height: 14px;
@@ -528,31 +552,33 @@ li {
 // 通知列表
 .informList {
   // padding-top: 20px;
-  div:first-child{
+  div:first-child {
     .item {
-    border: 0 none;
+      border: 0 none;
     }
   }
+
   .item {
     padding: 0 25px 0 28px;
     color: #333;
     font-size: 14px;
-    border-top:1px solid #f3f4f7;
+    border-top: 1px solid #f3f4f7;
 
     .tit {
       height: 58px;
       line-height: 58px;
-      i{
-        display:inline-block;
-        width:18px;
-        height:18px;
-        line-height:16px;
-        text-align:center;
-        color:#fff;
+
+      i {
+        display: inline-block;
+        width: 18px;
+        height: 18px;
+        line-height: 16px;
+        text-align: center;
+        color: #fff;
         background: #FD3333;
-        border-radius:50%;
-        font-style:normal;
-        font-size:12px;
+        border-radius: 50%;
+        font-style: normal;
+        font-size: 12px;
         vertical-align: text-bottom;
       }
     }
@@ -576,13 +602,15 @@ li {
       padding: 0 30% 10px 55px;
       margin-top: -5px;
 
-      &>p {
+      & > p {
         display: flex;
         padding: 0 0 8px;
-        &.todayData{
+
+        &.todayData {
           padding: 0 0 20px;
         }
-        &>span {
+
+        & > span {
           flex: 1;
         }
       }
@@ -591,74 +619,84 @@ li {
 
     .titAlready {
       color: #BDBDBD;
+
       .orderInfo {
-        p{
+        p {
           color: #BDBDBD;
         }
       }
     }
   }
 }
-.title-index{
-  margin-bottom:20px
+
+.title-index {
+  margin-bottom: 20px
 }
 
-.ellipsisHidden{
-    max-height:150px;
+.ellipsisHidden {
+  max-height: 150px;
   overflow: hidden;
-text-overflow: ellipsis;
-display: -webkit-box;
--webkit-line-clamp:5 ;
--webkit-box-orient:vertical;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
 
 
 }
-.orderListLine{
+
+.orderListLine {
   width: 360px;
   margin: 0 auto;
   display: flex;
   margin-top: -10px;
 
-  li{
+  li {
     font-size: 12px;
     color: #666666;
     padding: 0 6px;
     align-items: center;
     display: flex;
     height: 20px;
-    span{
+
+    span {
       display: inline-block;
       width: 12px;
       height: 2px;
       overflow: hidden;
       margin-right: 8px;
     }
-    &.one{
-      span{
-        background:#FFC100 ;
+
+    &.one {
+      span {
+        background: #FFC100;
       }
 
-   }
-    &.two{
-      span{
+    }
+
+    &.two {
+      span {
         background: #7f85fc;
       }
 
-   }
-   &.three{
-     span{
-      background:#FD7F7F;
-     }
+    }
 
-  }
+    &.three {
+      span {
+        background: #FD7F7F;
+      }
+
+    }
   }
 }
-.orderListLine.user{
+
+.orderListLine.user {
   width: 260px;
 }
-.orderListLine.turnover{
+
+.orderListLine.turnover {
   width: 70px;
 }
+
 // .el-popover
 // {
 //   background:#4D4D4D;

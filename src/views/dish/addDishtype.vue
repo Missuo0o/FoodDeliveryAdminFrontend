@@ -4,17 +4,17 @@
     <div :key="restKey"
          class="container">
       <el-form ref="ruleForm"
+               :inline="true"
                :model="ruleForm"
                :rules="rules"
-               :inline="true"
-               label-width="180px"
-               class="demo-ruleForm">
+               class="demo-ruleForm"
+               label-width="180px">
         <div>
           <el-form-item label="Name:"
                         prop="name">
             <el-input v-model="ruleForm.name"
-                      placeholder="Please enter the name"
-                      maxlength="20" />
+                      maxlength="20"
+                      placeholder="Please enter the name" />
           </el-form-item>
           <el-form-item label="Category:"
                         prop="categoryId">
@@ -31,8 +31,8 @@
           <el-form-item label="Price:"
                         prop="price">
             <el-input v-model="ruleForm.price"
-                      placeholder="Please set the price"
-                      maxlength="5"/>
+                      maxlength="5"
+                      placeholder="Please set the price" />
           </el-form-item>
         </div>
         <el-form-item label="Flavor:">
@@ -64,11 +64,11 @@
                       <span v-for="(it, ind) in item.value"
                             :key="ind">{{ it }}
                         <i @click="delFlavorLabel(index, ind)">X</i></span>
-                      <div class="inputBox"
-                           :style="inputStyle" />
+                      <div :style="inputStyle"
+                           class="inputBox" />
                     </div>
                     <span class="delFlavor delBut non"
-                          @click="delFlavor(item.name)">删除</span>
+                          @click="delFlavor(item.name)">Delete</span>
                   </div>
                 </div>
                 <div v-if="
@@ -88,7 +88,8 @@
                         prop="image">
             <image-upload :prop-image-url="imageUrl"
                           @imageChange="imageChange">
-              Image size not more than 2M<br>Only PNG JPEG JPG type images can be uploaded<br>It is recommended to upload a 200*200 or 300*300 size image
+              Image size not more than 2M<br>Only PNG JPEG JPG type images can be uploaded<br>It is recommended to
+              upload a 200*200 or 300*300 size image
             </image-upload>
           </el-form-item>
         </div>
@@ -96,18 +97,18 @@
           <el-form-item label="Description:"
                         prop="region">
             <el-input v-model="ruleForm.description"
-                      type="textarea"
                       :rows="3"
                       maxlength="200"
-                      placeholder="Description of the dish, maximum 200 words" />
+                      placeholder="Description of the dish, maximum 200 words"
+                      type="textarea" />
           </el-form-item>
         </div>
         <div class="subBox address">
           <el-button @click="() => $router.back()">
             Cancel
           </el-button>
-          <el-button type="primary"
-                     :class="{ continue: actionType === 'add' }"
+          <el-button :class="{ continue: actionType === 'add' }"
+                     type="primary"
                      @click="submitForm('ruleForm')">
             Submit
           </el-button>
@@ -128,15 +129,9 @@ import HeadLable from '@/components/HeadLable/index.vue'
 import SelectInput from './components/SelectInput.vue'
 import ImageUpload from '@/components/ImgUpload/index.vue'
 // getFlavorList口味列表暂时不做 getDishTypeList
-import {
-  queryDishById,
-  addDish,
-  editDish,
-  getCategoryList,
-  commonDownload
-} from '@/api/dish'
-import { baseUrl } from '@/config.json'
+import { addDish, editDish, getCategoryList, queryDishById } from '@/api/dish'
 import { getToken } from '@/utils/cookies'
+
 @Component({
   name: 'addShop',
   components: {
@@ -233,7 +228,9 @@ export default class extends Vue {
     }
   }
 
-  mounted() {}
+  mounted() {
+  }
+
   @Watch('dishFlavors')
   changeDishFlavors() {
     this.getLeftDishFlavors()
@@ -250,6 +247,10 @@ export default class extends Vue {
       }
     })
     this.leftDishFlavors = arr
+  }
+
+  imageChange(value: any) {
+    this.ruleForm.image = value
   }
 
   private selectHandle(val: any, key: any, ind: any) {
@@ -351,7 +352,7 @@ export default class extends Vue {
         let params: any = { ...this.ruleForm }
         // params.flavors = this.dishFlavors
         params.status =
-          this.actionType === 'add' ? 0 : this.ruleForm.status ? 1 : 0
+          this.actionType === 'add' ? 1 : this.ruleForm.status ? 1 : 0
         // params.price *= 100
         params.categoryId = this.ruleForm.categoryId
         params.flavors = this.dishFlavors.map(obj => ({
@@ -418,10 +419,6 @@ export default class extends Vue {
       }
     })
   }
-
-  imageChange(value: any) {
-    this.ruleForm.image = value
-  }
 }
 </script>
 <style lang="scss" scoped>
@@ -459,6 +456,7 @@ export default class extends Vue {
         text-align: center;
         border-top: solid 1px $gray-5;
       }
+
       .upload-item {
         .el-form-item__error {
           top: 90%;
@@ -491,6 +489,7 @@ export default class extends Vue {
 
     .title {
       color: #606168;
+
       .des-box {
         padding-left: 44px;
       }

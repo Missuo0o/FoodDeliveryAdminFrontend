@@ -1,13 +1,13 @@
 /* Variables */
 
 // Base color
-$mine:#FFC200;
+$mine: #FFC200;
 $loginBg: #FFCFAC;
-$blue:#2892E5;
+$blue: #2892E5;
 $green: #1DC779;
-$yellow:#FFB302;
+$yellow: #FFB302;
 $pink: #F56C6C;
-$block:#000;
+$block: #000;
 $gray-1: #20232A;
 $gray-2: #818693;
 $gray-3: #BAC0CD;
@@ -19,16 +19,16 @@ $white: #fff;
 
 // Sidebar
 $sideBarWidth: 190px;
-$subMenuBg:#272A36;
-$subMenuHover:#272A36;
-$subMenuActiveText:#f4f4f5;
-$menuBg:#343744;
-$menuText:#bfcbd9;
-$menuActiveText:$mine; //Also see settings.sidebarTextTheme
+$subMenuBg: #272A36;
+$subMenuHover: #272A36;
+$subMenuActiveText: #f4f4f5;
+$menuBg: #343744;
+$menuText: #bfcbd9;
+$menuActiveText: $mine; //Also see settings.sidebarTextTheme
 
 // Login page
 $lightGray: #080808;
-$darkGray:#889aa4;
+$darkGray: #889aa4;
 $loginCursorColor: #080808;
 
 // The :export directive is the magic sauce for webpack
@@ -39,26 +39,29 @@ $loginCursorColor: #080808;
   menuActiveText: $menuActiveText;
 }
 
-.avatar-uploader .el-upload{
+.avatar-uploader .el-upload {
   // border: dashed 2px #D8DDE3 !important;
   border-radius: 4px !important;
   background: #FCFCFC;
 }
-.avatar-uploader .avatar-uploader-icon{
+
+.avatar-uploader .avatar-uploader-icon {
   background: #FCFCFC;
 }
-.avatar-uploader .el-icon-plus:before{
+
+.avatar-uploader .el-icon-plus:before {
   content: 'Upload Image' !important;
   font-size: 12px;
-  color:#000;
+  color: #000;
 }
 
 
 // 弹框样式处理
-.el-dialog{
+.el-dialog {
   border-radius: 8px;
 }
-.el-dialog__header{
+
+.el-dialog__header {
   background: #FBFBFA;
   border-radius: 8px 8px 0 0;
   border: none;

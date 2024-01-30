@@ -9,8 +9,8 @@
               @click="checkTypeHandle(index, item.id)">{{ item.name }}</span>
       </div>
       <div class="tabList">
-        <div class="table"
-             :class="{ borderNone: !dishList.length }">
+        <div :class="{ borderNone: !dishList.length }"
+             class="table">
           <div v-if="dishList.length == 0"
                style="padding-left: 10px">
             <Empty />
@@ -25,10 +25,10 @@
                            :label="item.name">
                 <div class="item">
                   <span style="flex: 3; text-align: left">{{
-                    item.dishName
-                  }}</span>
+                      item.dishName
+                    }}</span>
                   <span>{{ item.status == 0 ? 'Disabled' : 'Enabled' }}</span>
-                  <span>{{ (Number(item.price) ).toFixed(2)*100/100 }}</span>
+                  <span>{{ (Number(item.price)).toFixed(2) * 100 / 100 }}</span>
                 </div>
               </el-checkbox>
             </div>
@@ -45,11 +45,11 @@
              :key="ind"
              class="item">
           <span>{{ item.dishName || item.name }}</span>
-          <span class="price">￥ {{ (Number(item.price) ).toFixed(2)*100/100 }} </span>
+          <span class="price">￥ {{ (Number(item.price)).toFixed(2) * 100 / 100 }} </span>
           <span class="del"
                 @click="delCheck(item.name)">
-            <img src="./../../../assets/icons/btn_clean@2x.png"
-                 alt="">
+            <img alt=""
+                 src="./../../../assets/icons/btn_clean@2x.png">
           </span>
         </div>
       </div>
@@ -70,6 +70,7 @@ import Empty from '@/components/Empty/index.vue'
   }
 })
 export default class extends Vue {
+  public checkedList: any[] = []
   @Prop({ default: '' }) private value!: number
   @Prop({ default: [] }) private checkList!: any[]
   @Prop({ default: '' }) private seachKey!: string
@@ -79,18 +80,11 @@ export default class extends Vue {
   private dishListCache: any[] = []
   private keyInd = 0
   private searchValue: string = ''
-  public checkedList: any[] = []
   private checkedListAll: any[] = []
   private ids: any = new Set()
+
   created() {
     this.init()
-  }
-
-  @Watch('seachKey')
-  private seachKeyChange(value: any) {
-    if (value.trim()) {
-      this.getDishForName(this.seachKey)
-    }
   }
 
   public init() {
@@ -101,6 +95,7 @@ export default class extends Vue {
     // 已选项的菜品-详细信息
     this.checkedListAll = this.checkList.reverse()
   }
+
   // 获取套餐分类
   public getDishType() {
     getCategoryList({ type: 1 }).then(res => {
@@ -118,6 +113,21 @@ export default class extends Vue {
       //   this.$message.error(res.data.desc)
       // }
     })
+  }
+
+  open(done: any) {
+    this.dishListCache = JSON.parse(JSON.stringify(this.checkList))
+  }
+
+  close(done: any) {
+    this.checkList = this.dishListCache
+  }
+
+  @Watch('seachKey')
+  private seachKeyChange(value: any) {
+    if (value.trim()) {
+      this.getDishForName(this.seachKey)
+    }
   }
 
   // 通过套餐ID获取菜品列表分类
@@ -161,11 +171,13 @@ export default class extends Vue {
       }
     })
   }
+
   // 点击分类
   private checkTypeHandle(ind: number, id: any) {
     this.keyInd = ind
     this.getDishList(id)
   }
+
   // 添加菜品
   private checkedListHandle(value: [string]) {
     // TODO 实现倒序 由于value是组件内封装无法从前面添加 所有取巧处理倒序添加
@@ -213,14 +225,6 @@ export default class extends Vue {
     this.checkedListAll.reverse()
   }
 
-  open(done: any) {
-    this.dishListCache = JSON.parse(JSON.stringify(this.checkList))
-  }
-
-  close(done: any) {
-    this.checkList = this.dishListCache
-  }
-
   // 删除
   private delCheck(name: any) {
     const index = this.checkedList.findIndex(it => it === name)
@@ -239,6 +243,7 @@ export default class extends Vue {
   .el-checkbox__label {
     width: 100%;
   }
+
   .empty-box {
     margin-top: 50px;
     margin-bottom: 0px;
@@ -250,6 +255,7 @@ export default class extends Vue {
   padding: 0 20px;
   display: flex;
   line-height: 40px;
+
   .empty-box {
     img {
       width: 190px;
@@ -260,19 +266,23 @@ export default class extends Vue {
   .borderNone {
     border: none !important;
   }
+
   span,
   .tit {
     color: #333;
   }
+
   .leftCont {
     display: flex;
     border-right: solid 1px #efefef;
     width: 60%;
     padding: 15px;
+
     .tabBut {
       width: 110px;
       font-weight: bold;
       border-right: solid 2px #f4f4f4;
+
       span {
         display: block;
         text-align: center;
@@ -281,10 +291,12 @@ export default class extends Vue {
         position: relative;
       }
     }
+
     .act {
       border-color: $mine !important;
       color: $mine !important;
     }
+
     .act::after {
       content: ' ';
       display: inline-block;
@@ -294,25 +306,31 @@ export default class extends Vue {
       position: absolute;
       right: -2px;
     }
+
     .tabList {
       flex: 1;
       padding: 15px;
       height: 400px;
       overflow-y: scroll;
+
       .table {
         border: solid 1px #f4f4f4;
         border-bottom: solid 1px #f4f4f4;
+
         .items {
           border-bottom: solid 1px #f4f4f4;
           padding: 0 10px;
           display: flex;
+
           .el-checkbox,
           .el-checkbox__label {
             width: 100%;
           }
+
           .item {
             display: flex;
             padding-right: 20px;
+
             span {
               display: inline-block;
               text-align: center;
@@ -324,17 +342,21 @@ export default class extends Vue {
       }
     }
   }
+
   .ritCont {
     width: 40%;
+
     .tit {
       margin: 0 15px;
       font-weight: bold;
     }
+
     .items {
       height: 338px;
       padding: 4px 15px;
       overflow: scroll;
     }
+
     .item {
       box-shadow: 0px 1px 4px 3px rgba(0, 0, 0, 0.03);
       display: flex;
@@ -343,18 +365,22 @@ export default class extends Vue {
       margin-bottom: 20px;
       border-radius: 6px;
       color: #818693;
+
       span:first-child {
         text-align: left;
         color: #20232a;
         flex: 70%;
       }
+
       .price {
         display: inline-block;
         flex: 70%;
         text-align: left;
       }
+
       .del {
         cursor: pointer;
+
         img {
           position: relative;
           top: 5px;

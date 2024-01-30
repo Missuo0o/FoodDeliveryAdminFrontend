@@ -9,9 +9,9 @@
           <p class="tip">
             同比增长<span v-if="overviewData.turnoverGrowth">
               <span
-                class="red"
                 :class="overviewData.turnoverGrowth > 0 ? '' : 'green'"
-                >{{
+                class="red"
+              >{{
                   overviewData.turnoverGrowth > 0
                     ? '+' + overviewData.turnoverGrowth
                     : overviewData.turnoverGrowth
@@ -27,9 +27,9 @@
           <p class="tip">
             同比增长<span v-if="overviewData.validOrderCountGrowth">
               <span
-                class="red"
                 :class="overviewData.validOrderCountGrowth > 0 ? '' : 'green'"
-                >{{
+                class="red"
+              >{{
                   overviewData.validOrderCountGrowth > 0
                     ? '+' + overviewData.validOrderCountGrowth
                     : overviewData.validOrderCountGrowth
@@ -47,11 +47,11 @@
           <p class="tip">
             同比增长<span v-if="overviewData.orderCompletionRateGrowth">
               <span
-                class="red"
                 :class="
                   overviewData.orderCompletionRateGrowth > 0 ? '' : 'green'
                 "
-                >{{
+                class="red"
+              >{{
                   overviewData.orderCompletionRateGrowth > 0
                     ? '+' + overviewData.orderCompletionRateGrowth
                     : overviewData.orderCompletionRateGrowth
@@ -67,9 +67,9 @@
           <p class="tip">
             同比增长<span v-if="overviewData.unitPriceGrowth">
               <span
-                class="red"
                 :class="overviewData.unitPriceGrowth > 0 ? '' : 'green'"
-                >{{
+                class="red"
+              >{{
                   overviewData.unitPriceGrowth > 0
                     ? '+' + overviewData.unitPriceGrowth
                     : overviewData.unitPriceGrowth
@@ -103,9 +103,9 @@
           <p class="tip">
             同比增长<span v-if="overviewData.newUsersGrowth">
               <span
-                class="red"
                 :class="overviewData.newUsersGrowth > 0 ? '' : 'green'"
-                >{{
+                class="red"
+              >{{
                   overviewData.newUsersGrowth > 0
                     ? '+' + overviewData.newUsersGrowth
                     : overviewData.newUsersGrowth
@@ -120,13 +120,15 @@
   </div>
 </template>
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { Component, Prop, Vue } from 'vue-property-decorator'
 import { getday } from '@/utils/formValidate'
+
 @Component({
-  name: 'Overview',
+  name: 'Overview'
 })
 export default class extends Vue {
   @Prop() private overviewData!: any
+
   get days() {
     return getday()
   }

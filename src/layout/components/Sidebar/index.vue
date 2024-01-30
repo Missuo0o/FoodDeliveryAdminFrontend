@@ -22,20 +22,20 @@
       </div>
     </div>
     <el-scrollbar wrap-class="scrollbar-wrapper">
-      <el-menu :default-openeds="defOpen"
-               :default-active="defAct"
-               :collapse="isCollapse"
+      <el-menu :active-text-color="variables.menuActiveText"
                :background-color="variables.menuBg"
-               :text-color="variables.menuText"
-               :active-text-color="variables.menuActiveText"
-               :unique-opened="false"
+               :collapse="isCollapse"
                :collapse-transition="false"
+               :default-active="defAct"
+               :default-openeds="defOpen"
+               :text-color="variables.menuText"
+               :unique-opened="false"
                mode="vertical">
         <sidebar-item v-for="route in routes"
                       :key="route.path"
-                      :item="route"
                       :base-path="route.path"
-                      :is-collapse="isCollapse" />
+                      :is-collapse="isCollapse"
+                      :item="route" />
         <!-- <div class="sub-menu">
           <div class="avatarName">
             {{ name }}
@@ -55,13 +55,13 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Vue } from 'vue-property-decorator'
 import { AppModule } from '@/store/modules/app'
 import { UserModule } from '@/store/modules/user'
 import SidebarItem from './SidebarItem.vue'
 import variables from '@/styles/_variables.scss'
-import { getSidebarStatus, setSidebarStatus } from '@/utils/cookies'
 import Cookies from 'js-cookie'
+
 @Component({
   name: 'SideBar',
   components: {
@@ -70,11 +70,13 @@ import Cookies from 'js-cookie'
 })
 export default class extends Vue {
   private restKey: number = 0
+
   get name() {
     return (UserModule.userInfo as any).name
       ? (UserModule.userInfo as any).name
       : JSON.parse(Cookies.get('user_info') as any).name
   }
+
   get defOpen() {
     // const urlArr = this.$route.path.split('/')
     // const openStr = urlArr.length > 2 ? `/${urlArr[1]}` : '/'
@@ -122,6 +124,7 @@ export default class extends Vue {
   get isCollapse() {
     return !this.sidebar.opened
   }
+
   private async logout() {
     this.$store.dispatch('LogOut').then(() => {
       // location.href = '/'
@@ -138,16 +141,19 @@ export default class extends Vue {
   background-color: #ffc100;
   padding: 15px 0 0;
   height: 60px;
+
   img {
     display: inline-block;
   }
 }
+
 .sidebar-logo-mini {
   img {
     width: 30px;
     height: 30px;
   }
 }
+
 .el-scrollbar {
   height: 100%;
   background-color: rgb(52, 55, 68);

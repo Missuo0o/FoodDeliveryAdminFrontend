@@ -1,5 +1,5 @@
-import { VuexModule, Module, Mutation, Action, getModule } from 'vuex-module-decorators'
-import { getSidebarStatus, setSidebarStatus } from '@/utils/cookies'
+import { Action, getModule, Module, Mutation, VuexModule } from 'vuex-module-decorators'
+import { setSidebarStatus } from '@/utils/cookies'
 import store from '@/store'
 
 export enum DeviceType {
@@ -12,9 +12,9 @@ export interface IAppState {
   sidebar: {
     opened: boolean
     withoutAnimation: boolean
-    
+
   }
-  statusNumber:Number
+  statusNumber: Number
 }
 
 @Module({ 'dynamic': true, store, 'name': 'app' })
@@ -25,6 +25,27 @@ class App extends VuexModule implements IAppState {
   }
   public device = DeviceType.Desktop
   public statusNumber = 0
+
+  @Action
+  public ToggleSideBar(withoutAnimation: boolean) {
+    this.TOGGLE_SIDEBAR(withoutAnimation)
+  }
+
+  @Action
+  public CloseSideBar(withoutAnimation: boolean) {
+    this.CLOSE_SIDEBAR(withoutAnimation)
+  }
+
+  @Action
+  public ToggleDevice(device: DeviceType) {
+    this.TOGGLE_DEVICE(device)
+  }
+
+  @Action
+  public StatusNumber(device: any) {
+    this.STATUS_NUMBER(device)
+  }
+
   @Mutation
   private TOGGLE_SIDEBAR(withoutAnimation: boolean) {
     this.sidebar.opened = !this.sidebar.opened
@@ -51,26 +72,6 @@ class App extends VuexModule implements IAppState {
   @Mutation
   private TOGGLE_DEVICE(device: DeviceType) {
     this.device = device
-  }
-
-  @Action
-  public ToggleSideBar(withoutAnimation: boolean) {
-    this.TOGGLE_SIDEBAR(withoutAnimation)
-  }
-
-  @Action
-  public CloseSideBar(withoutAnimation: boolean) {
-    this.CLOSE_SIDEBAR(withoutAnimation)
-  }
-
-  @Action
-  public ToggleDevice(device: DeviceType) {
-    this.TOGGLE_DEVICE(device)
-  }
-
-  @Action
-  public StatusNumber(device: any) {
-    this.STATUS_NUMBER(device)
   }
 }
 

@@ -3,13 +3,13 @@
     <HeadLable :but-list="true">
       <div class="headBut">
         <span :class="{ act: act === 'day' }" @click="dateAct('day')"
-          >日报</span
+        >日报</span
         >
         <span :class="{ act: act === 'week' }" @click="dateAct('week')"
-          >周报</span
+        >周报</span
         >
         <span :class="{ act: act === 'mouth' }" @click="dateAct('mouth')"
-          >月报</span
+        >月报</span
         >
       </div>
     </HeadLable>
@@ -17,10 +17,10 @@
       <div class="tit">
         <span v-if="act === 'day'">统计时间：00：00 - 24：00</span>
         <span v-if="act === 'week'"
-          >统计时间：{{ stateTime }} -{{ endTime }}</span
+        >统计时间：{{ stateTime }} -{{ endTime }}</span
         >
         <span v-if="act === 'mouth'"
-          >统计时间：{{ stateTime }} -{{ endTime }}</span
+        >统计时间：{{ stateTime }} -{{ endTime }}</span
         >
       </div>
       <div v-if="act === 'day'" class="dataSelect">
@@ -28,11 +28,11 @@
           <span @click="checkaffterDate('day', 'before')">前一天</span>
           <el-date-picker
             v-model="dataTime"
+            :clearable="false"
+            placeholder="选择日期"
             size="mini"
             type="date"
-            placeholder="选择日期"
             value-format="yyyy-MM-dd"
-            :clearable="false"
             @change="changeDate('day')"
           />
           <span @click="checkaffterDate('day', 'after')">后一天</span>
@@ -44,12 +44,12 @@
           <span @click="checkaffterDate('week', 'before')">前一周</span>
           <el-date-picker
             v-model="dataTime"
+            :clearable="false"
+            format="yyyy 第 WW 周"
+            placeholder="选择周"
             size="mini"
             type="week"
-            format="yyyy 第 WW 周"
             value-format="yyyy-MM-dd"
-            placeholder="选择周"
-            :clearable="false"
             @change="changeDate('week')"
           />
           <span @click="checkaffterDate('week', 'after')">后一周</span>
@@ -63,11 +63,11 @@
           <span @click="checkaffterDate('mouth', 'before')">前一月</span>
           <el-date-picker
             v-model="dataTime"
+            :clearable="false"
+            placeholder="选择月"
             size="mini"
             type="month"
             value-format="yyyy-MM-dd"
-            placeholder="选择月"
-            :clearable="false"
             @change="changeDate('mouth')"
           />
           <span @click="checkaffterDate('mouth', 'after')">后一月</span>
@@ -82,10 +82,10 @@
         <div class="box nowData">
           <div class="icon">
             <img
+              alt=""
+              height="43"
               src="./../../assets/icons/xiangmujine@2x.png"
               width="45"
-              height="43"
-              alt=""
             />
           </div>
           <div class="item">
@@ -96,7 +96,7 @@
         </div>
         <div class="box noData">
           <div class="icon">
-            <img src="./../../assets/icons/jine_m-2@2x.png" width="50" alt="" />
+            <img alt="" src="./../../assets/icons/jine_m-2@2x.png" width="50" />
           </div>
           <div class="item">
             <div>未收金额</div>
@@ -106,7 +106,7 @@
         </div>
         <div class="box employee">
           <div class="icon">
-            <img src="./../../assets/icons/renshu@2x.png" width="46" alt="" />
+            <img alt="" src="./../../assets/icons/renshu@2x.png" width="46" />
           </div>
           <div class="item">
             <div>就餐人数</div>
@@ -120,12 +120,12 @@
           <span
             :class="{ butAct: typeA == 1 }"
             @click="topActiveHandle('typeA')"
-            >按金额</span
+          >按金额</span
           >
           <span
             :class="{ butAct: typeA == 2 }"
             @click="topActiveHandle('typeA')"
-            >按单数</span
+          >按单数</span
           >
         </div>
         <Basic
@@ -143,12 +143,12 @@
             <span
               :class="{ butAct: typeB == 1 }"
               @click="topActiveHandle('typeB')"
-              >按金额</span
+            >按金额</span
             >
             <span
               :class="{ butAct: typeB == 2 }"
               @click="topActiveHandle('typeB')"
-              >按销量</span
+            >按销量</span
             >
           </div>
           <BarChart :chart-data="chartDataC" title="菜品分类占比" />
@@ -167,12 +167,12 @@
           <div class="title">优惠指标</div>
           <div class="item topLab">
             <span>优惠合计</span><span>{{ discountTotal / 100 }}元</span
-            ><span>{{ discountPercentTotal * 100 }}%</span>
+          ><span>{{ discountPercentTotal * 100 }}%</span>
           </div>
           <div v-for="(item, index) in discount" :key="index" class="item">
             <span>{{ item.name }}</span
             ><span>{{ item.value / 100 }}元</span
-            ><span>{{ item.percent * 100 }}%</span>
+          ><span>{{ item.percent * 100 }}%</span>
           </div>
         </div>
       </div>
@@ -188,21 +188,18 @@ import BarChart from '@/components/Charts/BarChart.vue'
 import MixedChart from '@/components/Charts/MixedChart.vue'
 import moment from 'moment'
 import {
-  getDataes,
-  getDayPayType,
-  getprivilege,
-  getDayDataes,
-  getSalesRanking,
-  getDayRanking,
-  getTimeQuantumDataes,
-  getTimeQuantumReceivables,
-  getTimeQuantumType,
-  getTimeQuantumDishes,
-  getTimeQuantumDiscount,
   getChartsDataes,
+  getDayDataes,
+  getDayPayType,
+  getDayRanking,
+  getprivilege,
+  getSalesRanking,
+  getTimeQuantumDataes,
+  getTimeQuantumDiscount,
+  getTimeQuantumDishes,
+  getTimeQuantumReceivables,
+  getTimeQuantumType
 } from '@/api/charts'
-import { isBoolean } from 'style-resources-loader/lib/utils'
-import request from '@/utils/request'
 
 @Component({
   name: 'chart',
@@ -210,8 +207,8 @@ import request from '@/utils/request'
     HeadLable,
     Basic,
     BarChart,
-    MixedChart,
-  },
+    MixedChart
+  }
 })
 export default class extends Vue {
   private dataTime: any = ''
@@ -220,11 +217,11 @@ export default class extends Vue {
   private Today = moment().format('YYYY-MM-DD')
   private week = [
     moment().startOf('week').add(1, 'day').format('YYYY-MM-DD'),
-    moment().endOf('week').add(1, 'day').format('YYYY-MM-DD'),
+    moment().endOf('week').add(1, 'day').format('YYYY-MM-DD')
   ]
   private month = [
     moment().startOf('month').format('YYYY-MM-DD'),
-    moment().endOf('month').format('YYYY-MM-DD'),
+    moment().endOf('month').format('YYYY-MM-DD')
   ]
   private topData = {}
   private stateTime = moment().format('YYYY-MM-DD')
@@ -407,9 +404,9 @@ export default class extends Vue {
           let yData: number[] = []
           if (this.typeA === 1) {
             data.series.length > 0 &&
-              data.series.map((n: number) => {
-                yData.push(n / 100)
-              })
+            data.series.map((n: number) => {
+              yData.push(n / 100)
+            })
           } else {
             yData = data.series
           }
@@ -423,6 +420,7 @@ export default class extends Vue {
         this.$message.error('请求出错了：' + err.message)
       })
   }
+
   // 获取菜品分类销售排行 - 菜品分类占比 -当日
   private getSalesRankData() {
     getSalesRanking({ type: this.typeB, date: this.dataTime })
@@ -432,23 +430,23 @@ export default class extends Vue {
           let chartData = []
           if (this.typeB === 1) {
             data.length > 0 &&
-              data.map((n: { name: string; percent: any; value: number }) => {
-                chartData.push({ ...n, value: n.value / 100 })
-              })
+            data.map((n: { name: string; percent: any; value: number }) => {
+              chartData.push({ ...n, value: n.value / 100 })
+            })
           } else {
             chartData = data
           }
           let charts = {
             legendData: [],
             seriesData: chartData,
-            selected: {},
+            selected: {}
           }
           data &&
-            data.length > 0 &&
-            data.forEach((item: any) => {
-              ;(charts.legendData as Array<string>).push(item.name as string)
-              ;(charts.selected as any)[item.name] = true
-            })
+          data.length > 0 &&
+          data.forEach((item: any) => {
+            ;(charts.legendData as Array<string>).push(item.name as string)
+            ;(charts.selected as any)[item.name] = true
+          })
           this.chartDataC = charts
         } else {
           this.$message.error(res.data.desc)
@@ -458,6 +456,7 @@ export default class extends Vue {
         this.$message.error('请求出错了：' + err.message)
       })
   }
+
   // 支付类型数据汇总 - 店内收款构成 - 当日
   private getDayPayTypeData() {
     getDayPayType({ date: this.dataTime })
@@ -467,23 +466,23 @@ export default class extends Vue {
           let chartData = []
           if (this.typeB === 1) {
             data.length > 0 &&
-              data.map((n: { name: string; percent: any; value: number }) => {
-                chartData.push({ ...n, value: n.value / 100 })
-              })
+            data.map((n: { name: string; percent: any; value: number }) => {
+              chartData.push({ ...n, value: n.value / 100 })
+            })
           } else {
             chartData = data
           }
           let charts = {
             legendData: [],
             seriesData: chartData,
-            selected: {},
+            selected: {}
           }
           data &&
-            data.length > 0 &&
-            data.forEach((item: any) => {
-              ;(charts.legendData as Array<string>).push(item.name as string)
-              ;(charts.selected as any)[item.name] = true
-            })
+          data.length > 0 &&
+          data.forEach((item: any) => {
+            ;(charts.legendData as Array<string>).push(item.name as string)
+            ;(charts.selected as any)[item.name] = true
+          })
           this.chartDataD = charts
         } else {
           this.$message.error(res.data.desc)
@@ -493,6 +492,7 @@ export default class extends Vue {
         this.$message.error('请求出错了：' + err.message)
       })
   }
+
   // 获取当日菜品销售排行 - 销售排行图
   private getDayRankingData() {
     getDayRanking({ type: this.dataType, date: this.dataTime })
@@ -509,6 +509,7 @@ export default class extends Vue {
         this.$message.error('请求出错了：' + err.message)
       })
   }
+
   // 获取一天的销售数量 - 顶部数据
   private getDaySalesVolumeData() {
     // 获取当日销售数据
@@ -525,6 +526,7 @@ export default class extends Vue {
         this.$message.error('请求出错了：' + err.message)
       })
   }
+
   // 获取当日各种优惠类型数据汇总
   private getprivilegeData() {
     getprivilege({ date: this.dataTime })
@@ -534,11 +536,11 @@ export default class extends Vue {
           this.discountTotal = 0
           this.discountPercentTotal = 0
           data &&
-            data.dataList.length > 0 &&
-            data.dataList.forEach((item: any) => {
-              this.discountTotal += item.value
-              this.discountPercentTotal += item.percent
-            })
+          data.dataList.length > 0 &&
+          data.dataList.forEach((item: any) => {
+            this.discountTotal += item.value
+            this.discountPercentTotal += item.percent
+          })
           this.discount = data.dataList
         } else {
           this.$message.error(res.data.desc)
@@ -569,11 +571,11 @@ export default class extends Vue {
           this.discountTotal = 0
           this.discountPercentTotal = 0
           data &&
-            data.dataList.length > 0 &&
-            data.dataList.forEach((item: any) => {
-              this.discountTotal += item.value
-              this.discountPercentTotal += item.percent
-            })
+          data.dataList.length > 0 &&
+          data.dataList.forEach((item: any) => {
+            this.discountTotal += item.value
+            this.discountPercentTotal += item.percent
+          })
           this.discount = data.dataList
         } else {
           this.$message.error(res.data.desc)
@@ -583,21 +585,22 @@ export default class extends Vue {
         this.$message.error('请求出错了：' + err.message)
       })
   }
+
   // 获取一定日期之内的销售趋势
   private getTimeQuantumData() {
     getTimeQuantumDataes({
       type: this.typeA,
       start: this.stateTime,
-      end: this.endTime,
+      end: this.endTime
     }).then((res) => {
       if (res.data.code == 200) {
         const { data } = res.data
         let yData: number[] = []
         if (this.typeA === 1) {
           data.series.length > 0 &&
-            data.series.map((n: number) => {
-              yData.push(n / 100)
-            })
+          data.series.map((n: number) => {
+            yData.push(n / 100)
+          })
         } else {
           yData = data.series
         }
@@ -608,6 +611,7 @@ export default class extends Vue {
       }
     })
   }
+
   // 获取时间范围之内的各种支付类型数据汇总 - 店内收款构成 - 时间段
   private getReceivables() {
     getTimeQuantumReceivables({ start: this.stateTime, end: this.endTime })
@@ -617,23 +621,23 @@ export default class extends Vue {
           let chartData = []
           if (this.typeB === 1) {
             data.length > 0 &&
-              data.map((n: { name: string; percent: any; value: number }) => {
-                chartData.push({ ...n, value: n.value / 100 })
-              })
+            data.map((n: { name: string; percent: any; value: number }) => {
+              chartData.push({ ...n, value: n.value / 100 })
+            })
           } else {
             chartData = data
           }
           let charts = {
             legendData: [],
             seriesData: chartData,
-            selected: {},
+            selected: {}
           }
           data &&
-            data.length > 0 &&
-            data.forEach((item: any) => {
-              ;(charts.legendData as Array<string>).push(item.name as string)
-              ;(charts.selected as any)[item.name] = true
-            })
+          data.length > 0 &&
+          data.forEach((item: any) => {
+            ;(charts.legendData as Array<string>).push(item.name as string)
+            ;(charts.selected as any)[item.name] = true
+          })
           this.chartDataD = charts
         } else {
           this.$message.error(res.data.desc)
@@ -649,7 +653,7 @@ export default class extends Vue {
     getTimeQuantumType({
       type: this.typeB,
       start: this.stateTime,
-      end: this.endTime,
+      end: this.endTime
     })
       .then((res) => {
         if (res.data.code == 200) {
@@ -657,22 +661,22 @@ export default class extends Vue {
           let chartData = []
           if (this.typeB === 1) {
             data.length > 0 &&
-              data.map((n: { name: string; percent: any; value: number }) => {
-                chartData.push({ ...n, value: n.value / 100 })
-              })
+            data.map((n: { name: string; percent: any; value: number }) => {
+              chartData.push({ ...n, value: n.value / 100 })
+            })
           } else {
             chartData = data
           }
           let charts = {
             legendData: [],
             seriesData: chartData,
-            selected: {},
+            selected: {}
           }
           data.length > 0 &&
-            data.forEach((item: any) => {
-              ;(charts.legendData as Array<string>).push(item.name as string)
-              ;(charts.selected as any)[item.name] = true
-            })
+          data.forEach((item: any) => {
+            ;(charts.legendData as Array<string>).push(item.name as string)
+            ;(charts.selected as any)[item.name] = true
+          })
           this.chartDataC = charts
         } else {
           this.$message.error(res.data.desc)
@@ -682,6 +686,7 @@ export default class extends Vue {
         this.$message.error('请求出错了：' + err.message)
       })
   }
+
   // 获取时间范围之内的菜品销售排行
   private getTimeQuantumDishesDataes() {
     getTimeQuantumDishes({ start: this.stateTime, end: this.endTime })
@@ -690,9 +695,9 @@ export default class extends Vue {
           const { data } = res.data
           let yData: number[] = []
           data.series.length > 0 &&
-            data.series.map((n: number) => {
-              yData.push(n / 100)
-            })
+          data.series.map((n: number) => {
+            yData.push(n / 100)
+          })
           const charts = { xData: data.xaxis, yData: yData }
           this.chartDataB = charts
         } else {
@@ -709,6 +714,7 @@ export default class extends Vue {
 .dashboard {
   &-container {
     margin: 30px;
+
     .headBut {
       span {
         cursor: pointer;
@@ -716,11 +722,13 @@ export default class extends Vue {
         font-size: 18px;
         padding: 16px 0px;
       }
+
       .act {
         border-bottom: solid 4px $mine;
         font-weight: bold;
       }
     }
+
     .topLable {
       font-size: 16px;
       background: #fff;
@@ -729,25 +737,30 @@ export default class extends Vue {
       padding: 15px 28px;
       margin-bottom: 30px;
       border-radius: 4px;
+
       .tit {
         line-height: 40px;
         color: $mine;
       }
+
       .dataSelect {
         display: flex;
         justify-content: space-between;
         line-height: 40px;
+
         div:first-child {
           span:first-child {
             margin-right: 10px;
             cursor: pointer;
           }
+
           span:last-child {
             margin-left: 10px;
             cursor: pointer;
           }
         }
       }
+
       .but {
         background: $mine;
         cursor: pointer;
@@ -760,6 +773,7 @@ export default class extends Vue {
         font-size: 14px;
       }
     }
+
     .container {
       background: #fff;
       position: relative;
@@ -767,9 +781,11 @@ export default class extends Vue {
       padding: 30px 28px;
       border-radius: 4px;
       margin-bottom: 30px;
+
       .topDataBox {
         display: flex;
         margin-bottom: 15px;
+
         .icon {
           width: 80px;
           height: 80px;
@@ -782,6 +798,7 @@ export default class extends Vue {
           justify-content: center;
           align-items: center;
         }
+
         .box {
           margin-right: 15px;
           display: flex;
@@ -789,6 +806,7 @@ export default class extends Vue {
           flex: 1;
           border-radius: 5px;
           color: #fff;
+
           .item {
             div:nth-child(2) {
               font-size: 18px;
@@ -796,53 +814,63 @@ export default class extends Vue {
             }
           }
         }
+
         .nowData {
           background: linear-gradient(
-            63deg,
-            rgba(85, 169, 255, 1) 24%,
-            rgba(55, 154, 255, 1) 100%
+              63deg,
+              rgba(85, 169, 255, 1) 24%,
+              rgba(55, 154, 255, 1) 100%
           );
         }
+
         .noData {
           background: linear-gradient(
-            63deg,
-            rgba(255, 168, 104, 1) 33%,
-            rgba(255, 144, 61, 1) 100%
+              63deg,
+              rgba(255, 168, 104, 1) 33%,
+              rgba(255, 144, 61, 1) 100%
           );
         }
+
         .employee {
           margin-right: 0;
           background: linear-gradient(
-            121deg,
-            rgba(255, 136, 136, 1) 24%,
-            rgba(245, 108, 108, 1) 100%
+              121deg,
+              rgba(255, 136, 136, 1) 24%,
+              rgba(245, 108, 108, 1) 100%
           );
         }
       }
+
       .chartBox {
         display: flex;
+
         div {
           flex: 1;
         }
+
         .itemList {
           .title {
             font-size: 18px;
             font-weight: bold;
             margin-bottom: 20px;
           }
+
           .item {
             display: flex;
             line-height: 45px;
             padding: 0 20px;
             border-bottom: solid 1px #f0f1f4;
+
             span {
               flex: 1;
               text-align: center;
             }
+
             span:first-child {
               text-align: left;
             }
           }
+
           .topLab {
             background: #f0f1f4;
             border-radius: 4px;
@@ -850,18 +878,21 @@ export default class extends Vue {
         }
       }
     }
+
     .topButBox {
       position: absolute;
       right: 20px;
       top: 0;
       z-index: 9999;
       font-size: 12px;
+
       span {
         display: inline-block;
         padding: 4px 10px;
         border-radius: 4px;
         cursor: pointer;
       }
+
       .butAct {
         background: #3a9bff;
         color: #fff;

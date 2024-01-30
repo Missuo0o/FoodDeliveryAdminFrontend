@@ -1,14 +1,14 @@
 <template>
   <div class="addBrand-container">
-    <HeadLable :title="title"
-               :goback="true" />
+    <HeadLable :goback="true"
+               :title="title" />
     <div class="container">
       <el-form ref="ruleForm"
+               :inline="false"
                :model="ruleForm"
                :rules="rules"
-               :inline="false"
-               label-width="180px"
-               class="demo-ruleForm">
+               class="demo-ruleForm"
+               label-width="180px">
         <!--          <el-form-item label="员工职级" prop="region">-->
         <!--            <el-select v-model="ruleForm.region" placeholder="请选择品牌名称">-->
         <!--              <el-option label="区域一" value="shanghai"></el-option>-->
@@ -19,14 +19,14 @@
         <el-form-item label="Username:"
                       prop="username">
           <el-input v-model="ruleForm.username"
-                    placeholder="Please enter the username"
-                    maxlength="20" />
+                    maxlength="20"
+                    placeholder="Please enter the username" />
         </el-form-item>
         <el-form-item label="Name:"
                       prop="name">
           <el-input v-model="ruleForm.name"
-                    placeholder="Please enter the name"
-                    maxlength="12" />
+                    maxlength="12"
+                    placeholder="Please enter the name" />
         </el-form-item>
         <!-- <el-form-item
           label="密码:"
@@ -53,8 +53,8 @@
         <el-form-item label="Phone:"
                       prop="phone">
           <el-input v-model="ruleForm.phone"
-                    placeholder="Please enter the phone"
-                    maxlength="10" />
+                    maxlength="10"
+                    placeholder="Please enter the phone" />
         </el-form-item>
         <el-form-item label="Sex:"
                       prop="sex">
@@ -63,20 +63,20 @@
             <el-radio label="Female" />
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="IdNumber:"
-                      prop="idNumber"
-                      class="idNumber">
+        <el-form-item class="idNumber"
+                      label="IdNumber:"
+                      prop="idNumber">
           <el-input v-model="ruleForm.idNumber"
-                    placeholder="Please enter the idNumber"
-                    maxlength="10" />
+                    maxlength="10"
+                    placeholder="Please enter the idNumber" />
         </el-form-item>
         <div class="subBox address">
           <!-- <el-form-item> -->
           <el-button @click="() => $router.push('/employee')">
             Cancel
           </el-button>
-          <el-button type="primary"
-                     :class="{ continue: actionType === 'add' }"
+          <el-button :class="{ continue: actionType === 'add' }"
+                     type="primary"
                      @click="submitForm('ruleForm', false)">
             Submit
           </el-button>
@@ -95,7 +95,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import HeadLable from '@/components/HeadLable/index.vue'
-import { queryEmployeeById, addEmployee, editEmployee } from '@/api/employee'
+import { addEmployee, editEmployee, queryEmployeeById } from '@/api/employee'
 
 @Component({
   name: 'addShop',
@@ -125,42 +125,6 @@ export default class extends Vue {
   //     callback()
   //   }
   // }
-
-  private isCellPhone(val: any) {
-    if (!/^(?:\(\d{3}\)\s?|\d{3}-)?\d{3}-\d{4}$/.test(val)) {
-      return false
-    } else {
-      return true
-    }
-  }
-
-  private checkphone(rule: any, value: any, callback: any) {
-    // let phoneReg = /(^1[3|4|5|6|7|8|9]\d{9}$)|(^09\d{8}$)/;
-    if (value == '') {
-      callback(new Error('Please enter the phone number'))
-    }
-    else if (!this.isCellPhone(value)) {
-      //引入methods中封装的检查手机格式的方法
-      callback(new Error('Please enter the correct number!'))
-    }
-    else {
-      callback()
-    }
-  }
-
-  private validID(rule: any, value: any, callback: any) {
-    // 身份证号码为15位或者18位，15位时全为数字，18位前17位为数字，最后一位是校验位，可能为数字或字符X
-    // let reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/
-    if (value == '') {
-      callback(new Error('Please enter the idNumber'))
-    }
-    // else if (reg.test(value)) {
-    //   callback()
-    // }
-    else {
-      callback()
-    }
-  }
 
   get rules() {
     return {
@@ -213,6 +177,40 @@ export default class extends Vue {
     if (this.$route.query.id) {
       this.title = 'Update Employee'
       this.init()
+    }
+  }
+
+  private isCellPhone(val: any) {
+    if (!/^(?:\(\d{3}\)\s?|\d{3}-)?\d{3}-\d{4}$/.test(val)) {
+      return false
+    } else {
+      return true
+    }
+  }
+
+  private checkphone(rule: any, value: any, callback: any) {
+    // let phoneReg = /(^1[3|4|5|6|7|8|9]\d{9}$)|(^09\d{8}$)/;
+    if (value == '') {
+      callback(new Error('Please enter the phone number'))
+    } else if (!this.isCellPhone(value)) {
+      //引入methods中封装的检查手机格式的方法
+      callback(new Error('Please enter the correct number!'))
+    } else {
+      callback()
+    }
+  }
+
+  private validID(rule: any, value: any, callback: any) {
+    // 身份证号码为15位或者18位，15位时全为数字，18位前17位为数字，最后一位是校验位，可能为数字或字符X
+    // let reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/
+    if (value == '') {
+      callback(new Error('Please enter the idNumber'))
+    }
+      // else if (reg.test(value)) {
+      //   callback()
+    // }
+    else {
+      callback()
     }
   }
 
@@ -301,11 +299,13 @@ export default class extends Vue {
   &-container {
     margin: 30px;
     margin-top: 0px;
+
     .HeadLable {
       background-color: transparent;
       margin-bottom: 0px;
       padding-left: 0px;
     }
+
     .container {
       position: relative;
       z-index: 1;
@@ -319,6 +319,7 @@ export default class extends Vue {
         border-top: solid 1px $gray-5;
       }
     }
+
     .idNumber {
       margin-bottom: 39px;
     }
@@ -326,6 +327,7 @@ export default class extends Vue {
     .el-form-item {
       margin-bottom: 29px;
     }
+
     .el-input {
       width: 293px;
     }

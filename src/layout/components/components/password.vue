@@ -1,31 +1,31 @@
 <template>
   <el-dialog
-    title="Update Password"
     :visible.sync="dialogFormVisible"
-    width="568px"
     class="pwdCon"
+    title="Update Password"
+    width="568px"
     @close="handlePwdClose()"
   >
-    <el-form :model="form" label-width="85px" :rules="rules" ref="form">
+    <el-form ref="form" :model="form" :rules="rules" label-width="85px">
       <el-form-item label="Original:" prop="oldPassword">
         <el-input
           v-model="form.oldPassword"
-          type="password"
           placeholder="Please enter"
+          type="password"
         ></el-input>
       </el-form-item>
       <el-form-item label="New:" prop="newPassword">
         <el-input
           v-model="form.newPassword"
-          type="password"
           placeholder="6 - 20 digit password, numeric or alphabetic, case sensitive"
+          type="password"
         ></el-input>
       </el-form-item>
       <el-form-item label="Confirm:" prop="affirmPassword">
         <el-input
           v-model="form.affirmPassword"
-          type="password"
           placeholder="Please enter"
+          type="password"
         ></el-input>
       </el-form-item>
     </el-form>
@@ -36,15 +36,40 @@
   </el-dialog>
 </template>
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
-import { Form as ElForm, Input } from 'element-ui'
+import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Form as ElForm } from 'element-ui'
 // 接口
 import { editPassword } from '@/api/users'
+
 @Component({
-  name: 'Password',
+  name: 'Password'
 })
 export default class extends Vue {
   @Prop() private dialogFormVisible!: any
+  private form = {} as any
+  private affirmPassword = ''
+
+  handleSave() {
+    ;(this.$refs.form as ElForm).validate(async (valid: boolean) => {
+      if (valid) {
+        const parnt = {
+          oldPassword: this.form.oldPassword,
+          newPassword: this.form.newPassword
+        }
+        await editPassword(parnt)
+        this.$emit('handleclose')
+        ;(this.$refs.form as ElForm).resetFields()
+      } else {
+        return false
+      }
+    })
+  }
+
+  handlePwdClose() {
+    ;(this.$refs.form as ElForm).resetFields()
+    this.$emit('handleclose')
+  }
+
   private validatePwd = (rule: any, value: any, callback: Function) => {
     const reg = /^[0-9A-Za-z]{6,20}$/
     if (!value) {
@@ -55,6 +80,7 @@ export default class extends Vue {
       callback()
     }
   }
+
   private validatePass2 = (rule, value, callback) => {
     if (!value) {
       callback(new Error('Please enter your password again'))
@@ -64,31 +90,11 @@ export default class extends Vue {
       callback()
     }
   }
+
   rules = {
     oldPassword: [{ validator: this.validatePwd, trigger: 'blur' }],
     newPassword: [{ validator: this.validatePwd, trigger: 'blur' }],
-    affirmPassword: [{ validator: this.validatePass2, trigger: 'blur' }],
-  }
-  private form = {} as any
-  private affirmPassword = ''
-  handleSave() {
-    ;(this.$refs.form as ElForm).validate(async (valid: boolean) => {
-      if (valid) {
-        const parnt = {
-          oldPassword: this.form.oldPassword,
-          newPassword: this.form.newPassword,
-        }
-        await editPassword(parnt)
-        this.$emit('handleclose')
-        ;(this.$refs.form as ElForm).resetFields()
-      } else {
-        return false
-      }
-    })
-  }
-  handlePwdClose() {
-    ;(this.$refs.form as ElForm).resetFields()
-    this.$emit('handleclose')
+    affirmPassword: [{ validator: this.validatePass2, trigger: 'blur' }]
   }
 }
 </script>
@@ -99,15 +105,19 @@ export default class extends Vue {
       padding-top: 60px;
       padding: 60px 100px 0;
     }
+
     .el-input__inner {
       padding: 0 12px;
     }
+
     .el-form-item {
       margin-bottom: 26px;
     }
+
     .el-form-item__label {
       text-align: left;
     }
+
     .el-dialog__footer {
       padding-top: 14px;
     }

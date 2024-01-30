@@ -1,9 +1,10 @@
-import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-decorators'
-import { login,userLogout } from '@/api/employee'
-import { getToken, setToken, removeToken,getStoreId, setStoreId, removeStoreId, setUserInfo, getUserInfo, removeUserInfo } from '@/utils/cookies'
+import { Action, getModule, Module, Mutation, VuexModule } from 'vuex-module-decorators'
+import { login, userLogout } from '@/api/employee'
+import { getStoreId, getToken, getUserInfo, removeToken, removeUserInfo, setStoreId, setToken } from '@/utils/cookies'
 import store from '@/store'
 import Cookies from 'js-cookie'
 import { Message } from 'element-ui'
+
 export interface IUserState {
   token: string
   name: string
@@ -26,6 +27,81 @@ class User extends VuexModule implements IUserState {
   public userInfo = {}
   public roles: string[] = []
   public username = Cookies.get('username') || ''
+
+  @Action
+  public async Login(userInfo: { username: string, password: string }) {
+    let { username, password } = userInfo
+    username = username.trim()
+    this.SET_USERNAME(username)
+    Cookies.set('username', username)
+    const { data } = await login({ username, password })
+    if (String(data.code) === '200') {
+      // const dataParams = {
+      //   // status: 200,
+      //   token: data.data.token,
+      //   // msg: '登录成功',
+      //   // ...data.data
+      //   ...data
+      // }
+      this.SET_TOKEN(data.data.token)
+      setToken(data.data.token)
+      this.SET_USERINFO(data.data)
+      Cookies.set('user_info', data.data)
+      return data
+    } else {
+      return Message.error(data.msg)
+    }
+  }
+
+  @Action
+  public ResetToken() {
+    removeToken()
+    this.SET_TOKEN('')
+    this.SET_ROLES([])
+  }
+
+  @Action
+  public async changeStore(data: any) {
+    this.SET_STOREID = data.data
+    this.SET_TOKEN(data.authorization)
+    setStoreId(data.data)
+    setToken(data.authorization)
+  }
+
+  @Action
+  public async GetUserInfo() {
+    if (this.token === '') {
+      throw Error('GetUserInfo: token is undefined!')
+    }
+
+    const data = JSON.parse(<string>getUserInfo()) //  { roles: ['admin'], name: 'zhangsan', avatar: '/login', introduction: '' }
+    if (!data) {
+      throw Error('Verification failed, please Login again.')
+    }
+
+    const { roles, name, avatar, introduction, applicant, storeManagerName, storeId = '' } = data // data.user
+    // roles must be a non-empty array
+    if (!roles || roles.length <= 0) {
+      throw Error('GetUserInfo: roles must be a non-null array!')
+    }
+
+    this.SET_ROLES(roles)
+    this.SET_USERINFO(data)
+    this.SET_NAME(name || applicant || storeManagerName)
+    this.SET_AVATAR(avatar)
+    this.SET_INTRODUCTION(introduction)
+  }
+
+  @Action
+  public async LogOut() {
+    const { data } = await userLogout({})
+    removeToken()
+    this.SET_TOKEN('')
+    this.SET_ROLES([])
+    Cookies.remove('username')
+    Cookies.remove('user_info')
+    removeUserInfo()
+  }
 
   @Mutation
   private SET_TOKEN(token: string) {
@@ -61,84 +137,10 @@ class User extends VuexModule implements IUserState {
   private SET_STOREID(storeId: string) {
     this.storeId = storeId
   }
+
   @Mutation
   private SET_USERNAME(name: string) {
     this.username = name
-    }
-
-  @Action
-  public async Login(userInfo: { username: string, password: string }) {
-    let { username, password } = userInfo
-    username = username.trim()
-    this.SET_USERNAME(username)
-    Cookies.set('username', username)
-    const { data } = await login({ username, password })
-    if (String(data.code) === '200') {
-      // const dataParams = {
-      //   // status: 200,
-      //   token: data.data.token,
-      //   // msg: '登录成功',
-      //   // ...data.data
-      //   ...data
-      // }
-      this.SET_TOKEN(data.data.token)
-      setToken(data.data.token)
-      this.SET_USERINFO(data.data)
-      Cookies.set('user_info', data.data)
-      return data
-    } else {
-      return Message.error(data.msg)
-    }
-  }
-
-  @Action
-  public ResetToken () {
-    removeToken()
-    this.SET_TOKEN('')
-    this.SET_ROLES([])
-  }
-
-  @Action
-  public async changeStore(data: any) {
-    this.SET_STOREID = data.data
-    this.SET_TOKEN(data.authorization)
-    setStoreId(data.data)
-    setToken(data.authorization)
-  }
-
-  @Action
-  public async GetUserInfo () {
-    if (this.token === '') {
-      throw Error('GetUserInfo: token is undefined!')
-    }
-
-    const data = JSON.parse(<string>getUserInfo()) //  { roles: ['admin'], name: 'zhangsan', avatar: '/login', introduction: '' }
-    if (!data) {
-      throw Error('Verification failed, please Login again.')
-    }
-
-    const { roles, name, avatar, introduction, applicant, storeManagerName, storeId='' } = data // data.user
-    // roles must be a non-empty array
-    if (!roles || roles.length <= 0) {
-      throw Error('GetUserInfo: roles must be a non-null array!')
-    }
-
-    this.SET_ROLES(roles)
-    this.SET_USERINFO(data)
-    this.SET_NAME(name || applicant || storeManagerName)
-    this.SET_AVATAR(avatar)
-    this.SET_INTRODUCTION(introduction)
-  }
-
-  @Action
-  public async LogOut () {
-    const { data } = await userLogout({})
-    removeToken()
-    this.SET_TOKEN('')
-    this.SET_ROLES([])
-    Cookies.remove('username')
-    Cookies.remove('user_info')
-    removeUserInfo()
   }
 }
 

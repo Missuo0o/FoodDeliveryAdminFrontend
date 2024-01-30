@@ -1,4 +1,5 @@
 import request from '@/utils/request'
+
 /**
  *
  * 报表数据
@@ -20,7 +21,7 @@ export const getChartsDataes = (params: any) =>
   })
 
 // 获取当日销售趋势数据（24小时）-> 销售趋势
-export const getDayDataes= (params: any) =>
+export const getDayDataes = (params: any) =>
   request({
     'url': `/report/hourCollect/${params.type}/${params.date}`,
     'method': 'get'

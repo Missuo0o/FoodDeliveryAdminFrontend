@@ -4,15 +4,15 @@
       <div class="tableBar">
         <label style="margin-right: 10px">Name:</label>
         <el-input v-model="input"
-                  style="width: 14%"
                   clearable
+                  style="width: 14%"
                   @clear="init"
                   @keyup.enter.native="initFun" />
 
         <label style="margin-right: 10px; margin-left: 20px">Category:</label>
         <el-select v-model="categoryId"
-                   style="width: 14%"
                    clearable
+                   style="width: 14%"
                    @clear="init">
           <el-option v-for="item in dishCategoryList"
                      :key="item.value"
@@ -22,8 +22,8 @@
 
         <label style="margin-right: 10px; margin-left: 20px">Status:</label>
         <el-select v-model="dishStatus"
-                   style="width: 14%"
                    clearable
+                   style="width: 14%"
                    @clear="init">
           <el-option v-for="item in saleStatus"
                      :key="item.value"
@@ -44,8 +44,8 @@
             @click="statusHandle('0')"
             >批量停售</span
           > -->
-          <el-button type="primary"
-                     style="margin-left: 15px"
+          <el-button style="margin-left: 15px"
+                     type="primary"
                      @click="addSetMeal('add')">
             + Add Combo
           </el-button>
@@ -53,18 +53,18 @@
       </div>
       <el-table v-if="tableData.length"
                 :data="tableData"
-                stripe
                 class="tableBox"
+                stripe
                 @selection-change="handleSelectionChange">
         <el-table-column type="selection"
                          width="25" />
-        <el-table-column prop="name"
-                         label="Name" />
-        <el-table-column prop="image"
-                         label="Image">
+        <el-table-column label="Name"
+                         prop="name" />
+        <el-table-column label="Image"
+                         prop="image">
           <template slot-scope="{ row }">
-            <el-image style="width: 80px; height: 40px; border: none; cursor: pointer"
-                      :src="row.image">
+            <el-image :src="row.image"
+                      style="width: 80px; height: 40px; border: none; cursor: pointer">
               <div slot="error"
                    class="image-slot">
                 <img src="./../../assets/noImg.png"
@@ -73,51 +73,52 @@
             </el-image>
           </template>
         </el-table-column>
-        <el-table-column prop="categoryName"
-                         label="Category" />
-        <el-table-column prop="price"
-                         label="Price">
+        <el-table-column label="Category"
+                         prop="categoryName" />
+        <el-table-column label="Price"
+                         prop="price">
           <template slot-scope="scope">
-            <span>￥{{ ((scope.row.price ).toFixed(2) * 100) / 100 }}</span>
+            <span>￥{{ ((scope.row.price).toFixed(2) * 100) / 100 }}</span>
           </template>
         </el-table-column>
         <el-table-column label="Status">
           <template slot-scope="scope">
-            <div class="tableColumn-status"
-                 :class="{ 'stop-use': String(scope.row.status) === '0' }">
+            <div :class="{ 'stop-use': String(scope.row.status) === '0' }"
+                 class="tableColumn-status">
               {{ String(scope.row.status) === '0' ? 'Disabled' : 'Enabled' }}
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="updateTime"
-                         label="Last Operation Time">
+        <el-table-column label="Last Operation Time"
+                         prop="updateTime"
+                         width="200">
           <!-- <template slot-scope="scope">
             {{ moment(scope.row.lastUpdateTime).format('YYYY-MM-DD h:m:s') }}
           </template> -->
         </el-table-column>
-        <el-table-column label="Operate"
-                         width="250"
-                         align="center">
+        <el-table-column align="center"
+                         label="Operate"
+                         width="250">
           <template slot-scope="scope">
-            <el-button type="text"
+            <el-button class="blueBug"
                        size="small"
-                       class="blueBug"
+                       type="text"
                        @click="addSetMeal(scope.row)">
               Update
             </el-button>
-            <el-button type="text"
+            <el-button class="delBut"
                        size="small"
-                       class="delBut"
+                       type="text"
                        @click="deleteHandle('delete', scope.row.id)">
               Delete
             </el-button>
-            <el-button type="text"
-                       size="small"
-                       class="blueBug non"
-                       :class="{
+            <el-button :class="{
                          blueBug: scope.row.status == '0',
                          delBut: scope.row.status != '0'
                        }"
+                       class="blueBug non"
+                       size="small"
+                       type="text"
                        @click="statusHandle(scope.row)">
               {{ scope.row.status == '0' ? 'Enable' : 'Disable' }}
             </el-button>
@@ -127,11 +128,11 @@
       <Empty v-else
              :is-search="isSearch" />
       <el-pagination v-if="counts > 10"
-                     class="pageList"
-                     :page-sizes="[10, 20, 30, 40]"
                      :page-size="pageSize"
-                     layout="total, sizes, prev, pager, next, jumper"
+                     :page-sizes="[10, 20, 30, 40]"
                      :total="counts"
+                     class="pageList"
+                     layout="total, sizes, prev, pager, next, jumper"
                      @size-change="handleSizeChange"
                      @current-change="handleCurrentChange" />
     </div>
@@ -141,16 +142,9 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import HeadLable from '@/components/HeadLable/index.vue'
-import {
-  getSetmealPage,
-  editSetmeal,
-  deleteSetmeal,
-  setmealStatusByStatus,
-  dishCategoryList
-} from '@/api/setMeal'
+import { deleteSetmeal, dishCategoryList, getSetmealPage, setmealStatusByStatus } from '@/api/setMeal'
 import InputAutoComplete from '@/components/InputAutoComplete/index.vue'
 import Empty from '@/components/Empty/index.vue'
-import { baseUrl } from '@/config.json'
 
 @Component({
   name: 'package',
@@ -306,7 +300,8 @@ export default class extends Vue {
           })
         }
       })
-      .catch(() => {})
+      .catch(() => {
+      })
   }
 
   // 全部操作
@@ -348,8 +343,10 @@ export default class extends Vue {
 
       .tableBar {
         margin-bottom: 20px;
+
         .tableLab {
           float: right;
+
           span {
             cursor: pointer;
             display: inline-block;
@@ -370,6 +367,7 @@ export default class extends Vue {
         text-align: center;
         margin-top: 30px;
       }
+
       //查询黑色按钮样式
       .normal-btn {
         background: #333333;

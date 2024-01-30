@@ -16,7 +16,7 @@
 <script lang="ts">
 import { Component } from 'vue-property-decorator'
 import { mixins } from 'vue-class-component'
-import { DeviceType, AppModule } from '@/store/modules/app'
+import { AppModule, DeviceType } from '@/store/modules/app'
 import { AppMain, Navbar, Sidebar } from './components'
 import ResizeMixin from './mixin/resize'
 
@@ -25,8 +25,8 @@ import ResizeMixin from './mixin/resize'
   components: {
     AppMain,
     Navbar,
-    Sidebar,
-  },
+    Sidebar
+  }
 })
 export default class extends mixins(ResizeMixin) {
   get classObj() {
@@ -34,7 +34,7 @@ export default class extends mixins(ResizeMixin) {
       hideSidebar: !this.sidebar.opened,
       openSidebar: this.sidebar.opened,
       withoutAnimation: this.sidebar.withoutAnimation,
-      mobile: this.device === DeviceType.Mobile,
+      mobile: this.device === DeviceType.Mobile
     }
   }
 

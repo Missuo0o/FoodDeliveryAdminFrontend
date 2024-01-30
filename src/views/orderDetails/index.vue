@@ -1,42 +1,42 @@
 <template>
   <div class="dashboard-container">
     <TabChange
-      :order-statics="orderStatics"
       :default-activity="defaultActivity"
+      :order-statics="orderStatics"
       @tabChange="change"
     />
-    <div class="container" :class="{ hContainer: tableData.length }">
+    <div :class="{ hContainer: tableData.length }" class="container">
       <!-- 搜索项 -->
       <div class="tableBar">
         <label style="margin-right: 10px">订单号：</label>
         <el-input
           v-model="input"
+          clearable
           placeholder="请填写订单号"
           style="width: 15%"
-          clearable
           @clear="init(orderStatus)"
           @keyup.enter.native="initFun(orderStatus)"
         />
         <label style="margin-left: 20px">手机号：</label>
         <el-input
           v-model="phone"
+          clearable
           placeholder="请填写手机号"
           style="width: 15%"
-          clearable
           @clear="init(orderStatus)"
           @keyup.enter.native="initFun(orderStatus)"
         />
         <label style="margin-left: 20px">下单时间：</label>
         <el-date-picker
           v-model="valueTime"
-          clearable
-          value-format="yyyy-MM-dd HH:mm:ss"
-          range-separator="至"
           :default-time="['00:00:00', '23:59:59']"
-          type="daterange"
-          start-placeholder="开始日期"
+          clearable
           end-placeholder="结束日期"
+          range-separator="至"
+          start-placeholder="开始日期"
           style="width: 25%; margin-left: 10px"
+          type="daterange"
+          value-format="yyyy-MM-dd HH:mm:ss"
           @clear="init(orderStatus)"
         />
         <el-button class="normal-btn continue" @click="init(orderStatus, true)">
@@ -46,21 +46,21 @@
       <el-table
         v-if="tableData.length"
         :data="tableData"
-        stripe
         class="tableBox"
+        stripe
       >
-        <el-table-column key="number" prop="number" label="订单号" />
+        <el-table-column key="number" label="订单号" prop="number" />
         <el-table-column
           v-if="[2, 3, 4].includes(orderStatus)"
           key="orderDishes"
-          prop="orderDishes"
           label="订单菜品"
+          prop="orderDishes"
         />
         <el-table-column
           v-if="[0].includes(orderStatus)"
           key="status"
-          prop="订单状态"
           label="订单状态"
+          prop="订单状态"
         >
           <template slot-scope="{ row }">
             <span>{{ getOrderType(row) }}</span>
@@ -69,66 +69,66 @@
         <el-table-column
           v-if="[0, 5, 6].includes(orderStatus)"
           key="consignee"
-          prop="consignee"
           label="用户名"
+          prop="consignee"
           show-overflow-tooltip
         />
         <el-table-column
           v-if="[0, 5, 6].includes(orderStatus)"
           key="phone"
-          prop="phone"
           label="手机号"
+          prop="phone"
         />
         <el-table-column
           v-if="[0, 2, 3, 4, 5, 6].includes(orderStatus)"
           key="address"
-          prop="address"
-          label="地址"
           :class-name="orderStatus === 6 ? 'address' : ''"
+          label="地址"
+          prop="address"
         />
         <el-table-column
           v-if="[0, 6].includes(orderStatus)"
           key="orderTime"
-          prop="orderTime"
-          label="下单时间"
           class-name="orderTime"
+          label="下单时间"
           min-width="110"
+          prop="orderTime"
         />
         <el-table-column
           v-if="[6].includes(orderStatus)"
           key="cancelTime"
-          prop="cancelTime"
           class-name="cancelTime"
           label="取消时间"
           min-width="110"
+          prop="cancelTime"
         />
         <el-table-column
           v-if="[6].includes(orderStatus)"
           key="cancelReason"
-          prop="cancelReason"
-          label="取消原因"
-          class-name="cancelReason"
           :min-width="[6].includes(orderStatus) ? 80 : 'auto'"
+          class-name="cancelReason"
+          label="取消原因"
+          prop="cancelReason"
         />
         <el-table-column
           v-if="[5].includes(orderStatus)"
           key="deliveryTime"
-          prop="deliveryTime"
           label="送达时间"
+          prop="deliveryTime"
         />
         <el-table-column
           v-if="[2, 3, 4].includes(orderStatus)"
           key="estimatedDeliveryTime"
-          prop="estimatedDeliveryTime"
           label="预计送达时间"
           min-width="110"
+          prop="estimatedDeliveryTime"
         />
         <el-table-column
           v-if="[0, 2, 5].includes(orderStatus)"
           key="amount"
-          prop="amount"
-          label="实收金额"
           align="center"
+          label="实收金额"
+          prop="amount"
         >
           <template slot-scope="{ row }">
             <span>￥{{ (row.amount.toFixed(2) * 100) / 100 }}</span>
@@ -137,22 +137,19 @@
         <el-table-column
           v-if="[2, 3, 4, 5].includes(orderStatus)"
           key="remark"
-          prop="remark"
-          label="备注"
           align="center"
+          label="备注"
+          prop="remark"
         />
         <el-table-column
           v-if="[2, 3, 4].includes(orderStatus)"
           key="tablewareNumber"
-          prop="tablewareNumber"
-          label="餐具数量"
           align="center"
+          label="餐具数量"
           min-width="80"
+          prop="tablewareNumber"
         />
         <el-table-column
-          prop="btn"
-          label="操作"
-          align="center"
           :class-name="orderStatus === 0 ? 'operate' : 'otherOperate'"
           :min-width="
             [2, 3, 4].includes(orderStatus)
@@ -161,30 +158,33 @@
               ? 140
               : 'auto'
           "
+          align="center"
+          label="操作"
+          prop="btn"
         >
           <template slot-scope="{ row }">
             <!-- <el-divider direction="vertical" /> -->
             <div class="before">
               <el-button
                 v-if="row.status === 2"
-                type="text"
                 class="blueBug"
+                type="text"
                 @click="orderAccept(row), (isTableOperateBtn = true)"
               >
                 接单
               </el-button>
               <el-button
                 v-if="row.status === 3"
-                type="text"
                 class="blueBug"
+                type="text"
                 @click="cancelOrDeliveryOrComplete(3, row.id)"
               >
                 派送
               </el-button>
               <el-button
                 v-if="row.status === 4"
-                type="text"
                 class="blueBug"
+                type="text"
                 @click="cancelOrDeliveryOrComplete(4, row.id)"
               >
                 完成
@@ -193,16 +193,16 @@
             <div class="middle">
               <el-button
                 v-if="row.status === 2"
-                type="text"
                 class="delBut"
+                type="text"
                 @click="orderReject(row), (isTableOperateBtn = true)"
               >
                 拒单
               </el-button>
               <el-button
                 v-if="[1, 3, 4, 5].includes(row.status)"
-                type="text"
                 class="delBut"
+                type="text"
                 @click="cancelOrder(row)"
               >
                 取消
@@ -210,8 +210,8 @@
             </div>
             <div class="after">
               <el-button
-                type="text"
                 class="blueBug non"
+                type="text"
                 @click="goDetail(row.id, row.status, row)"
               >
                 查看
@@ -223,11 +223,11 @@
       <Empty v-else :is-search="isSearch" />
       <el-pagination
         v-if="counts > 10"
-        class="pageList"
-        :page-sizes="[10, 20, 30, 40]"
         :page-size="pageSize"
-        layout="total, sizes, prev, pager, next, jumper"
+        :page-sizes="[10, 20, 30, 40]"
         :total="counts"
+        class="pageList"
+        layout="total, sizes, prev, pager, next, jumper"
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
       />
@@ -235,11 +235,11 @@
 
     <!-- 查看弹框部分 -->
     <el-dialog
-      title="订单信息"
-      :visible.sync="dialogVisible"
-      width="53%"
       :before-close="handleClose"
+      :visible.sync="dialogVisible"
       class="order-dialog"
+      title="订单信息"
+      width="53%"
     >
       <el-scrollbar style="height: 100%">
         <div class="order-top">
@@ -251,9 +251,9 @@
               </div>
             </div>
             <div
-              style="display: inline-block"
-              class="order-status"
               :class="{ status3: [3, 4].includes(dialogOrderStatus) }"
+              class="order-status"
+              style="display: inline-block"
             >
               {{
                 orderList.filter((item) => item.value === dialogOrderStatus)[0]
@@ -280,13 +280,13 @@
                 class="user-getTime"
               >
                 <label>{{
-                  dialogOrderStatus === 5 ? '送达时间：' : '预计送达时间：'
-                }}</label>
+                    dialogOrderStatus === 5 ? '送达时间：' : '预计送达时间：'
+                  }}</label>
                 <span>{{
-                  dialogOrderStatus === 5
-                    ? diaForm.deliveryTime
-                    : diaForm.estimatedDeliveryTime
-                }}</span>
+                    dialogOrderStatus === 5
+                      ? diaForm.deliveryTime
+                      : diaForm.estimatedDeliveryTime
+                  }}</span>
               </div>
               <div class="user-address">
                 <label>地址：</label>
@@ -294,15 +294,15 @@
               </div>
             </div>
             <div
-              class="user-remark"
               :class="{ orderCancel: dialogOrderStatus === 6 }"
+              class="user-remark"
             >
               <div>{{ dialogOrderStatus === 6 ? '取消原因' : '备注' }}</div>
               <span>{{
-                dialogOrderStatus === 6
-                  ? diaForm.cancelReason || diaForm.rejectionReason
-                  : diaForm.remark
-              }}</span>
+                  dialogOrderStatus === 6
+                    ? diaForm.cancelReason || diaForm.rejectionReason
+                    : diaForm.remark
+                }}</span>
             </div>
           </div>
 
@@ -319,14 +319,14 @@
                   <span class="dish-num">x{{ item.number }}</span>
                 </div>
                 <span class="dish-price"
-                  >￥{{ item.amount ? item.amount.toFixed(2) : '' }}</span
+                >￥{{ item.amount ? item.amount.toFixed(2) : '' }}</span
                 >
               </div>
             </div>
             <div class="dish-all-amount">
               <label>菜品小计</label>
               <span
-                >￥{{
+              >￥{{
                   (diaForm.amount - 6 - diaForm.packAmount).toFixed(2)
                 }}</span
               >
@@ -341,7 +341,7 @@
               <div class="dish-amount">
                 <span class="amount-name">菜品小计：</span>
                 <span class="amount-price"
-                  >￥{{
+                >￥{{
                     ((diaForm.amount - 6 - diaForm.packAmount).toFixed(2) *
                       100) /
                     100
@@ -355,7 +355,7 @@
               <div class="package-amount">
                 <span class="amount-name">打包费：</span>
                 <span class="amount-price"
-                  >￥{{
+                >￥{{
                     diaForm.packAmount
                       ? (diaForm.packAmount.toFixed(2) * 100) / 100
                       : ''
@@ -365,7 +365,7 @@
               <div class="all-amount">
                 <span class="amount-name">合计：</span>
                 <span class="amount-price"
-                  >￥{{
+                >￥{{
                     diaForm.amount
                       ? (diaForm.amount.toFixed(2) * 100) / 100
                       : ''
@@ -375,8 +375,8 @@
               <div class="pay-type">
                 <span class="pay-name">支付渠道：</span>
                 <span class="pay-value">{{
-                  diaForm.payMethod === 1 ? '微信支付' : '支付宝支付'
-                }}</span>
+                    diaForm.payMethod === 1 ? '微信支付' : '支付宝支付'
+                  }}</span>
               </div>
               <div class="pay-time">
                 <span class="pay-name">支付时间：</span>
@@ -390,52 +390,52 @@
         <el-checkbox
           v-if="dialogOrderStatus === 2 && orderStatus === 2"
           v-model="isAutoNext"
-          >处理完自动跳转下一条</el-checkbox
+        >处理完自动跳转下一条</el-checkbox
         >
         <el-button
           v-if="dialogOrderStatus === 2"
           @click="orderReject(row), (isTableOperateBtn = false)"
-          >拒 单</el-button
+        >拒 单</el-button
         >
         <el-button
           v-if="dialogOrderStatus === 2"
           type="primary"
           @click="orderAccept(row), (isTableOperateBtn = false)"
-          >接 单</el-button
+        >接 单</el-button
         >
 
         <el-button
           v-if="[1, 3, 4, 5].includes(dialogOrderStatus)"
           @click="dialogVisible = false"
-          >返 回</el-button
+        >返 回</el-button
         >
         <el-button
           v-if="dialogOrderStatus === 3"
           type="primary"
           @click="cancelOrDeliveryOrComplete(3, row.id)"
-          >派 送</el-button
+        >派 送</el-button
         >
         <el-button
           v-if="dialogOrderStatus === 4"
           type="primary"
           @click="cancelOrDeliveryOrComplete(4, row.id)"
-          >完 成</el-button
+        >完 成</el-button
         >
         <el-button
           v-if="[1].includes(dialogOrderStatus)"
           type="primary"
           @click="cancelOrder(row)"
-          >取消订单</el-button
+        >取消订单</el-button
         >
       </span>
     </el-dialog>
     <!-- 拒单，取消弹窗 -->
     <el-dialog
+      :before-close="() => ((cancelDialogVisible = false), (cancelReason = ''))"
       :title="cancelDialogTitle + '原因'"
       :visible.sync="cancelDialogVisible"
-      width="42%"
-      :before-close="() => ((cancelDialogVisible = false), (cancelReason = ''))"
       class="cancelDialog"
+      width="42%"
     >
       <el-form label-width="90px">
         <el-form-item :label="cancelDialogTitle + '原因：'">
@@ -456,15 +456,15 @@
         <el-form-item v-if="cancelReason === '自定义原因'" label="原因：">
           <el-input
             v-model.trim="remark"
-            type="textarea"
             :placeholder="'请填写您' + cancelDialogTitle + '的原因（限20字内）'"
             maxlength="20"
+            type="textarea"
           />
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click=";(cancelDialogVisible = false), (cancelReason = '')"
-          >取 消</el-button
+        >取 消</el-button
         >
         <el-button type="primary" @click="confirmCancel">确 定</el-button>
       </span>
@@ -479,14 +479,14 @@ import InputAutoComplete from '@/components/InputAutoComplete/index.vue'
 import TabChange from './tabChange.vue'
 import Empty from '@/components/Empty/index.vue'
 import {
-  getOrderDetailPage,
-  queryOrderDetailById,
   completeOrder,
   deliveryOrder,
+  getOrderDetailPage,
+  getOrderListBy,
+  orderAccept,
   orderCancel,
   orderReject,
-  orderAccept,
-  getOrderListBy,
+  queryOrderDetailById
 } from '@/api/order'
 
 @Component({
@@ -494,8 +494,8 @@ import {
     HeadLable,
     InputAutoComplete,
     TabChange,
-    Empty,
-  },
+    Empty
+  }
 })
 export default class extends Vue {
   private defaultActivity: any = 0
@@ -524,73 +524,73 @@ export default class extends Vue {
   private cancelOrderReasonList = [
     {
       value: 1,
-      label: '订单量较多，暂时无法接单',
+      label: '订单量较多，暂时无法接单'
     },
     {
       value: 2,
-      label: '菜品已销售完，暂时无法接单',
+      label: '菜品已销售完，暂时无法接单'
     },
     {
       value: 3,
-      label: '餐厅已打烊，暂时无法接单',
+      label: '餐厅已打烊，暂时无法接单'
     },
     {
       value: 0,
-      label: '自定义原因',
-    },
+      label: '自定义原因'
+    }
   ]
 
   private cancelrReasonList = [
     {
       value: 1,
-      label: '订单量较多，暂时无法接单',
+      label: '订单量较多，暂时无法接单'
     },
     {
       value: 2,
-      label: '菜品已销售完，暂时无法接单',
+      label: '菜品已销售完，暂时无法接单'
     },
     {
       value: 3,
-      label: '骑手不足无法配送',
+      label: '骑手不足无法配送'
     },
     {
       value: 4,
-      label: '客户电话取消',
+      label: '客户电话取消'
     },
     {
       value: 0,
-      label: '自定义原因',
-    },
+      label: '自定义原因'
+    }
   ]
   private orderList = [
     {
       label: '全部订单',
-      value: 0,
+      value: 0
     },
     {
       label: '待付款',
-      value: 1,
+      value: 1
     },
     {
       label: '待接单',
-      value: 2,
+      value: 2
     },
     {
       label: '待派送',
-      value: 3,
+      value: 3
     },
     {
       label: '派送中',
-      value: 4,
+      value: 4
     },
     {
       label: '已完成',
-      value: 5,
+      value: 5
     },
     {
       label: '已取消',
-      value: 6,
-    },
+      value: 6
+    }
   ]
 
   created() {
@@ -657,7 +657,7 @@ export default class extends Vue {
         this.valueTime && this.valueTime.length > 0
           ? this.valueTime[1]
           : undefined,
-      status: activeIndex || undefined,
+      status: activeIndex || undefined
     }
     getOrderDetailPage({ ...params })
       .then((res) => {
@@ -773,7 +773,7 @@ export default class extends Vue {
       id: this.orderId,
       // eslint-disable-next-line standard/computed-property-even-spacing
       [this.cancelDialogTitle === '取消' ? 'cancelReason' : 'rejectionReason']:
-        this.cancelReason === '自定义原因' ? this.remark : this.cancelReason,
+        this.cancelReason === '自定义原因' ? this.remark : this.cancelReason
     })
       .then((res) => {
         if (res.data.code === 200) {
@@ -794,9 +794,9 @@ export default class extends Vue {
   // 派送，完成
   cancelOrDeliveryOrComplete(status: number, id: string) {
     const params = {
-      status,
-      id,
-    }
+        status,
+        id
+      }
     ;(status === 3 ? deliveryOrder : completeOrder)(params)
       .then((res) => {
         if (res.data.code === 200) {
@@ -836,6 +836,7 @@ export default class extends Vue {
     margin: 30px;
     // height: 100%;
     min-height: 700px;
+
     .container {
       background: #fff;
       position: relative;
@@ -872,6 +873,7 @@ export default class extends Vue {
         text-align: center;
         margin-top: 30px;
       }
+
       //查询黑色按钮样式
       .normal-btn {
         background: #333333;
@@ -879,6 +881,7 @@ export default class extends Vue {
         margin-left: 20px;
       }
     }
+
     .hContainer {
       height: auto !important;
     }
@@ -891,6 +894,7 @@ export default class extends Vue {
 
 .info-box {
   margin: -15px -44px 20px;
+
   p {
     display: flex;
     height: 20px;
@@ -900,14 +904,17 @@ export default class extends Vue {
     color: #666666;
     text-align: left;
     margin-bottom: 14px;
+
     &:last-child {
       margin-bottom: 0;
     }
+
     label {
       width: 100px;
       display: inline-block;
       color: #666;
     }
+
     .des {
       flex: 1;
       color: #333333;
@@ -925,6 +932,7 @@ export default class extends Vue {
   display: flex;
   justify-content: space-between;
   align-items: center;
+
   .order-status {
     width: 57.25px;
     height: 27px;
@@ -935,15 +943,19 @@ export default class extends Vue {
     text-align: center;
     line-height: 27px;
   }
+
   .status3 {
     background: #f56c6c;
   }
+
   p {
     color: #333;
+
     label {
       color: #666;
     }
   }
+
   .order-num {
     font-size: 16px;
     color: #2a2929;
@@ -960,23 +972,29 @@ export default class extends Vue {
 
     padding: 20px 43px;
     color: #333;
+
     .user-info-box {
       min-height: 55px;
       display: flex;
       flex-wrap: wrap;
+
       .user-name {
         flex: 67%;
       }
+
       .user-phone {
         flex: 33%;
       }
+
       .user-getTime {
         margin-top: 14px;
         flex: 80%;
+
         label {
           margin-right: 3px;
         }
       }
+
       label {
         margin-right: 17px;
         color: #666;
@@ -985,11 +1003,13 @@ export default class extends Vue {
       .user-address {
         margin-top: 14px;
         flex: 80%;
+
         label {
           margin-right: 30px;
         }
       }
     }
+
     .user-remark {
       min-height: 43px;
       line-height: 43px;
@@ -1000,6 +1020,7 @@ export default class extends Vue {
       padding: 6px;
       display: flex;
       align-items: center;
+
       div {
         display: inline-block;
         min-width: 53px;
@@ -1012,11 +1033,13 @@ export default class extends Vue {
         margin-right: 30px;
         // padding: 12px 6px;
       }
+
       span {
         color: #f2a402;
         line-height: 1.15;
       }
     }
+
     .orderCancel {
       background: #ffffff;
       border: 1px solid #b6b6b6;
@@ -1025,54 +1048,66 @@ export default class extends Vue {
         padding: 0 10px;
         background-color: #e5e4e4;
       }
+
       span {
         color: #f56c6c;
       }
     }
   }
+
   .dish-info {
     // min-height: 180px;
     display: flex;
     flex-wrap: wrap;
     padding: 20px 40px;
     border-bottom: 1px solid #e7e6e6;
+
     .dish-label {
       color: #666;
     }
+
     .dish-list {
       flex: 80%;
       display: flex;
       flex-wrap: wrap;
+
       .dish-item {
         flex: 50%;
         margin-bottom: 14px;
         color: #333;
+
         .dish-num {
         }
+
         .dish-item-box {
           display: inline-block;
           width: 120px;
         }
       }
     }
+
     .dish-label {
       margin-right: 65px;
     }
+
     .dish-all-amount {
       flex: 1;
       padding-left: 92px;
       margin-top: 10px;
+
       label {
         color: #333333;
         font-weight: bold;
         margin-right: 5px;
       }
+
       span {
         color: #f56c6c;
       }
     }
   }
 }
+
 .order-bottom {
   .amount-info {
     // min-height: 180px;
@@ -1080,10 +1115,12 @@ export default class extends Vue {
     flex-wrap: wrap;
     padding: 20px 40px;
     padding-bottom: 0px;
+
     .amount-label {
       color: #666;
       margin-right: 65px;
     }
+
     .amount-list {
       flex: 80%;
       display: flex;
@@ -1098,6 +1135,7 @@ export default class extends Vue {
         margin-bottom: 14px;
         flex: 50%;
       }
+
       .send-amount,
       .all-amount,
       .pay-time {
@@ -1105,19 +1143,23 @@ export default class extends Vue {
         flex: 50%;
         padding-left: 10%;
       }
+
       .package-amount {
         .amount-name {
           margin-right: 14px;
         }
       }
+
       .all-amount {
         .amount-name {
           margin-right: 24px;
         }
+
         .amount-price {
           color: #f56c6c;
         }
       }
+
       .send-amount {
         .amount-name {
           margin-right: 10px;
@@ -1133,12 +1175,15 @@ export default class extends Vue {
   .cancelReason {
     padding-left: 40px;
   }
+
   .cancelTime {
     padding-left: 50px;
   }
+
   .orderTime {
     padding-left: 50px;
   }
+
   td.operate .cell {
     .before,
     .middle,
@@ -1147,12 +1192,14 @@ export default class extends Vue {
       width: 48px;
     }
   }
+
   td.operate .cell,
   td.otherOperate .cell {
     display: flex;
     flex-wrap: nowrap;
     justify-content: center;
   }
+
   .order-dialog {
     .el-dialog {
       max-height: 764px !important;
@@ -1166,41 +1213,50 @@ export default class extends Vue {
       max-height: calc(100% - 30px);
       max-width: calc(100% - 30px);
     }
+
     .el-dialog__body {
       height: 520px !important;
     }
   }
 }
+
 .el-dialog__body {
   padding-top: 34px;
   padding-left: 30px;
   padding-right: 30px;
 }
+
 .cancelDialog {
   .el-dialog__body {
     padding-left: 64px;
   }
+
   .el-select,
   .el-textarea {
     width: 293px;
   }
+
   .el-textarea textarea {
     height: 114px;
   }
 }
+
 .el-dialog__footer {
   .el-checkbox {
     float: left;
     margin-left: 40px;
   }
+
   .el-checkbox__label {
     color: #333333 !important;
   }
 }
+
 .empty-box {
   display: flex;
   align-items: center;
   justify-content: center;
+
   img {
     margin-top: 0 !important;
   }

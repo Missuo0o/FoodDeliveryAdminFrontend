@@ -4,8 +4,8 @@
     <el-input
       v-model="input"
       :placeholder="placeholder"
-      style="width: 250px"
       clearable
+      style="width: 250px"
       @clear="init"
       @keyup.enter.native="init"
     >
@@ -20,15 +20,16 @@
 </template>
 
 <script lang='ts'>
-import { Vue, Component, Prop } from 'vue-property-decorator'
+import { Component, Prop, Vue } from 'vue-property-decorator'
+
 @Component({
-  name: 'InputAutoComplete',
+  name: 'InputAutoComplete'
 })
 export default class extends Vue {
-  private input: any = ''
   @Prop({ default: [] }) data: Array<any>
   @Prop({ default: '' }) placeholder: string
   @Prop({ default: 'name' }) ObKey: string
+  private input: any = ''
 
   init() {
     this.$emit('init', this.input)

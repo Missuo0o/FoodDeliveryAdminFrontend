@@ -11,19 +11,22 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import * as echarts from 'echarts'
+
 @Component({
-  name: 'TurnoverStatistics',
+  name: 'TurnoverStatistics'
 })
 export default class extends Vue {
   @Prop() private turnoverdata!: any
+
   @Watch('turnoverdata')
   getData() {
     this.$nextTick(() => {
       this.initChart()
     })
   }
+
   initChart() {
     type EChartsOption = echarts.EChartsOption
     const chartDom = document.getElementById('main') as any
@@ -42,14 +45,14 @@ export default class extends Vue {
       //   },
       // },
       tooltip: {
-        trigger: 'axis',
+        trigger: 'axis'
       },
       grid: {
         top: '5%',
         left: '10',
         right: '50',
         bottom: '12%',
-        containLabel: true,
+        containLabel: true
       },
       xAxis: {
         type: 'category',
@@ -58,17 +61,17 @@ export default class extends Vue {
           //X轴字体颜色
           textStyle: {
             color: '#666',
-            fontSize: '12px',
-          },
+            fontSize: '12px'
+          }
         },
         axisLine: {
           //X轴线颜色
           lineStyle: {
             color: '#E5E4E4',
-            width: 1, //x轴线的宽度
-          },
+            width: 1 //x轴线的宽度
+          }
         },
-        data: this.turnoverdata.dateList, //后端传来的动态数据
+        data: this.turnoverdata.dateList //后端传来的动态数据
       },
       yAxis: [
         {
@@ -79,7 +82,7 @@ export default class extends Vue {
           axisLabel: {
             textStyle: {
               color: '#666',
-              fontSize: '12px',
+              fontSize: '12px'
             }
             // formatter: "{value} ml",//单位
           }
@@ -98,19 +101,19 @@ export default class extends Vue {
             normal: {
               color: '#F29C1B',
               lineStyle: {
-                color: '#FFD000',
-              },
+                color: '#FFD000'
+              }
             },
             emphasis: {
               color: '#fff',
               borderWidth: 5,
-              borderColor: '#FFC100',
-            },
+              borderColor: '#FFC100'
+            }
           },
 
-          data: this.turnoverdata.turnoverList,
-        },
-      ],
+          data: this.turnoverdata.turnoverList
+        }
+      ]
     }
     option && myChart.setOption(option)
   }

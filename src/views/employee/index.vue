@@ -5,64 +5,65 @@
         <label style="margin-right: 5px">Name:</label>
         <el-input
           v-model="input"
-          style="width: 15%"
           clearable
+          style="width: 15%"
           @clear="init"
           @keyup.enter.native="initFun"
         />
         <el-button class="normal-btn continue" @click="init(true)"
-          >Select</el-button
+        >Select
+        </el-button
         >
         <el-button
-          type="primary"
           style="float: right"
+          type="primary"
           @click="addEmployeeHandle('add')"
         >
           + Add Employee
         </el-button>
       </div>
       <el-table
-        :data="tableData"
-        stripe
         v-if="tableData.length"
+        :data="tableData"
         class="tableBox"
+        stripe
       >
-        <el-table-column prop="name" label="Name" />
-        <el-table-column prop="username" label="Username" />
-        <el-table-column prop="phone" label="Phone" />
+        <el-table-column label="Name" prop="name" />
+        <el-table-column label="Username" prop="username" />
+        <el-table-column label="Phone" prop="phone" />
         <el-table-column label="Status">
           <template slot-scope="scope">
             <div
-              class="tableColumn-status"
               :class="{ 'stop-use': String(scope.row.status) === '0' }"
+              class="tableColumn-status"
             >
               {{ String(scope.row.status) === '0' ? 'Disabled' : 'Enabled' }}
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="updateTime" label="Last Operation Time" />
-        <el-table-column label="Operate" width="250" align="center">
+        <el-table-column label="Last Operation Time" prop="updateTime" />
+        <el-table-column align="center" label="Operate" width="250">
           <template slot-scope="scope">
             <el-button
-              type="text"
-              size="small"
-              class="blueBug"
               :class="{ 'disabled-text': scope.row.username === 'admin' }"
               :disabled="scope.row.username === 'admin'"
+              class="blueBug"
+              size="small"
+              type="text"
               @click="addEmployeeHandle(scope.row.id, scope.row.username)"
             >
               Update
             </el-button>
             <el-button
-              :disabled="scope.row.username === 'admin'"
-              type="text"
-              size="small"
-              class="non"
               :class="{
                 'disabled-text': scope.row.username === 'admin',
                 blueBug: scope.row.status == '0',
                 delBut: scope.row.status != '0',
               }"
+              :disabled="scope.row.username === 'admin'"
+              class="non"
+              size="small"
+              type="text"
               @click="statusHandle(scope.row)"
             >
               {{ scope.row.status == '1' ? 'Disable' : 'Enable' }}
@@ -72,11 +73,12 @@
       </el-table>
       <Empty v-else :is-search="isSearch" />
       <el-pagination
-        class="pageList"
-        :page-sizes="[10, 20, 30, 40]"
+        v-if="counts > 10"
         :page-size="pageSize"
-        layout="total, sizes, prev, pager, next, jumper"
+        :page-sizes="[10, 20, 30, 40]"
         :total="counts"
+        class="pageList"
+        layout="total, sizes, prev, pager, next, jumper"
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
       />
@@ -87,7 +89,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import HeadLable from '@/components/HeadLable/index.vue'
-import { getEmployeeList, enableOrDisableEmployee } from '@/api/employee'
+import { enableOrDisableEmployee, getEmployeeList } from '@/api/employee'
 import { UserModule } from '@/store/modules/user'
 import InputAutoComplete from '@/components/InputAutoComplete/index.vue'
 import Empty from '@/components/Empty/index.vue'
@@ -97,8 +99,8 @@ import Empty from '@/components/Empty/index.vue'
   components: {
     HeadLable,
     InputAutoComplete,
-    Empty,
-  },
+    Empty
+  }
 })
 export default class extends Vue {
   private input: any = ''
@@ -109,6 +111,10 @@ export default class extends Vue {
   private id = ''
   private status = ''
   private isSearch: boolean = false
+
+  get userName() {
+    return UserModule.username
+  }
 
   created() {
     this.init()
@@ -124,16 +130,12 @@ export default class extends Vue {
     this.init()
   }
 
-  get userName() {
-    return UserModule.username
-  }
-
   private async init(isSearch?: boolean) {
     this.isSearch = isSearch
     const params = {
       page: this.page,
       pageSize: this.pageSize,
-      name: this.input ? this.input : undefined,
+      name: this.input ? this.input : undefined
     }
     await getEmployeeList(params)
       .then((res: any) => {
@@ -172,7 +174,7 @@ export default class extends Vue {
     this.$confirm('Are you sure ?', 'Confirm', {
       confirmButtonText: 'Yes',
       cancelButtonText: 'No',
-      type: 'warning',
+      type: 'warning'
     }).then(() => {
       enableOrDisableEmployee({ id: this.id, status: !this.status ? 1 : 0 })
         .then((res) => {

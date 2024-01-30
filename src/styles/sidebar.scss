@@ -49,13 +49,13 @@
   }
 
   .el-submenu.is-active {
-    >.el-submenu__title {
+    > .el-submenu__title {
       color: #f4f4f5 !important;
     }
   }
 
   .el-submenu {
-    >.el-submenu__title {
+    > .el-submenu__title {
       min-width: 190px !important;
       background-color: #272a36 !important;
     }
@@ -91,14 +91,14 @@
     .el-submenu {
       overflow: hidden;
 
-      >.el-submenu__title {
+      > .el-submenu__title {
         padding: 0px !important;
 
         .el-submenu__icon-arrow {
           display: none;
         }
 
-        >span {
+        > span {
           visibility: hidden;
         }
       }

@@ -24,7 +24,7 @@
 <script lang="ts">
 import pathToRegexp from 'path-to-regexp'
 import { Component, Vue, Watch } from 'vue-property-decorator'
-import { RouteRecord, Route } from 'vue-router'
+import { Route, RouteRecord } from 'vue-router'
 
 @Component({
   'name': 'Breadcrumb'
@@ -32,6 +32,11 @@ import { RouteRecord, Route } from 'vue-router'
 
 export default class extends Vue {
   private breadcrumbs: RouteRecord[] = []
+
+  created() {
+    this.getBreadcrumb()
+  }
+
   @Watch('$route')
   private onRouteChange(route: Route) {
     // if you go to the redirect page, do not update the breadcrumbs
@@ -42,11 +47,7 @@ export default class extends Vue {
     this.getBreadcrumb()
   }
 
-  created () {
-    this.getBreadcrumb()
-  }
-
-  private getBreadcrumb () {
+  private getBreadcrumb() {
     let matched = this.$route.matched.filter(
       item => item.meta && item.meta.title
     )
@@ -61,19 +62,19 @@ export default class extends Vue {
     })
   }
 
-  private isDashboard (route: RouteRecord) {
+  private isDashboard(route: RouteRecord) {
     const name = route && route.meta && route.meta.title
     return name === '集团管理'
   }
 
-  private pathCompile (path: string) {
+  private pathCompile(path: string) {
     // To solve this problem https://github.com/PanJiaChen/vue-element-admin/issues/561
     const { params } = this.$route
     const toPath = pathToRegexp.compile(path)
     return toPath(params)
   }
 
-  private handleLink (item: any) {
+  private handleLink(item: any) {
     const { redirect, path } = item
     if (redirect) {
       this.$router.push(redirect)

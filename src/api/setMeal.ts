@@ -1,4 +1,5 @@
 import request from '@/utils/request'
+
 /**
  *
  * 套餐管理
@@ -10,8 +11,8 @@ export const getSetmealPage = (params: any) => {
   return request({
     url: '/setmeal/page',
     method: 'get',
-    params,
-  },)
+    params
+  })
 }
 
 // 删除数据接口

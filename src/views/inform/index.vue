@@ -9,76 +9,79 @@
           @click="handleClass(index)"
         >
           <el-badge
-            class="item"
             :class="ountUnread >= 10 ? 'badgeW' : ''"
+            :hidden="!([1].includes(item.value) && ountUnread)"
             :value="
               ountUnread === 0 ? null : ountUnread > 99 ? '99+' : ountUnread
             "
-            :hidden="!([1].includes(item.value) && ountUnread)"
-            >{{ item.label }}</el-badge
+            class="item"
+          >{{ item.label }}
+          </el-badge
           >
         </li>
       </ul>
 
       <el-button
-        icon="iconfont icon-clear"
-        class="right-el-button"
         v-if="status === 1 && baseData.length > 0"
+        class="right-el-button"
+        icon="iconfont icon-clear"
         @click="handleBatch"
-        >全部已读</el-button
+      >全部已读
+      </el-button
       >
       <el-button
-        icon="iconfont icon-clear"
+        v-else
         class="right-el-button onbutton"
         disabled
-        v-else
-        >全部已读</el-button
+        icon="iconfont icon-clear"
+      >全部已读
+      </el-button
       >
     </div>
-    <div class="container newBox" :class="{ hContainer: baseData.length }">
-      <div class="informList" v-if="baseData.length > 0">
+    <div :class="{ hContainer: baseData.length }" class="container newBox">
+      <div v-if="baseData.length > 0" class="informList">
         <div v-for="(item, index) in baseData" :key="index">
           <!-- 待接单 -->
-          <div class="item" v-if="item.type === 1">
+          <div v-if="item.type === 1" class="item">
             <div class="tit">
               <span>【待接单】</span>{{ item.arrNew[0]
               }}<span class="fontOrderTip" @click="handleSetStatus(item.id)">
                 <router-link :to="'/order?status=' + 2">{{
-                  item.arrNew[1]
-                }}</router-link></span
-              >{{ item.arrNew[2]
+                    item.arrNew[1]
+                  }}</router-link></span
+            >{{ item.arrNew[2]
               }}<span class="time">{{ item.createTime }}</span>
             </div>
           </div>
-          <div class="item" v-if="item.type === 2">
+          <div v-if="item.type === 2" class="item">
             <div class="tit">
               <i>急</i><span>【待接单】</span>{{ item.arrNew[0]
               }}<span class="fontOrderTip" @click="handleSetStatus(item.id)"
-                ><router-link :to="'/order?status=' + 2">{{
-                  item.arrNew[1]
-                }}</router-link></span
-              >{{ item.arrNew[2]
+            ><router-link :to="'/order?status=' + 2">{{
+                item.arrNew[1]
+              }}</router-link></span
+            >{{ item.arrNew[2]
               }}<span class="time">{{ item.createTime }}</span>
             </div>
           </div>
           <!-- end -->
           <!-- 待派送 -->
-          <div class="item" v-if="item.type === 3">
+          <div v-if="item.type === 3" class="item">
             <div class="tit">
               <span>【待派送】</span>{{ item.arrNew[0]
               }}<span class="fontOrderTip" @click="handleSetStatus(item.id)"
-                ><router-link :to="'/order?status=' + 2">{{
-                  item.arrNew[1]
-                }}</router-link></span
-              >{{ item.arrNew[2]
+            ><router-link :to="'/order?status=' + 2">{{
+                item.arrNew[1]
+              }}</router-link></span
+            >{{ item.arrNew[2]
               }}<span class="time">{{ item.createTime }}</span>
             </div>
           </div>
           <!-- end -->
           <!-- 催单 -->
           <div
-            class="item"
             v-if="item.type === 4"
+            class="item"
             @mouseenter="toggleShow(item.id, index)"
             @mouseleave="mouseLeaves(index)"
           >
@@ -94,11 +97,11 @@
               <div v-if="shopShow && showIndex === index" class="orderInfo">
                 <p>
                   <span
-                    ><label>下单时间：</label>{{ item.details.orderTime }}</span
+                  ><label>下单时间：</label>{{ item.details.orderTime }}</span
                   ><span
-                    ><label>预计送达时间：</label
-                    >{{ item.details.estimatedDeliveryTime }}</span
-                  >
+                ><label>预计送达时间：</label
+                >{{ item.details.estimatedDeliveryTime }}</span
+                >
                 </p>
                 <p>
                   {{ item.details.consignee }}，{{ item.details.phone }}，{{
@@ -107,7 +110,7 @@
                 </p>
                 <p>
                   <span
-                    ><label>菜品：</label>{{ item.details.orderDishes }}</span
+                  ><label>菜品：</label>{{ item.details.orderDishes }}</span
                   >
                 </p>
               </div>
@@ -134,43 +137,43 @@
             </div>
           </div> -->
           <div
-            class="item"
             v-if="item.type === 5"
+            class="item"
             @mouseenter="toggleShow(item.id, index)"
             @mouseleave="mouseLeaves(index)"
           >
             <div :class="isActive ? 'titAlready' : ''">
               <div class="tit">
                 <span>【今日数据】</span>认真工作的同时也要好好生活。<span
-                  class="time"
-                  >{{ item.createTime }}</span
-                >
+                class="time"
+              >{{ item.createTime }}</span
+              >
               </div>
               <div v-if="shopShow && showIndex === index" class="orderInfo">
                 <p>
                   <span
-                    ><label>营业额：</label>{{ item.details.turnover }}</span
+                  ><label>营业额：</label>{{ item.details.turnover }}</span
                   >
                   <span
-                    ><label>有效订单：</label
-                    >{{ item.details.validOrderCount }}笔</span
+                  ><label>有效订单：</label
+                  >{{ item.details.validOrderCount }}笔</span
                   >
                   <span
-                    ><label>订单完成率：</label
-                    >{{ item.details.orderCompletionRate }}</span
+                  ><label>订单完成率：</label
+                  >{{ item.details.orderCompletionRate }}</span
                   >
                 </p>
                 <p>
                   <span
-                    ><label>今日新增用户：</label
-                    >{{ item.details.newUsers }}</span
+                  ><label>今日新增用户：</label
+                  >{{ item.details.newUsers }}</span
                   >
                   <span
-                    ><label>今日取消：</label
-                    >{{ item.details.cancelledOrders }}笔</span
+                  ><label>今日取消：</label
+                  >{{ item.details.cancelledOrders }}笔</span
                   >
                   <span
-                    ><label>今日取消金额：</label>￥{{
+                  ><label>今日取消金额：</label>￥{{
                       item.details.cancelledAmount
                     }}</span
                   >
@@ -184,11 +187,11 @@
       <Empty v-else :is-search="isSearch" />
       <el-pagination
         v-if="counts > 10"
-        class="pageList"
-        :page-sizes="[10, 20, 30, 40]"
         :page-size="pageSize"
-        layout="total, sizes, prev, pager, next, jumper"
+        :page-sizes="[10, 20, 30, 40]"
         :total="counts"
+        class="pageList"
+        layout="total, sizes, prev, pager, next, jumper"
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
       />
@@ -197,22 +200,17 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Inject } from 'vue-property-decorator'
+import { Component, Vue } from 'vue-property-decorator'
 import Empty from '@/components/Empty/index.vue'
-import { getNewData, setNewData } from '@/utils/cookies'
 import { AppModule } from '@/store/modules/app'
 // 接口
-import {
-  getInformData,
-  batchMsg,
-  setStatus,
-  getCountUnread,
-} from '@/api/inform'
+import { batchMsg, getCountUnread, getInformData, setStatus } from '@/api/inform'
+
 @Component({
   name: 'Inform',
   components: {
-    Empty,
-  },
+    Empty
+  }
 })
 export default class extends Vue {
   // @Inject('reload') readonly reload!: Function
@@ -232,28 +230,31 @@ export default class extends Vue {
     return [
       {
         label: '未读',
-        value: 1,
+        value: 1
         // num: this.ountUnread,
       },
       {
         label: '已读',
-        value: 2,
+        value: 2
         // num: 0,
-      },
+      }
     ]
   }
+
   get ountUnread() {
     return AppModule.statusNumber
   }
+
   created() {
     this.getData()
   }
+
   // 获取列表数据
   async getData() {
     const parent = {
       pageNum: this.page,
       pageSize: this.pageSize,
-      status: this.status,
+      status: this.status
     }
     const { data } = await getInformData(parent)
     if (data.code === 1) {
@@ -295,6 +296,7 @@ export default class extends Vue {
       this.$message.error(data.msg)
     }
   }
+
   // 设置单个订单已读
   async handleSetStatus(id) {
     const { data } = await setStatus(id)
@@ -312,6 +314,7 @@ export default class extends Vue {
       this.$message.error(data.msg)
     }
   }
+
   // 获取未读消息
   async getCountUnread() {
     const { data } = await getCountUnread()
@@ -322,6 +325,7 @@ export default class extends Vue {
       this.$message.error(data.msg)
     }
   }
+
   // 触发已读未读按钮
   handleClass(index) {
     this.activeIndex = index
@@ -332,6 +336,7 @@ export default class extends Vue {
     }
     this.getData()
   }
+
   // 下拉菜单显示
   toggleShow(id, index) {
     this.shopShow = true
@@ -349,11 +354,13 @@ export default class extends Vue {
       }
     }, 1000)
   }
+
   // 下拉菜单隐藏
   mouseLeaves(index) {
     this.shopShow = false
     this.showIndex = index
   }
+
   private handleSizeChange(val: any) {
     this.pageSize = val
     this.getData()
@@ -370,6 +377,7 @@ export default class extends Vue {
 .dashboard {
   &-container {
     margin: 30px;
+
     .container {
       background: #fff;
       position: relative;
@@ -379,6 +387,7 @@ export default class extends Vue {
       // min-height: 650px;
       height: calc(100% - 55px);
       overflow: hidden;
+
       &.newBox {
         // padding:0;
         .pageList {
@@ -388,6 +397,7 @@ export default class extends Vue {
         }
       }
     }
+
     .hContainer {
       height: auto !important;
     }
