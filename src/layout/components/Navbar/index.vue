@@ -6,9 +6,9 @@
                  class="hamburger-container"
                  @toggleClick="toggleSideBar" />
       <span v-if="status===1"
-            class="businessBtn">In business</span>
+            class="businessBtn">Open</span>
       <span v-else
-            class="businessBtn closing">Not in business</span>
+            class="businessBtn closing">Closed</span>
     </div>
 
     <div :key="restKey"
@@ -53,11 +53,11 @@
                width="25%">
       <el-radio-group v-model="setStatus">
         <el-radio :label="1">
-          In Business
+          Open
           <span>The restaurant is currently open and will automatically accept any orders.</span>
         </el-radio>
         <el-radio :label="0">
-          Not In Business
+          Closed
           <span>The restaurant is currently closed and only accepts reservations during business hours.</span>
         </el-radio>
       </el-radio-group>
@@ -243,7 +243,7 @@ export default class extends Vue {
   // 获取未读消息
   async getCountUnread() {
     const { data } = await getCountUnread()
-    if (data.code === 1) {
+    if (data.code === 200) {
       // this.ountUnread = data.data
       AppModule.StatusNumber(data.data)
       // setNewData(data.data)
@@ -284,7 +284,7 @@ export default class extends Vue {
   // 营业状态设置
   async handleSave() {
     const { data } = await setStatus(this.setStatus)
-    if (data.code === 1) {
+    if (data.code === 200) {
       this.dialogVisible = false
       this.getStatus()
     }

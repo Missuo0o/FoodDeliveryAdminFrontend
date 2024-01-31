@@ -46,7 +46,7 @@ export const addCategory = (params: any) => {
 export const enableOrDisableEmployee = (params: any) => {
   return request({
     url: `/category/status/${params.status}`,
-    method: 'post',
+    method: 'put',
     params: { id: params.id }
   })
 }

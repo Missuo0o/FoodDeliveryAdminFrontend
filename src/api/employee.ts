@@ -32,7 +32,7 @@ export const getEmployeeList = (params: any) => {
 export const enableOrDisableEmployee = (params: any) => {
   return request({
     url: `/employee/status/${params.status}`,
-    method: 'post',
+    method: 'put',
     params: { id: params.id }
   })
 }

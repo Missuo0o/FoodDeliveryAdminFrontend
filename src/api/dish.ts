@@ -83,7 +83,7 @@ export const commonDownload = (params: any) => {
 export const dishStatusByStatus = (params: any) => {
   return request({
     url: `/dish/status/${params.status}`,
-    method: 'post',
+    method: 'put',
     params: { id: params.id }
   })
 }

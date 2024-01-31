@@ -54,7 +54,7 @@ export const querySetmealById = (id: string | (string | null)[]) => {
 export const setmealStatusByStatus = (params: any) => {
   return request({
     url: `/setmeal/status/${params.status}`,
-    method: 'post',
+    method: 'put',
     params: { id: params.ids }
   })
 }
