@@ -36,7 +36,7 @@
         </el-button>
         <div class="tableLab">
           <span class="delBut non"
-                @click="deleteHandle('batch')">Batch Delete</span>
+                @click="deleteHandle('batch', null)">Batch Delete</span>
           <!-- <span class="blueBug non" @click="statusHandle('1')">批量启售</span>
           <span
             style="border: none"
@@ -201,7 +201,7 @@ export default class extends Vue {
       status: this.dishStatus
     })
       .then(res => {
-        if (res && res.data && res.data.code === 200) {
+        if (res && res.data && res.data.code === 1) {
           this.tableData = res.data.data.records
           this.counts = Number(res.data.data.total)
         } else {
@@ -236,7 +236,7 @@ export default class extends Vue {
     }).then(() => {
       deleteSetmeal(type === 'batch' ? this.checkList.join(',') : id)
         .then(res => {
-          if (res.data.code === 200) {
+          if (res.data.code === 1) {
             this.$message.success('Success!')
             this.init()
           } else {
@@ -271,7 +271,7 @@ export default class extends Vue {
     }).then(() => {
       setmealStatusByStatus(params)
         .then(res => {
-          if (res.data.code === 200) {
+          if (res.data.code === 1) {
             this.$message.success('Success!')
             this.init()
           } else {
@@ -290,7 +290,7 @@ export default class extends Vue {
       type: 2
     })
       .then(res => {
-        if (res && res.data && res.data.code === 200) {
+        if (res && res.data && res.data.code === 1) {
           this.dishCategoryList = (
             res.data &&
             res.data.data &&

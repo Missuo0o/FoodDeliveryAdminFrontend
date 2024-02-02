@@ -399,7 +399,7 @@ export default class extends Vue {
   private getDayData() {
     getDayDataes({ type: this.typeA, date: this.dataTime })
       .then((res) => {
-        if (res.data.code == 200) {
+        if (res.data.code == 1) {
           const { data } = res.data
           let yData: number[] = []
           if (this.typeA === 1) {
@@ -425,7 +425,7 @@ export default class extends Vue {
   private getSalesRankData() {
     getSalesRanking({ type: this.typeB, date: this.dataTime })
       .then((res) => {
-        if (res.data.code == 200) {
+        if (res.data.code == 1) {
           const { data } = res.data
           let chartData = []
           if (this.typeB === 1) {
@@ -461,7 +461,7 @@ export default class extends Vue {
   private getDayPayTypeData() {
     getDayPayType({ date: this.dataTime })
       .then((res) => {
-        if (res.data.code == 200) {
+        if (res.data.code == 1) {
           const { data } = res.data
           let chartData = []
           if (this.typeB === 1) {
@@ -497,7 +497,7 @@ export default class extends Vue {
   private getDayRankingData() {
     getDayRanking({ type: this.dataType, date: this.dataTime })
       .then((res) => {
-        if (res.data.code == 200) {
+        if (res.data.code == 1) {
           const { data } = res.data
           const charts = { xData: data.xaxis, yData: data.series }
           this.chartDataB = charts
@@ -515,7 +515,7 @@ export default class extends Vue {
     // 获取当日销售数据
     getChartsDataes({ start: this.dataTime, end: this.dataTime })
       .then((res) => {
-        if (res.data.code == 200) {
+        if (res.data.code == 1) {
           const { data } = res.data
           this.topData = data
         } else {
@@ -531,7 +531,7 @@ export default class extends Vue {
   private getprivilegeData() {
     getprivilege({ date: this.dataTime })
       .then((res) => {
-        if (res.data.code == 200) {
+        if (res.data.code == 1) {
           const { data } = res.data
           this.discountTotal = 0
           this.discountPercentTotal = 0
@@ -566,7 +566,7 @@ export default class extends Vue {
   private getDiscount() {
     getTimeQuantumDiscount({ start: this.stateTime, end: this.endTime })
       .then((res) => {
-        if (res.data.code == 200) {
+        if (res.data.code == 1) {
           const { data } = res.data
           this.discountTotal = 0
           this.discountPercentTotal = 0
@@ -593,7 +593,7 @@ export default class extends Vue {
       start: this.stateTime,
       end: this.endTime
     }).then((res) => {
-      if (res.data.code == 200) {
+      if (res.data.code == 1) {
         const { data } = res.data
         let yData: number[] = []
         if (this.typeA === 1) {
@@ -616,7 +616,7 @@ export default class extends Vue {
   private getReceivables() {
     getTimeQuantumReceivables({ start: this.stateTime, end: this.endTime })
       .then((res) => {
-        if (res.data.code == 200) {
+        if (res.data.code == 1) {
           const { data } = res.data
           let chartData = []
           if (this.typeB === 1) {
@@ -656,7 +656,7 @@ export default class extends Vue {
       end: this.endTime
     })
       .then((res) => {
-        if (res.data.code == 200) {
+        if (res.data.code == 1) {
           const { data } = res.data
           let chartData = []
           if (this.typeB === 1) {
@@ -691,7 +691,7 @@ export default class extends Vue {
   private getTimeQuantumDishesDataes() {
     getTimeQuantumDishes({ start: this.stateTime, end: this.endTime })
       .then((res) => {
-        if (res.data.code == 200) {
+        if (res.data.code == 1) {
           const { data } = res.data
           let yData: number[] = []
           data.series.length > 0 &&

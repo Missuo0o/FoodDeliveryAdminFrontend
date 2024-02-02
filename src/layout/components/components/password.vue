@@ -37,7 +37,7 @@
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
-import { Form as ElForm } from 'element-ui'
+import { Form as ElForm, Message } from 'element-ui'
 // 接口
 import { editPassword } from '@/api/users'
 
@@ -56,11 +56,14 @@ export default class extends Vue {
           oldPassword: this.form.oldPassword,
           newPassword: this.form.newPassword
         }
-        await editPassword(parnt)
-        this.$emit('handleclose')
-        ;(this.$refs.form as ElForm).resetFields()
-      } else {
-        return false
+        const response = await editPassword(parnt);
+        if (response.data.code === 1) {
+          this.$message.success('Success!');
+        } else {
+          this.$message.error(response.data.msg);
+        }
+        this.$emit('handleclose');
+        (this.$refs.form as ElForm).resetFields();
       }
     })
   }
@@ -83,7 +86,7 @@ export default class extends Vue {
 
   private validatePass2 = (rule, value, callback) => {
     if (!value) {
-      callback(new Error('Please enter your password again'))
+      callback(new Error('Please enter the password again'))
     } else if (value !== this.form.newPassword) {
       callback(new Error('Password is not the same, please re-enter the password'))
     } else {

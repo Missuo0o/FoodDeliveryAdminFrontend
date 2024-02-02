@@ -580,8 +580,8 @@ export default class extends Vue {
     this.dialogOrderStatus = row.status
     orderAccept({ id: this.orderId })
       .then((res) => {
-        if (res.data.code === 200) {
-          this.$message.success('操作成功')
+        if (res.data.code === 1) {
+          this.$message.success('Success!')
           this.orderId = ''
           // this.dialogOrderStatus = 0
           this.dialogVisible = false
@@ -632,8 +632,8 @@ export default class extends Vue {
         this.cancelReason === '自定义原因' ? this.remark : this.cancelReason
     })
       .then((res) => {
-        if (res.data.code === 200) {
-          this.$message.success('操作成功')
+        if (res.data.code === 1) {
+          this.$message.success('Success!')
           this.cancelDialogVisible = false
           this.orderId = ''
           // this.dialogOrderStatus = 0
@@ -656,8 +656,8 @@ export default class extends Vue {
       }
     ;(status === 3 ? deliveryOrder : completeOrder)(params)
       .then((res) => {
-        if (res.data.code === 200) {
-          this.$message.success('操作成功')
+        if (res.data.code === 1) {
+          this.$message.success('Success!')
           this.orderId = ''
           // this.dialogOrderStatus = 0
           this.dialogVisible = false

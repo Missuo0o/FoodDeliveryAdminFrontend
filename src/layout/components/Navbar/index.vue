@@ -243,7 +243,7 @@ export default class extends Vue {
   // 获取未读消息
   async getCountUnread() {
     const { data } = await getCountUnread()
-    if (data.code === 200) {
+    if (data.code === 1) {
       // this.ountUnread = data.data
       AppModule.StatusNumber(data.data)
       // setNewData(data.data)
@@ -284,7 +284,7 @@ export default class extends Vue {
   // 营业状态设置
   async handleSave() {
     const { data } = await setStatus(this.setStatus)
-    if (data.code === 200) {
+    if (data.code === 1) {
       this.dialogVisible = false
       this.getStatus()
     }

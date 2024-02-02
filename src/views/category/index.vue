@@ -188,6 +188,7 @@ export default class extends Vue {
   private classData: any = {
     title: 'Type',
     dialogVisible: false,
+    type:'',
     categoryId: '',
     name: '',
     sort: ''
@@ -246,11 +247,11 @@ export default class extends Vue {
         if (value) {
           addCategory({
             name: this.classData.name,
-            type: this.type,
+            type: this.classData.type,
             sort: this.classData.sort
           })
             .then(res => {
-              if (res.data.code === 200) {
+              if (res.data.code === 1) {
                 this.$message.success('Success ！')
                 this.$refs.classData.resetFields()
                 if (!st) {
@@ -271,11 +272,12 @@ export default class extends Vue {
         if (value) {
           editCategory({
             id: this.classData.id,
+            type:this.classData.type,
             name: this.classData.name,
             sort: this.classData.sort
           })
             .then(res => {
-              if (res.data.code === 200) {
+              if (res.data.code === 1) {
                 this.$message.success('Success ！')
                 this.classData.dialogVisible = false
                 this.$refs.classData.resetFields()
@@ -302,7 +304,7 @@ export default class extends Vue {
       type: this.categoryType ? this.categoryType : undefined
     })
       .then(res => {
-        if (String(res.data.code) === '200') {
+        if (String(res.data.code) === '1') {
           this.tableData =
             res && res.data && res.data.data && res.data.data.records
           this.counts = Number(res.data.data.total)
@@ -338,6 +340,7 @@ export default class extends Vue {
     this.action = 'edit'
     this.classData.name = dat.name
     this.classData.sort = dat.sort
+    this.classData.type = dat.type
     this.classData.id = dat.id
     this.classData.dialogVisible = true
     this.actionType = 'edit'
@@ -383,7 +386,7 @@ export default class extends Vue {
     }).then(() => {
       deleCategory(id)
         .then(res => {
-          if (res.data.code === 200) {
+          if (res.data.code === 1) {
             this.$message.success('Success ！')
             this.init()
           } else {

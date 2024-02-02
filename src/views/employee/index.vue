@@ -139,7 +139,7 @@ export default class extends Vue {
     }
     await getEmployeeList(params)
       .then((res: any) => {
-        if (String(res.data.code) === '200') {
+        if (String(res.data.code) === '1') {
           this.tableData = res.data && res.data.data && res.data.data.records
           this.counts = res.data.data.total
         }

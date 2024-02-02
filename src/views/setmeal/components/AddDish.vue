@@ -99,7 +99,7 @@ export default class extends Vue {
   // 获取套餐分类
   public getDishType() {
     getCategoryList({ type: 1 }).then(res => {
-      if (res && res.data && res.data.code === 200) {
+      if (res && res.data && res.data.code === 1) {
         this.dishType = res.data.data
         this.getDishList(res.data.data[0].id)
       } else {
@@ -133,7 +133,7 @@ export default class extends Vue {
   // 通过套餐ID获取菜品列表分类
   private getDishList(id: number) {
     queryDishList({ categoryId: id }).then(res => {
-      if (res && res.data && res.data.code === 200) {
+      if (res && res.data && res.data.code === 1) {
         if (res.data.data.length == 0) {
           this.dishList = []
           return
@@ -159,7 +159,7 @@ export default class extends Vue {
   // 关键词收搜菜品列表分类
   private getDishForName(name: any) {
     queryDishList({ name }).then(res => {
-      if (res && res.data && res.data.code === 200) {
+      if (res && res.data && res.data.code === 1) {
         let newArr = res.data.data
         newArr.forEach((n: any) => {
           n.dishId = n.id

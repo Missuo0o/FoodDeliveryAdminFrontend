@@ -179,7 +179,7 @@ export default class extends Vue {
             } else {
               const reg = /^([A-Za-z0-9\u4e00-\u9fa5]){1,32}$/
               if (!reg.test(value)) {
-                callback(new Error('The input of the dish name does not match, please enter 2-20 characters'))
+                callback(new Error('Please enter 2-20 characters'))
               } else {
                 callback()
               }
@@ -262,7 +262,7 @@ export default class extends Vue {
 
   private async init() {
     queryDishById(this.$route.query.id).then(res => {
-      if (res && res.data && res.data.code === 200) {
+      if (res && res.data && res.data.code === 1) {
         this.ruleForm = { ...res.data.data }
         this.ruleForm.price = String(res.data.data.price)
         this.ruleForm.status = res.data.data.status == '1'
@@ -319,7 +319,7 @@ export default class extends Vue {
   // 获取菜品分类
   private getDishList() {
     getCategoryList({ type: 1 }).then(res => {
-      if (res.data.code === 200) {
+      if (res.data.code === 1) {
         this.dishList = res && res.data && res.data.data
       } else {
         this.$message.error(res.data.msg)
@@ -364,7 +364,7 @@ export default class extends Vue {
           delete params.id
           addDish(params)
             .then(res => {
-              if (res.data.code === 200) {
+              if (res.data.code === 1) {
                 this.$message.success('Success!')
                 if (!st) {
                   this.$router.push({ path: '/dish' })
@@ -397,7 +397,7 @@ export default class extends Vue {
           delete params.updateTime
           editDish(params)
             .then(res => {
-              if (res && res.data && res.data.code === 200) {
+              if (res && res.data && res.data.code === 1) {
                 this.$router.push({ path: '/dish' })
                 this.$message.success('Success!')
               } else {

@@ -225,7 +225,7 @@ export default class extends Vue {
           } else {
             const reg = /^([A-Za-z0-9\u4e00-\u9fa5]){2,20}$/
             if (!reg.test(value)) {
-              callback(new Error('The input of the dish name does not match, please enter 2-20 characters'))
+              callback(new Error('Please enter 2-20 characters'))
             } else {
               callback()
             }
@@ -335,7 +335,7 @@ export default class extends Vue {
           delete prams.id
           addSetmeal(prams)
             .then(res => {
-              if (res && res.data && res.data.code === 200) {
+              if (res && res.data && res.data.code === 1) {
                 this.$message.success('Success!')
                 if (!st) {
                   this.$router.push({ path: '/setmeal' })
@@ -368,7 +368,7 @@ export default class extends Vue {
           delete prams.updateTime
           editSetmeal(prams)
             .then(res => {
-              if (res.data.code === 200) {
+              if (res.data.code === 1) {
                 this.$message.success('Success!')
                 this.$router.push({ path: '/setmeal' })
               } else {
@@ -392,7 +392,7 @@ export default class extends Vue {
 
   private async init() {
     querySetmealById(this.$route.query.id).then(res => {
-      if (res && res.data && res.data.code === 200) {
+      if (res && res.data && res.data.code === 1) {
         this.ruleForm = res.data.data
         this.ruleForm.status = res.data.data.status == '1'
         ;(this.ruleForm as any).price = res.data.data.price
@@ -414,7 +414,7 @@ export default class extends Vue {
   // 获取套餐分类
   private getDishTypeList() {
     getCategoryList({ type: 2, page: 1, pageSize: 1000 }).then(res => {
-      if (res && res.data && res.data.code === 200) {
+      if (res && res.data && res.data.code === 1) {
         this.setMealList = res.data.data.map((obj: any) => ({
           ...obj,
           idType: obj.id

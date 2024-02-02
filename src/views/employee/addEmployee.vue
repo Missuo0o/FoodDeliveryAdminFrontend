@@ -67,7 +67,7 @@
                       label="IdNumber:"
                       prop="idNumber">
           <el-input v-model="ruleForm.idNumber"
-                    maxlength="10"
+                    maxlength="9"
                     placeholder="Please enter the idNumber" />
         </el-form-item>
         <div class="subBox address">
@@ -154,7 +154,7 @@ export default class extends Vue {
           // message: '请输入账号',
           validator: (rule: any, value: string, callback: Function) => {
             if (!value) {
-              callback(new Error('Please enter your username'))
+              callback(new Error('Please enter the username'))
             } else {
               const reg = /^([a-z]|[0-9]){3,20}$/
               if (!reg.test(value)) {
@@ -181,10 +181,18 @@ export default class extends Vue {
   }
 
   private isCellPhone(val: any) {
-    if (!/^(?:\(\d{3}\)\s?|\d{3}-)?\d{3}-\d{4}$/.test(val)) {
-      return false
+    // 更新正则表达式以匹配9位数字的美国手机号格式
+    if (!/^\d{10}$/.test(val)) {
+      return false;
     } else {
-      return true
+      return true;
+    }
+  }
+  private isIdnumber(val: any) {
+    if (!/^\d{9}$/.test(val)) {
+      return false;
+    } else {
+      return true;
     }
   }
 
@@ -206,10 +214,9 @@ export default class extends Vue {
     if (value == '') {
       callback(new Error('Please enter the idNumber'))
     }
-      // else if (reg.test(value)) {
-      //   callback()
-    // }
-    else {
+    else if (!this.isIdnumber(value)){
+      callback(new Error('Please enter the correct idNumber!'))
+    } else {
       callback()
     }
   }
@@ -218,7 +225,7 @@ export default class extends Vue {
     const id = this.$route.query.id
     queryEmployeeById(id).then((res: any) => {
       // String(res.status) === '200'
-      if (res.data.code === 200) {
+      if (res.data.code === 1) {
         this.ruleForm = res.data.data
         this.ruleForm.sex = res.data.data.sex === '0' ? 'Female' : 'Male'
         // this.ruleForm.password = ''
@@ -246,7 +253,7 @@ export default class extends Vue {
           }
           addEmployee(params)
             .then((res: any) => {
-              if (res.data.code === 200) {
+              if (res.data.code === 1) {
                 this.$message.success('Success ！')
                 if (!st) {
                   this.$router.push({ path: '/employee' })
@@ -275,7 +282,7 @@ export default class extends Vue {
           }
           editEmployee(params)
             .then((res: any) => {
-              if (res.data.code === 200) {
+              if (res.data.code === 1) {
                 this.$message.success('Success ！')
                 this.$router.push({ path: '/employee' })
               } else {
@@ -291,6 +298,7 @@ export default class extends Vue {
       }
     })
   }
+
 }
 </script>
 

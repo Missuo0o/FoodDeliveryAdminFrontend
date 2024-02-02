@@ -59,8 +59,8 @@ import { UserModule } from '@/store/modules/user'
 })
 export default class extends Vue {
   private loginForm = {
-    username: 'admin',
-    password: '123456'
+    username: '',
+    password: ''
   } as {
     username: String
     password: String
@@ -70,7 +70,7 @@ export default class extends Vue {
 
   private validateUsername = (rule: any, value: string, callback: Function) => {
     if (!value) {
-      callback(new Error('Please enter your username'))
+      callback(new Error('Please enter the username'))
     } else {
       callback()
     }
@@ -100,7 +100,7 @@ export default class extends Vue {
         this.loading = true
         await UserModule.Login(this.loginForm as any)
           .then((res: any) => {
-            if (String(res.code) === '200') {
+            if (String(res.code) === '1') {
               this.$router.push('/')
             } else {
               // this.$message.error(res.msg)

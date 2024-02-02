@@ -14,7 +14,7 @@
       <div v-if="!isCollapse"
            class="sidebar-logo">
         <img src="@/assets/login/logo.png"
-             style="width: 100px; height: 40px">
+             style="width: 40px; height: 40px">
       </div>
       <div v-else
            class="sidebar-logo-mini">

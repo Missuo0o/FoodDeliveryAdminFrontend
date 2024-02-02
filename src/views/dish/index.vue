@@ -198,7 +198,7 @@ export default class extends Vue {
       status: this.dishStatus
     })
       .then(res => {
-        if (res.data.code === 200) {
+        if (res.data.code === 1) {
           this.tableData = res.data && res.data.data && res.data.data.records
           this.counts = Number(res.data.data.total)
         }
@@ -231,7 +231,7 @@ export default class extends Vue {
     }).then(() => {
       deleteDish(type === 'batch' ? this.checkList.join(',') : id)
         .then(res => {
-          if (res && res.data && res.data.code === 200) {
+          if (res && res.data && res.data.code === 1) {
             this.$message.success('Success!')
             this.init()
           } else {
@@ -250,7 +250,7 @@ export default class extends Vue {
       type: 1
     })
       .then(res => {
-        if (res && res.data && res.data.code === 200) {
+        if (res && res.data && res.data.code === 1) {
           this.dishCategoryList = (
             res.data &&
             res.data.data &&
@@ -287,7 +287,7 @@ export default class extends Vue {
       // 起售停售---批量起售停售接口
       dishStatusByStatus(this.dishState)
         .then(res => {
-          if (res && res.data && res.data.code === 200) {
+          if (res && res.data && res.data.code === 1) {
             this.$message.success('Success!')
             this.init()
           } else {

@@ -257,7 +257,7 @@ export default class extends Vue {
       status: this.status
     }
     const { data } = await getInformData(parent)
-    if (data.code === 200) {
+    if (data.code === 1) {
       this.baseData = data.data.records
       this.counts = data.data.total
       let objNew = {} as any
@@ -286,7 +286,7 @@ export default class extends Vue {
       ids.push(val.id)
     })
     const { data } = await batchMsg(ids)
-    if (data.code === 200) {
+    if (data.code === 1) {
       // this.status = 2
       // this.activeIndex = 1
       this.getCountUnread()
@@ -300,7 +300,7 @@ export default class extends Vue {
   // 设置单个订单已读
   async handleSetStatus(id) {
     const { data } = await setStatus(id)
-    if (data.code === 200) {
+    if (data.code === 1) {
       // this.status = 2
       // this.activeIndex = 1
       if (!this.isActive) {
@@ -318,7 +318,7 @@ export default class extends Vue {
   // 获取未读消息
   async getCountUnread() {
     const { data } = await getCountUnread()
-    if (data.code === 200) {
+    if (data.code === 1) {
       AppModule.StatusNumber(data.data)
       // this.$message.success('操作成功！')
     } else {

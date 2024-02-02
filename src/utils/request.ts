@@ -89,7 +89,7 @@ service.interceptors.response.use(
     //   // window.location.href = '/login'
     //   // return false
     // } else
-    if (response.data.code === 200) {
+    if (response.data.code === 1) {
       // const res = response.data
       return response
     }

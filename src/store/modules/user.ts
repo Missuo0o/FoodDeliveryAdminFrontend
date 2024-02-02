@@ -35,7 +35,7 @@ class User extends VuexModule implements IUserState {
     this.SET_USERNAME(username)
     Cookies.set('username', username)
     const { data } = await login({ username, password })
-    if (String(data.code) === '200') {
+    if (String(data.code) === '1') {
       // const dataParams = {
       //   // status: 200,
       //   token: data.data.token,
