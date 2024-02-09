@@ -8,7 +8,7 @@
       <ul>
         <li>
           <span class="status"
-          ><i class="iconfont icon-waiting"></i>待接单</span
+          ><i class="iconfont icon-waiting"></i>Pending Order</span
           >
           <span class="num tip"
           ><router-link to="/order?status=2">{{
@@ -18,7 +18,7 @@
         </li>
         <li>
           <span class="status"
-          ><i class="iconfont icon-staySway"></i>待派送</span
+          ><i class="iconfont icon-staySway"></i>Awaiting delivery</span
           >
           <span class="num tip"
           ><router-link to="/order?status=3">{{
@@ -28,7 +28,7 @@
         </li>
         <li>
           <span class="status"
-          ><i class="iconfont icon-complete"></i>已完成</span
+          ><i class="iconfont icon-complete"></i>Completed</span
           >
           <span class="num"
           ><router-link to="/order?status=5">{{
@@ -37,7 +37,7 @@
           >
         </li>
         <li>
-          <span class="status"><i class="iconfont icon-cancel"></i>已取消</span>
+          <span class="status"><i class="iconfont icon-cancel"></i>Cancelled</span>
           <span class="num"
           ><router-link to="/order?status=6">{{
               orderviewData.cancelledOrders
@@ -45,7 +45,7 @@
           >
         </li>
         <li>
-          <span class="status"><i class="iconfont icon-all"></i>全部订单</span>
+          <span class="status"><i class="iconfont icon-all"></i>All Orders</span>
           <span class="num"
           ><router-link to="/order">{{
               orderviewData.allOrders

@@ -89,7 +89,7 @@
             />
           </div>
           <div class="item">
-            <div>实收金额</div>
+            <div>Amount</div>
             <div>{{ topData.payTotal / 100 || 0 }}元</div>
             <div>较前一日 0%</div>
           </div>

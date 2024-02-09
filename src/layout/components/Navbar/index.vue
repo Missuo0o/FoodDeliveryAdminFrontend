@@ -203,7 +203,7 @@ export default class extends Vue {
           that.$refs.audioVo2.play()
         }
         that.$notify({
-          title: jsonMsg.type === 1 ? 'Pending order' : 'Reminder',
+          title: jsonMsg.type === 1 ? 'Pending Order' : 'Reminder',
           duration: 0,
           dangerouslyUseHTMLString: true,
           onClick: () => {

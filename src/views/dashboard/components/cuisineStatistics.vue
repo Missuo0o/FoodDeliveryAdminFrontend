@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <h2 class="homeTitle">
-      菜品总览<span><router-link to="dish">菜品管理</router-link></span>
+      Dish Overview<span><router-link to="dish">Dish Management</router-link></span>
     </h2>
     <div class="orderviewBox">
       <ul>
@@ -16,7 +16,7 @@
         <li class="add">
           <router-link to="/dish/add">
             <i></i>
-            <p>新增菜品</p>
+            <p>Add Dish</p>
           </router-link>
         </li>
       </ul>

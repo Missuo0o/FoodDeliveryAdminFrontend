@@ -62,7 +62,7 @@ export default class extends Vue {
   handleExport() {
     this.$confirm('是否确认导出最近30天运营数据?', '提示', {
       confirmButtonText: '确定',
-      cancelButtonText: '取消',
+      cancelButtonText: 'Cancel',
       type: 'warning'
     })
       .then(async function() {

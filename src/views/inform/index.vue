@@ -44,7 +44,7 @@
           <!-- 待接单 -->
           <div v-if="item.type === 1" class="item">
             <div class="tit">
-              <span>【待接单】</span>{{ item.arrNew[0]
+              <span>【Pending Order】</span>{{ item.arrNew[0]
               }}<span class="fontOrderTip" @click="handleSetStatus(item.id)">
                 <router-link :to="'/order?status=' + 2">{{
                     item.arrNew[1]
@@ -55,7 +55,7 @@
           </div>
           <div v-if="item.type === 2" class="item">
             <div class="tit">
-              <i>急</i><span>【待接单】</span>{{ item.arrNew[0]
+              <i>急</i><span>【Pending Order】</span>{{ item.arrNew[0]
               }}<span class="fontOrderTip" @click="handleSetStatus(item.id)"
             ><router-link :to="'/order?status=' + 2">{{
                 item.arrNew[1]
@@ -68,7 +68,7 @@
           <!-- 待派送 -->
           <div v-if="item.type === 3" class="item">
             <div class="tit">
-              <span>【待派送】</span>{{ item.arrNew[0]
+              <span>【Awaiting delivery】</span>{{ item.arrNew[0]
               }}<span class="fontOrderTip" @click="handleSetStatus(item.id)"
             ><router-link :to="'/order?status=' + 2">{{
                 item.arrNew[1]
@@ -97,9 +97,9 @@
               <div v-if="shopShow && showIndex === index" class="orderInfo">
                 <p>
                   <span
-                  ><label>下单时间：</label>{{ item.details.orderTime }}</span
+                  ><label>Order Time:</label>{{ item.details.orderTime }}</span
                   ><span
-                ><label>预计送达时间：</label
+                ><label>ETA：</label
                 >{{ item.details.estimatedDeliveryTime }}</span
                 >
                 </p>
@@ -110,7 +110,7 @@
                 </p>
                 <p>
                   <span
-                  ><label>菜品：</label>{{ item.details.orderDishes }}</span
+                  ><label>Dish:</label>{{ item.details.orderDishes }}</span
                   >
                 </p>
               </div>
