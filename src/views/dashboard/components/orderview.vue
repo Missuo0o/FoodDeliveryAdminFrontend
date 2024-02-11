@@ -1,8 +1,8 @@
 <template>
   <div class="container">
     <h2 class="homeTitle">
-      订单管理<i>{{ days[1] }}</i
-    ><span><router-link to="/order">订单明细</router-link></span>
+      Order Management<i>{{ days[1] }}</i
+    ><span><router-link to="/order">Order Details</router-link></span>
     </h2>
     <div class="orderviewBox">
       <ul>

@@ -26,7 +26,7 @@
         class="right-el-button"
         icon="iconfont icon-clear"
         @click="handleBatch"
-      >全部已读
+      >All Read
       </el-button
       >
       <el-button
@@ -34,7 +34,7 @@
         class="right-el-button onbutton"
         disabled
         icon="iconfont icon-clear"
-      >全部已读
+      >All read
       </el-button
       >
     </div>
@@ -87,7 +87,7 @@
           >
             <div :class="isActive ? 'titAlready' : ''">
               <div class="tit">
-                <span>【催单】</span>{{ item.arrNew[0] }}
+                <span>[Reminder]</span>{{ item.arrNew[0] }}
                 <!-- <span
                   class="fontOrderTip"
                   >去处理</span
@@ -144,7 +144,7 @@
           >
             <div :class="isActive ? 'titAlready' : ''">
               <div class="tit">
-                <span>【今日数据】</span>认真工作的同时也要好好生活。<span
+                <span>[Today's Data]</span><span
                 class="time"
               >{{ item.createTime }}</span
               >
@@ -152,28 +152,28 @@
               <div v-if="shopShow && showIndex === index" class="orderInfo">
                 <p>
                   <span
-                  ><label>营业额：</label>{{ item.details.turnover }}</span
+                  ><label>Turnover:</label>{{ item.details.turnover }}</span
                   >
                   <span
-                  ><label>有效订单：</label
-                  >{{ item.details.validOrderCount }}笔</span
+                  ><label>Valid orders:</label
+                  >{{ item.details.validOrderCount }}</span
                   >
                   <span
-                  ><label>订单完成率：</label
+                  ><label>Order completion rate:</label
                   >{{ item.details.orderCompletionRate }}</span
                   >
                 </p>
                 <p>
                   <span
-                  ><label>今日新增用户：</label
+                  ><label>New users today:</label
                   >{{ item.details.newUsers }}</span
                   >
                   <span
-                  ><label>今日取消：</label
-                  >{{ item.details.cancelledOrders }}笔</span
+                  ><label>Cancelled today:</label
+                  >{{ item.details.cancelledOrders }}</span
                   >
                   <span
-                  ><label>今日取消金额：</label>￥{{
+                  ><label>Amount cancelled today:</label>￥{{
                       item.details.cancelledAmount
                     }}</span
                   >

@@ -16,7 +16,7 @@
     </div>
     <div class="get-time">
       <p>
-        已选时间：{{ tateData[0] }} 至
+        From：{{ tateData[0] }} To
         {{ tateData[tateData.length - 1] }}
       </p>
     </div>
@@ -40,7 +40,7 @@ import { exportInfor } from '@/api/index'
 export default class extends Vue {
   nowIndex = 2 - 1
   value = []
-  tabsParam = ['昨日', '近7日', '近30日', '本周', '本月']
+  tabsParam = ['Yesterday', '7 days', '30 days', 'Week', 'Month']
   @Prop() private flag!: any
   @Prop() private tateData!: any
   @Prop() private turnoverData!: any

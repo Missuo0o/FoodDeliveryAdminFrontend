@@ -37,7 +37,7 @@
           />
           <span @click="checkaffterDate('day', 'after')">后一天</span>
         </div>
-        <div><span class="but" @click="init()">查看今日数据</span></div>
+        <div><span class="but" @click="init()">View today's data</span></div>
       </div>
       <div v-if="act === 'week'" class="dataSelect">
         <div>
@@ -148,7 +148,7 @@
             <span
               :class="{ butAct: typeB == 2 }"
               @click="topActiveHandle('typeB')"
-            >按销量</span
+            >By sales volume</span
             >
           </div>
           <BarChart :chart-data="chartDataC" title="菜品分类占比" />
@@ -288,13 +288,13 @@ export default class extends Vue {
         let err = ''
         switch (val) {
           case 'day':
-            err = '已经是最后一天了'
+            err = 'It is the last day'
             break
           case 'week':
-            err = '已经是最后一周了'
+            err = 'It is the last week'
             break
           default:
-            err = '已经是最后一个月了'
+            err = 'It is the last month'
         }
         this.$message.error(err)
       }
@@ -304,7 +304,7 @@ export default class extends Vue {
   // 日期选择
   private changeDate(val: string) {
     if (this.stateTime == '' || this.endTime == '' || this.dataTime == null) {
-      this.$message.error('检索日期不能为空！')
+      this.$message.error('The search date cannot be empty!')
       this.dataTime = moment().format('YYYY-MM-DD')
       this.stateTime = moment().format('YYYY-MM-DD')
       this.endTime = moment().format('YYYY-MM-DD')
@@ -417,7 +417,7 @@ export default class extends Vue {
         }
       })
       .catch((err) => {
-        this.$message.error('请求出错了：' + err.message)
+        this.$message.error('error：' + err.message)
       })
   }
 
@@ -453,7 +453,7 @@ export default class extends Vue {
         }
       })
       .catch((err) => {
-        this.$message.error('请求出错了：' + err.message)
+        this.$message.error('error：' + err.message)
       })
   }
 
@@ -489,7 +489,7 @@ export default class extends Vue {
         }
       })
       .catch((err) => {
-        this.$message.error('请求出错了：' + err.message)
+        this.$message.error('error：' + err.message)
       })
   }
 
@@ -506,7 +506,7 @@ export default class extends Vue {
         }
       })
       .catch((err) => {
-        this.$message.error('请求出错了：' + err.message)
+        this.$message.error('error：' + err.message)
       })
   }
 
@@ -523,7 +523,7 @@ export default class extends Vue {
         }
       })
       .catch((err) => {
-        this.$message.error('请求出错了：' + err.message)
+        this.$message.error('error：' + err.message)
       })
   }
 
@@ -547,7 +547,7 @@ export default class extends Vue {
         }
       })
       .catch((err) => {
-        this.$message.error('请求出错了：' + err.message)
+        this.$message.error('error：' + err.message)
       })
   }
 
@@ -582,7 +582,7 @@ export default class extends Vue {
         }
       })
       .catch((err) => {
-        this.$message.error('请求出错了：' + err.message)
+        this.$message.error('error：' + err.message)
       })
   }
 
@@ -644,7 +644,7 @@ export default class extends Vue {
         }
       })
       .catch((err) => {
-        this.$message.error('请求出错了：' + err.message)
+        this.$message.error('error：' + err.message)
       })
   }
 
@@ -683,7 +683,7 @@ export default class extends Vue {
         }
       })
       .catch((err) => {
-        this.$message.error('请求出错了：' + err.message)
+        this.$message.error('error：' + err.message)
       })
   }
 
@@ -705,7 +705,7 @@ export default class extends Vue {
         }
       })
       .catch((err) => {
-        this.$message.error('请求出错了：' + err.message)
+        this.$message.error('error：' + err.message)
       })
   }
 }

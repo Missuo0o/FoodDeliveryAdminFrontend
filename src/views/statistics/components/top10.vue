@@ -1,6 +1,6 @@
 <template>
   <div class="container top10">
-    <h2 class="homeTitle">销量排名TOP10</h2>
+    <h2 class="homeTitle">Top 10 Sales Ranking</h2>
     <div class="charBox">
       <div id="top" style="width: 100%; height: 380px"></div>
     </div>
