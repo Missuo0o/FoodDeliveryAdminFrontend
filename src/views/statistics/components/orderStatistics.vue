@@ -126,7 +126,7 @@ export default class extends Vue {
       ],
       series: [
         {
-          name: '订单总数',
+          name: 'Total number of orders',
           type: 'line',
           // stack: 'Total',
           smooth: false, //否平滑曲线

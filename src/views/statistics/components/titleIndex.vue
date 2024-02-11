@@ -24,7 +24,7 @@
       class="right-el-button"
       icon="iconfont icon-download"
       @click="handleExport"
-    >数据导出
+    >Data Export
     </el-button
     >
   </div>
