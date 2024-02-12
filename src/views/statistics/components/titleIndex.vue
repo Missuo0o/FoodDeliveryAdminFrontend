@@ -60,8 +60,8 @@ export default class extends Vue {
   //  数据导出
   /** 导出按钮操作 */
   handleExport() {
-    this.$confirm('是否确认导出最近30天运营数据?', '提示', {
-      confirmButtonText: '确定',
+    this.$confirm('Do you confirm to export the operational data of the last 30 days?', 'Confirm', {
+      confirmButtonText: 'Sumbit',
       cancelButtonText: 'Cancel',
       type: 'warning'
     })
@@ -71,7 +71,7 @@ export default class extends Vue {
         var a = document.createElement('a')
         document.body.appendChild(a)
         a.href = url
-        a.download = '运营数据统计报表.xlsx'
+        a.download = 'Operational Data Statistics Report.xlsx'
         a.click()
         window.URL.revokeObjectURL(url)
       })
