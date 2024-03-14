@@ -222,13 +222,12 @@ export default class extends Vue {
         validator: (rule: any, value: string, callback: Function) => {
           if (!value) {
             callback(new Error('Please enter the name'))
-          } else {
-            const reg = /^([A-Za-z0-9\u4e00-\u9fa5]){2,20}$/
-            if (!reg.test(value)) {
-              callback(new Error('Please enter 2-20 characters'))
-            } else {
-              callback()
-            }
+          }
+            else if (value.length < 2) {
+            callback(new Error('Please enter 2-20 characters'))
+          }
+          else{
+            callback()
           }
         },
         trigger: 'blur'

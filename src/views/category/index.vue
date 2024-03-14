@@ -322,10 +322,10 @@ export default class extends Vue {
   private addClass(st: any) {
     if (st == 'class') {
       this.classData.title = 'Dish Category'
-      this.type = '1'
+      this.classData.type = '1'
     } else {
       this.classData.title = 'Combo Category'
-      this.type = '2'
+      this.classData.type = '2'
     }
     this.action = 'add'
     this.classData.name = ''
