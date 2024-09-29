@@ -2,6 +2,8 @@
 
 ## Project setup
 
+use nvm to switch node version to 12 and run npm install
+
 ```
 npm install
 ```
